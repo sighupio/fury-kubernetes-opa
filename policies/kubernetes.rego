@@ -38,6 +38,10 @@ check_container(container) = sprintf("image %s using latest tag", [container]) {
 	endswith(container, ":latest")
 }
 
+else {
+	not contains(container, ":")
+}
+
 deny[msg] {
 	kinds = {"DaemonSet", "Deployment", "Job", "Pod"}
 	kinds[input.kind]

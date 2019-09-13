@@ -63,6 +63,26 @@ spec:
   `)
 }
 
+test_denied_no_tag {
+	denied with input as yaml.unmarshal(`
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cert-manager
+  namespace: ns
+spec:
+  template:
+    spec:
+      containers:
+      - name: cert-manager
+        image: "quay.io/jetstack/cert-manager-controller"
+        resources:
+          requests:
+            cpu: 50m
+            memory: 50Mi
+  `)
+}
+
 test_deployment_denied_two_containers_same_pod {
 	denied with input as yaml.unmarshal(`
 apiVersion: apps/v1
