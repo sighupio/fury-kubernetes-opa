@@ -1,6 +1,6 @@
 
 conftest:
-	kustomize build . | conftest test -p ../policies -
+	kustomize build . | conftest test -p ../policy -
 
 tests:
-	opa test -v ../policies
+	opa test -v ../policy
