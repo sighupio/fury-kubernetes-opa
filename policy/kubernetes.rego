@@ -105,3 +105,18 @@ warn[msg] {
 	not check_resources("limits")
 	msg := utilities.wrap_error("limits are not set")
 }
+
+labels {
+    input.metadata.labels["app.kubernetes.io/name"]
+    input.metadata.labels["app.kubernetes.io/instance"]
+    input.metadata.labels["app.kubernetes.io/version"]
+    input.metadata.labels["app.kubernetes.io/component"]
+    input.metadata.labels["app.kubernetes.io/part-of"]
+    input.metadata.labels["app.kubernetes.io/managed-by"]
+}
+
+warn[msg] {
+  not labels
+  msg := sprintf("%s must include Kubernetes recommended labels: https://kubernetes.io/docs/concepts/overview/working-with-objects/common-labels/#labels ", [input.metadata.name])
+}
+
