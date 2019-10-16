@@ -67,7 +67,7 @@ deny[msg] {
 
 warn[msg] {
 	input.kind = "Service"
-	allowed_services = {"ClusterIp", "NodePort"}
+	allowed_services = {"ClusterIP", "NodePort"}
 	not allowed_services[input.spec.type]
 	msg := utilities.wrap_error(sprintf("Service of type %s are not allowed, only: %v", [input.spec.type, concat(", ", allowed_services)]))
 }
@@ -101,6 +101,7 @@ warn[msg] {
 ##
 ## CHECK LABELS SET
 ##
+
 labels {
 	input.metadata.labels["app.kubernetes.io/name"]
 	input.metadata.labels["app.kubernetes.io/instance"]
@@ -110,7 +111,7 @@ labels {
 	input.metadata.labels["app.kubernetes.io/managed-by"]
 }
 
-#warn[msg] {
-#not labels
-#msg := sprintf("%s must include Kubernetes recommended labels: https://kubernetes.io/docs/concepts/overview/working-with-objects/common-labels/#labels ", [input.metadata.name])
-#}
+warn[msg] {
+	not labels
+	msg := utilities.wrap_error(sprintf("%s must include Kubernetes recommended labels: https://kubernetes.io/docs/concepts/overview/working-with-objects/common-labels/#labels ", [input.metadata.name]))
+}
