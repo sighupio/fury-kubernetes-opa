@@ -15,7 +15,15 @@ deny[msg] {
 max_containers_per_pod = 1
 
 deny[msg] {
-	kinds = {"DaemonSet", "Deployment", "Job", "Pod"}
+	kinds = {"Pod"}
+	kinds[input.kind]
+	containers_per_pod = count(input.spec.containers)
+	containers_per_pod > max_containers_per_pod
+	msg := utilities.wrap_error([containers_per_pod, max_containers_per_pod])
+}
+
+deny[msg] {
+	kinds = {"DaemonSet", "Deployment", "Job"}
 	kinds[input.kind]
 	containers_per_pod = count(input.spec.template.spec.containers)
 	containers_per_pod > max_containers_per_pod
@@ -69,54 +77,40 @@ warn[msg] {
 ##
 
 check_resources(resource) {
-	some i, j
-	input.spec.template.spec[i][j].resources[resource]
+	count({x | input.spec[_][x].resources[resource].cpu; input.spec[_][x].resources[resource].memory}) == count(input.spec.containers)
 }
 
 else {
-	some i, j
-	input.spec.jobTemplate.spec.template.spec[i][j].resources[resource]
+	count({x | input.spec.template.spec[_][x].resources[resource].cpu; input.spec.template.spec[_][x].resources[resource].memory}) == count(input.spec.template.spec.containers)
 }
 
 deny[msg] {
-	kinds = {"Cronjob"}
+	kinds = {"DaemonSet", "Deployment", "Job", "Cronjob", "Pod"}
 	kinds[input.kind]
 	not check_resources("requests")
 	msg := utilities.wrap_error("requests are not set")
 }
 
 warn[msg] {
-	kinds = {"Cronjob"}
+	kinds = {"DaemonSet", "Deployment", "Job", "Cronjob", "Pod"}
 	kinds[input.kind]
 	not check_resources("limits")
 	msg := utilities.wrap_error("limits are not set")
 }
 
-deny[msg] {
-	kinds = {"DaemonSet", "Deployment", "Job", "Pod"}
-	kinds[input.kind]
-	not check_resources("requests")
-	msg := utilities.wrap_error("requests are not set")
-}
-
-warn[msg] {
-	kinds = {"DaemonSet", "Deployment", "Job", "Pod"}
-	kinds[input.kind]
-	not check_resources("limits")
-	msg := utilities.wrap_error("limits are not set")
-}
-
+##
+## CHECK LABELS SET
+##
 labels {
-    input.metadata.labels["app.kubernetes.io/name"]
-    input.metadata.labels["app.kubernetes.io/instance"]
-    input.metadata.labels["app.kubernetes.io/version"]
-    input.metadata.labels["app.kubernetes.io/component"]
-    input.metadata.labels["app.kubernetes.io/part-of"]
-    input.metadata.labels["app.kubernetes.io/managed-by"]
+	input.metadata.labels["app.kubernetes.io/name"]
+	input.metadata.labels["app.kubernetes.io/instance"]
+	input.metadata.labels["app.kubernetes.io/version"]
+	input.metadata.labels["app.kubernetes.io/component"]
+	input.metadata.labels["app.kubernetes.io/part-of"]
+	input.metadata.labels["app.kubernetes.io/managed-by"]
 }
 
-warn[msg] {
-  not labels
-  msg := sprintf("%s must include Kubernetes recommended labels: https://kubernetes.io/docs/concepts/overview/working-with-objects/common-labels/#labels ", [input.metadata.name])
-}
-
+#warn[msg] {
+#not labels
+#msg := sprintf("%s must include Kubernetes recommended labels: https://kubernetes.io/docs/concepts/overview/working-with-objects/common-labels/#labels ", [input.metadata.name])
+#}
