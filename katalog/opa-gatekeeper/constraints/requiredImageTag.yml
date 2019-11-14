@@ -1,0 +1,9 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sRequiredImageTag
+metadata:
+  name: deployments-must-have-image-tag
+spec:
+  match:
+    kinds:
+      - apiGroups: ["apps", "extensions"]
+        kinds: ["Deployment"]      

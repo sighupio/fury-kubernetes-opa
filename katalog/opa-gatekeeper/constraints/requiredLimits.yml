@@ -1,0 +1,9 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sRequiredLimits
+metadata:
+  name: deployments-must-have-limits
+spec:
+  match:
+    kinds:
+      - apiGroups: ["apps", "extensions"]
+        kinds: ["Deployment"]      

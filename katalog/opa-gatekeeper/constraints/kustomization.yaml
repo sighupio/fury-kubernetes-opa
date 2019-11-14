@@ -1,0 +1,5 @@
+resources:
+- requiredImageTagTemplate.yml
+- requiredLimitsTemplate.yml
+- requiredImageTag.yml
+- requiredLimits.yml

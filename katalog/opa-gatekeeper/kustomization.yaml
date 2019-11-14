@@ -1,0 +1,10 @@
+namespace: gatekeeper-system
+
+resources:
+- ns.yml
+- secret.yml
+- rbac.yml
+- crd.yml
+- deploy.yml
+- audit.yml
+

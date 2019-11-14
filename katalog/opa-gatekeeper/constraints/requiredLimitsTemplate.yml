@@ -1,0 +1,32 @@
+##
+## CHECK REQUESTS AND LIMITS ARE SET
+##
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: k8srequiredlimits
+spec:
+  crd:
+    spec:
+      names:
+        kind: K8sRequiredLimits
+        listKind: K8sRequiredLimitsList
+        plural: k8srequiredlimits
+        singular: k8srequiredlimits
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package k8srequiredlimits
+
+        check_resources(object) {
+          count({x | object.spec[_][x].resources["limits"].cpu; object.spec[_][x].resources["limits"].memory}) == count(object.spec.containers)
+        } else {
+          count({x | object.spec.template.spec[_][x].resources["limits"].cpu; object.spec.template.spec[_][x].resources["limits"].memory}) == count(object.spec.template.spec.containers)
+        }
+
+        violation[{"msg": msg}] {
+          object := input.review.object
+          not check_resources(object)
+          msg := "Limits are not set"
+        }
+
