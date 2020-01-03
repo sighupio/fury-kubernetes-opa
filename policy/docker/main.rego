@@ -57,6 +57,15 @@ deny[msg] {
     msg := "[DL3002] User should be set"
 }
 
+#DL3004
+deny[msg] {
+    input[i].Cmd == "run"
+    val := input[i].Value
+    cmds := regex.split("[ &;]+", val[0])
+    cmds[x] == "sudo"
+    msg := sprintf("[DL3004] line %v: Do not use 'sudo' as it leads to unpredictable behavior. Use a tool like gosu to enforce root.", [i])
+}
+
 #DL3005
 deny[msg] {
     input[i].Cmd == "run"
@@ -66,6 +75,67 @@ deny[msg] {
     cmds[x+1] == "upgrade"
     msg := "[DL3005] Do not use apt-get upgrade"
 }
+
+#DL3005
+deny[msg] {
+    input[i].Cmd == "run"
+    val := input[i].Value
+    cmds := regex.split("[ &;]+", val[0])
+    cmds[x] == "apt-get"
+    cmds[x+1] == "dist-upgrade"
+    msg := "[DL3005] Do not use apt-get dist-upgrade"
+}
+
+get_image_tag(in) = image_tag {
+    input[i].Cmd == "from"
+    val := input[i].Value
+    image := regex.split(":", val[0])
+    image_tag := image[1]
+}
+
+#DL3006
+deny[msg] {
+    not get_image_tag(input)
+    msg := "[DL3006] Always tag the version of an image explicitly."
+}
+
+#DL3007
+deny[msg] {
+    get_image_tag(input) == "latest"
+    msg := "[DL3007] Using latest is prone to errors if the image will ever update. Pin the version explicitly to a release tag."
+}
+
+#DL3008
+# TODO: CORNER CASES / REFACTORING
+deny[msg] {
+    input[i].Cmd == "run"
+    val := input[i].Value
+    cmds := regex.split("[ &;]+", val[0])
+    cmds[x] == "apt-get"
+    cmds[y] == "install"
+    args := regex.split("[=]", cmds[z])
+    y > x
+    z > y
+    not args[1]
+    msg := sprintf("[DL3008] line %v Pin versions in apt-get install", [i])
+}
+
+#DL3008
+# TODO: CORNER CASES / REFACTORING
+deny[msg] {
+    input[i].Cmd == "run"
+    val := input[i].Value
+    cmds := regex.split("[ &;]+", val[0])
+    cmds[x] == "apt-get"
+    cmds[y] == "install"
+    args := regex.split("[=]", cmds[z])
+    y > x
+    z > y
+    args[1] == ""
+    msg := sprintf("[DL3008] line %v Pin versions in apt-get install", [i])
+}
+
+
 
 # DL3011
 deny[msg] {
