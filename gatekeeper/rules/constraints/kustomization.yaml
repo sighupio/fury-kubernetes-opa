@@ -1,14 +1,9 @@
 resources:
-  - do_not_allow_empty_or_latest_tag_images.yml
   - must_have_security_controls.yml
+  - must_have_unique_ingresses.yml
+  - must_have_unique_service_selector.yml
 
 patchesJson6902:
-  - target:
-      group: constraints.gatekeeper.sh
-      version: v1beta1
-      kind: K8sRequiredImageTag
-      name: deployments-must-have-image-tag-and-not-latest
-    path: patches/matches.yml
   - target:
       group: constraints.gatekeeper.sh
       version: v1beta1
