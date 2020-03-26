@@ -1,0 +1,5 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sRequiredImageTag
+metadata:
+  name: deployments-must-have-image-tag-and-not-latest
+spec: {}

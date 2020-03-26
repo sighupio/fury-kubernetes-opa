@@ -1,0 +1,4 @@
+resources:
+  - latest_without_tags_template.yml
+  - security_controls_template.yml
+  - unique_ingress_template.yml

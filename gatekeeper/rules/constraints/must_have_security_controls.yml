@@ -1,0 +1,5 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: SecurityControls
+metadata:
+  name: enforce-deployment-and-pod-security-controls
+spec: {}
