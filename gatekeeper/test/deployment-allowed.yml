@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    run: deployment-allowed
+  name: deployment-allowed
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: deployment-allowed
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: deployment-allowed
+    spec:
+      containers:
+        - image: nginx:1.17.9
+          name: deployment-allowed
+          resources: {}
+status: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    run: deployment-allowed-ns
+  name: deployment-allowed-ns
+  namespace: kube-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: deployment-allowed-ns
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: deployment-allowed-ns
+    spec:
+      containers:
+        - image: nginx:latest
+          name: deployment-allowed-ns
