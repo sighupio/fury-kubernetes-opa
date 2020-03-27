@@ -1,12 +1,11 @@
 - op: "add"
-  path: "/spec"
+  path: "/spec/match"
   value:
-    match:
-      excludedNamespaces:
-        - kube-system
-        - logging
-        - monitoring
-        - ingress-nginx
-      kinds:
-        - apiGroups: ["extensions", "networking.k8s.io"]
-          kinds: ["Ingress"]
+    excludedNamespaces:
+      - kube-system
+      - logging
+      - monitoring
+      - ingress-nginx
+    kinds:
+      - apiGroups: ["extensions", "networking.k8s.io"]
+        kinds: ["Ingress"]

@@ -1,7 +1,7 @@
 ---
 apiVersion: constraints.gatekeeper.sh/v1beta1
-kind: K8sUniqueServiceSelector
+kind: K8sReadinessProbe
 metadata:
-  name: unique-service-selector
+  name: readiness-probe
 spec:
   enforcementaction: deny

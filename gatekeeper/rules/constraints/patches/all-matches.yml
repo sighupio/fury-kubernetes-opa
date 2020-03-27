@@ -1,22 +1,21 @@
 - op: "add"
-  path: "/spec"
+  path: "/spec/match"
   value:
-    match:
-      excludedNamespaces:
-        - kube-system
-        - logging
-        - monitoring
-        - ingress-nginx
-      kinds:
-        - apiGroups: ["batch", "extensions", "apps", ""]
-          kinds:
-            [
-              "Deployment",
-              "Pod",
-              "CronJob",
-              "Job",
-              "StatefulSet",
-              "DaemonSet",
-              "ConfigMap",
-              "Service",
-            ]
+    excludedNamespaces:
+      - kube-system
+      - logging
+      - monitoring
+      - ingress-nginx
+    kinds:
+      - apiGroups: ["batch", "extensions", "apps", ""]
+        kinds:
+          [
+            "Deployment",
+            "Pod",
+            "CronJob",
+            "Job",
+            "StatefulSet",
+            "DaemonSet",
+            "ConfigMap",
+            "Service",
+          ]

@@ -1,0 +1,26 @@
+---
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: k8sreadinessprobe
+spec:
+  crd:
+    spec:
+      names:
+        kind: K8sReadinessProbe
+        listKind: K8sReadinessProbeList
+        plural: k8sreadinessprobe
+        singular: k8sreadinessprobe
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package k8sreadinessprobe
+        violation[{"msg": msg}] {
+            input.request.kind.kind = "Deployment"
+            input.request.operation = "CREATE"
+            servicetype = input.request.kind.kind
+            name = input.request.object.metadata.name
+            containers := input.request.object.spec.template.spec.containers[_]
+            not containers.readinessProbe
+            msg = sprintf("Rejecting \"%v/%v\" for not specifying a readinessProbe", [servicetype, name])
+        }
