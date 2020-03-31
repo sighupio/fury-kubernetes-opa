@@ -21,6 +21,14 @@ spec:
       containers:
         - image: redis:5.0.8
           name: deployment-allowed
+          livenessProbe:
+            httpGet:
+              path: /healthy
+              port: 8080
+          readinessProbe:
+            httpGet:
+              path: /healthy
+              port: 8080
           securityContext:
             runAsNonRoot: true
             runAsUser: 1001
@@ -70,14 +78,3 @@ spec:
             backend:
               serviceName: example
               servicePort: 80
-# ---
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   name: gatekeeper-test1-service
-#   namespace: default
-# spec:
-#   ports:
-#     - port: 443
-#   selector:
-#     control-plane: controller-manager
