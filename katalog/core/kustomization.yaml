@@ -1,0 +1,10 @@
+---
+resources:
+  - crd.yml
+  - deploy.yml
+  - ns.yml
+  - rbac.yml
+  - sa.yml
+  - secret.yml
+  - svc.yml
+  - vwh.yml

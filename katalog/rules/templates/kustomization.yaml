@@ -1,0 +1,7 @@
+---
+resources:
+  - security_controls_template.yml
+  - unique_ingress_template.yml
+  #- unique_service_selector_template.yml
+  - livenessprobe_template.yml
+  - readinessproble_template.yml
