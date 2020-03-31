@@ -1,3 +1,4 @@
+---
 resources:
   - must_have_security_controls.yml
   - must_have_unique_ingresses.yml
@@ -23,10 +24,10 @@ patchesJson6902:
       version: v1beta1
       kind: K8sLivenessProbe
       name: liveness-probe
-    path: patches/matches.yml
+    path: patches/deployment-matches.yml
   - target:
       group: constraints.gatekeeper.sh
       version: v1beta1
       kind: K8sReadinessProbe
       name: readiness-probe
-    path: patches/matches.yml
+    path: patches/all-matches.yml

@@ -1,0 +1,38 @@
+{
+    "inventory": {
+        "namespace": [
+            {
+                "kube-public": {
+                    "v1": {
+                        "name": {
+                            "kind": {
+                                "version": "v1",
+                                "kind": "Service",
+                                "group": "core"
+                            },
+                            "object": {
+                                "apiVersion": "v1",
+                                "kind": "Service",
+                                "metadata": {
+                                    "name": "gatekeeper-test1-service",
+                                    "namespace": "kube-public"
+                                },
+                                "spec": {
+                                    "ports": [
+                                        {
+                                            "port": 443
+                                        }
+                                    ],
+                                    "selector": {
+                                        "control-plane": "controller-manager",
+                                        "pippo": "pluto"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        ]
+    }
+}

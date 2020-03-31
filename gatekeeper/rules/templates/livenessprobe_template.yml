@@ -16,11 +16,11 @@ spec:
       rego: |
         package k8slivenessprobe
         violation[{"msg": msg}] {
-            input.request.kind.kind = "Deployment"
-            input.request.operation = "CREATE"
-            servicetype = input.request.kind.kind
-            name = input.request.object.metadata.name
-            containers := input.request.object.spec.template.spec.containers[_]
+            containers := input.review.object.spec.template.spec.containers[_]
+            name := input.review.object.metadata.name
+            servicetype := input.review.kind.kind
+            servicetype = input.review.kind.kind
+            name = input.review.object.metadata.name
             not containers.livenessProbe
             msg = sprintf("Rejecting \"%v/%v\" for not specifying a livenessProbe", [servicetype, name])
         }
