@@ -16,7 +16,10 @@ load helpers
 }
 
 
-@test "deployment_ns_whitelisted" {
+# list of test that must pass if exit status == 0
+
+
+@test "deployment_trusted_on_excluded_ns" {
  info
  deploy() {
    kubectl apply -f manifests/deploy_ns_whitelisted.yml
@@ -26,8 +29,7 @@ run deploy
 
 }
 
-
-@test "deployment_trusted" {
+@test "deployment_trusted_with_needed_setup" {
  info
  deploy() {
    kubectl apply -f manifests/deployment_trusted.yml
@@ -36,7 +38,6 @@ run deploy
 [ "$status" -eq 0 ]
 
 }
-
 
 @test "ingress_trusted" {
  info
@@ -49,6 +50,40 @@ run deploy
 
 }
 
+# list of test that pass if exit status != 0
+
+@test "deployment_rejected_image_with_latest_tag" {
+ info
+ deploy() {
+   kubectl apply -f manifests/deployment_reject_label_latest.yml
+ }
+
+run deploy
+[ "$status" -ne 0 ]
+
+}
+
+@test "deployment_rejected_image_with_latest_tag" {
+ info
+ deploy() {
+   kubectl apply -f manifests/deployment_rejected_missing_resources.yml
+ }
+
+run deploy
+[ "$status" -ne 0 ]
+
+}
+
+@test "ingress_rejected_duplicated" {
+ info
+ deploy() {
+   kubectl apply -f manifests/ingress_rejected_duplicated.yml
+ }
+
+run deploy
+[ "$status" -ne 0 ]
+
+}
 
 @test "teardown" {
     info
