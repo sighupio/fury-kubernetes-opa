@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    run: deployment-not-allowed-by-label
+  name: deployment-not-allowed-by-label
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: deployment-not-allowed-by-label
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: deployment-not-allowed-by-label
+    spec:
+      containers:
+        - image: nginx:latest
+          name: deployment-not-allowed-by-label
+          resources: {}
+status: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    run: deployment-not-allowed-by-resources
+  name: deployment-not-allowed-by-resources
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: deployment-not-allowed-by-resources
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: deployment-not-allowed-by-resources
+    spec:
+      containers:
+        - image: nginx:1.17.9
+          name: deployment-not-allowed-by-resources
+          resources: {}
+status: {}
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-allowed
+  namespace: kube-public
+spec:
+  rules:
+    - host: ingress-allowed.example.com
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: example-2
+              servicePort: 80
