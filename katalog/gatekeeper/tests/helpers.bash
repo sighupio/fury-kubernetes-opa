@@ -1,5 +1,6 @@
 #!/usr/bin/env bats
 
+set -o pipefail
 
 kaction(){
     path=$1
