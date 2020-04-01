@@ -117,6 +117,17 @@ spec:
                 not container.resources.limits.cpu
                 msg = kubernetes.format(sprintf("%s in the %s %s does not have a CPU limit set", [container.name, kubernetes.kind, kubernetes.name]))
         }
+         violation[msg] {
+                 kubernetes.containers[container]
+                 kubernetes.priviledge_escalation_allowed(container)
+                 msg = kubernetes.format(sprintf("%s in the %s %s allows priviledge escalation", [container.name, kubernetes.kind, kubernetes.name]))
+         }
+        # https://kubesec.io/basics/containers-securitycontext-runasnonroot-true/
+        violation[msg] {
+                kubernetes.containers[container]
+                not container.securityContext.runAsNonRoot = true
+                msg = kubernetes.format(sprintf("%s in the %s %s is running as root", [container.name, kubernetes.kind, kubernetes.name]))
+        }
         # # https://kubesec.io/basics/containers-securitycontext-capabilities-add-index-sys-admin/
         # violation[msg] {
         #         kubernetes.containers[container]
@@ -124,7 +135,7 @@ spec:
         #         msg = kubernetes.format(sprintf("%s in the %s %s has SYS_ADMIN capabilties", [container.name, kubernetes.kind, kubernetes.name]))
         # }
         #
-        # https://kubesec.io/basics/containers-securitycontext-capabilities-drop-index-all/
+        # # https://kubesec.io/basics/containers-securitycontext-capabilities-drop-index-all/
         # violation[msg] {
         #         kubernetes.containers[container]
         #         not kubernetes.dropped_capability(container, "all")
@@ -142,17 +153,6 @@ spec:
         #         kubernetes.no_read_only_filesystem(container)
         #         msg = kubernetes.format(sprintf("%s in the %s %s is not using a read only root filesystem", [container.name, kubernetes.kind, kubernetes.name]))
         # }
-         violation[msg] {
-                 kubernetes.containers[container]
-                 kubernetes.priviledge_escalation_allowed(container)
-                 msg = kubernetes.format(sprintf("%s in the %s %s allows priviledge escalation", [container.name, kubernetes.kind, kubernetes.name]))
-         }
-        # https://kubesec.io/basics/containers-securitycontext-runasnonroot-true/
-        violation[msg] {
-                kubernetes.containers[container]
-                not container.securityContext.runAsNonRoot = true
-                msg = kubernetes.format(sprintf("%s in the %s %s is running as root", [container.name, kubernetes.kind, kubernetes.name]))
-        }
         # # https://kubesec.io/basics/containers-securitycontext-runasuser/
         # violation[msg] {
         #         kubernetes.containers[container]
