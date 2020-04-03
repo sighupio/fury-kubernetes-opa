@@ -1,4 +1,5 @@
 #!/usr/bin/env bats
+
 load helpers
 
 set -o pipefail
