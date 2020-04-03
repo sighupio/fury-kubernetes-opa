@@ -1,7 +1,0 @@
----
-apiVersion: constraints.gatekeeper.sh/v1beta1
-kind: K8sReadinessProbe
-metadata:
-  name: readiness-probe
-spec:
-  enforcementaction: deny

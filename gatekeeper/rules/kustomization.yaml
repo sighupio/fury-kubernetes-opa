@@ -1,4 +1,0 @@
-bases:
-  - constraints
-  - templates
-  - config

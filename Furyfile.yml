@@ -1,3 +1,0 @@
-bases:
-  - name: monitoring/grafana
-    version: master
