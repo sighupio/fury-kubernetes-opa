@@ -8,7 +8,7 @@ Minimum Kubernetes version >= 1.14
 
 ## Fury Setup
 
-This module can easily added to your existing Fury setup adding to your `Furyfile.yml`:
+This module can easily be added to your existing Fury setup adding to your `Furyfile.yml`:
 
 ```yml
 bases:
@@ -24,15 +24,14 @@ Once you'll did this, you can then proceed to integrate Gatekeeper into your pro
 If you need to disable already exisisting constraints that are usually enabled by default,
 you can just simply create a patch in kustomize like the following one:
 
-
 ```yml
 patchesJson6902:
-  - target:
-      group: constraints.gatekeeper.sh
-      version: v1beta1
-      kind: K8sUniqueIngressHost # is just an example of already enabled constraints
-      name: unique-ingress-host
-    path: patches/allow.yml
+    - target:
+          group: constraints.gatekeeper.sh
+          version: v1beta1
+          kind: K8sUniqueIngressHost # is just an example of already enabled constraints
+          name: unique-ingress-host
+      path: patches/allow.yml
 ```
 
 in the `patches/allow.yml`:
@@ -51,12 +50,12 @@ reason, you can just do it with a kustomize path like the following one:
 
 ```yml
 patchesJson6902:
-  - target:
-      group: constraints.gatekeeper.sh
-      version: v1beta1
-      kind: K8sUniqueIngressHost # is just an example of already enabled constraints
-      name: unique-ingress-host
-    path: patches/ns.yml
+    - target:
+          group: constraints.gatekeeper.sh
+          version: v1beta1
+          kind: K8sUniqueIngressHost # is just an example of already enabled constraints
+          name: unique-ingress-host
+      path: patches/ns.yml
 ```
 
 in the `patches/allow.yml` :
@@ -65,12 +64,11 @@ in the `patches/allow.yml` :
 - op: "replace"
   path: "/spec/match/excludedNamespaces"
   value:
-    - myNs1
-    - myNs2
-    - myNs3
-    - myNs4
+      - myNs1
+      - myNs2
+      - myNs3
+      - myNs4
 ```
-
 
 ### Naming of Constraints and ConstraintTemplates
 
@@ -106,7 +104,7 @@ are removed by Gatekeeper. Otherwise the finalizers will need to be removed manu
 
 ### Before Uninstall, Clean Up Old Constraints
 
-Currently the uninstall mechanism only removes the Gatekeeper system, 
+Currently the uninstall mechanism only removes the Gatekeeper system,
 it does not remove any `ConstraintTemplate`, `Constraint`, and `Config` resources that have been created by the user,
 nor does it remove their accompanying `CRDs`.
 
