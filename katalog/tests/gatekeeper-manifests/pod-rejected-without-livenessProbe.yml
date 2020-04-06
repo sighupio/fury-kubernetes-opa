@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: nginx-pod
+  name: nginx-pod-ok
+spec:
+  containers:
+  - image: nginx:1.17.9
+    name: nginx-container
+    resources:
+      requests:
+        cpu: 100m
+        memory: 512M
+      limits:
+        cpu: 1000m
+        memory: 1024M
+    securityContext:
+      privileged: false
+      runAsNonRoot: true

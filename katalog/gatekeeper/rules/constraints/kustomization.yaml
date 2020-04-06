@@ -25,7 +25,7 @@ patchesJson6902:
       version: v1beta1
       kind: K8sLivenessProbe
       name: liveness-probe
-    path: patches/deployment-matches.yml
+    path: patches/all-matches.yml
   - target:
       group: constraints.gatekeeper.sh
       version: v1beta1
