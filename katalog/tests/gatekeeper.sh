@@ -87,6 +87,16 @@ set -o pipefail
   [[ "$output" == *"denied by enforce-deployment-and-pod-security-controls"* ]]
 }
 
+@test "[DENY] Pod without liveness/readiness probes" {
+  info
+  deploy() {
+    kubectl apply -f katalog/tests/gatekeeper-manifests/pod-rejected-without-livenessProbe.yml
+  }
+  run deploy
+  [[ "$status" -ne 0 ]]
+  [[ "$output" == *"denied by liveness-probe"* ]]
+}
+
 @test "[DENY] Duplicated ingress" {
   info
   deploy() {

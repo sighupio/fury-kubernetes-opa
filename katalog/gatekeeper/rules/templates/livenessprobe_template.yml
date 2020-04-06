@@ -19,8 +19,13 @@ spec:
             containers := input.review.object.spec.template.spec.containers[_]
             name := input.review.object.metadata.name
             servicetype := input.review.kind.kind
-            servicetype = input.review.kind.kind
-            name = input.review.object.metadata.name
+            not containers.livenessProbe
+            msg = sprintf("Rejecting \"%v/%v\" for not specifying a livenessProbe", [servicetype, name])
+        }
+        violation[{"msg": msg}] {
+            containers := input.review.object.spec.containers[_]
+            name := input.review.object.metadata.name
+            servicetype := input.review.kind.kind
             not containers.livenessProbe
             msg = sprintf("Rejecting \"%v/%v\" for not specifying a livenessProbe", [servicetype, name])
         }
