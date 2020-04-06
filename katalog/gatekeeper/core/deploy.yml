@@ -6,7 +6,6 @@ metadata:
     control-plane: controller-manager
     gatekeeper.sh/system: "yes"
   name: gatekeeper-controller-manager
-  namespace: gatekeeper-system
 spec:
   replicas: 1
   selector:

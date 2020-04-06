@@ -2,7 +2,6 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  creationTimestamp: null
   labels:
     run: deployment-allowed-ns
   name: deployment-allowed-ns
@@ -14,7 +13,6 @@ spec:
       run: deployment-allowed-ns
   template:
     metadata:
-      creationTimestamp: null
       labels:
         run: deployment-allowed-ns
     spec:

@@ -5,4 +5,3 @@ metadata:
   labels:
     gatekeeper.sh/system: "yes"
   name: gatekeeper-admin
-  namespace: gatekeeper-system

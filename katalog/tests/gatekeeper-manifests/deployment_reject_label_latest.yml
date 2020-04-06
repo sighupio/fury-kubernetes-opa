@@ -2,7 +2,6 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  creationTimestamp: null
   labels:
     run: deployment-not-allowed-by-label
   name: deployment-not-allowed-by-label
@@ -15,7 +14,6 @@ spec:
   strategy: {}
   template:
     metadata:
-      creationTimestamp: null
       labels:
         run: deployment-not-allowed-by-label
     spec:

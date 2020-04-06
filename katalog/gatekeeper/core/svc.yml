@@ -5,7 +5,6 @@ metadata:
   labels:
     gatekeeper.sh/system: "yes"
   name: gatekeeper-webhook-service
-  namespace: gatekeeper-system
 spec:
   ports:
     - port: 443
