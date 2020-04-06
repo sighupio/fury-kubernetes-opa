@@ -6,6 +6,7 @@
       - logging
       - monitoring
       - ingress-nginx
+      - cert-manager
     kinds:
       - apiGroups: ["extensions", "networking.k8s.io"]
         kinds: ["Ingress"]
