@@ -2,7 +2,6 @@
 resources:
   - must_have_security_controls.yml
   - must_have_unique_ingresses.yml
-  # - must_have_unique_service_selector.yml
   - must_have_liveness_probe.yml
   - must_have_readiness_probe.yml
 
