@@ -72,17 +72,17 @@ in the `patches/allow.yml` :
 
 ### Naming of Constraints and ConstraintTemplates
 
-For being more explicit should be useful give a verbose name to constraints such as:
+To be more explicit, it is useful to give a verbose name to constraints, such as:
 `all_pod_must_have_gatekeeper_namespaceselector.yml`
-In this way will be crystal clear the scope of the constraint that is going to be applied
+In this way, the scope of the constraint that is going to be applied will be crystal clear.
 For the ConstraintTemplate (that is the general logic - a function basically -) could be reasonable to have something
 like: `k8srequiredlabels_template.yml`
 
 #### Uninstall Constraints
 
-For uninstalling rules you first need to remove the constraint, then the constraintTemplate:
+To uninstall rules you first need to remove the constraint, then the constraintTemplate:
 
-here an example for the following resource:
+here is an example of the following resource:
 
 ```bash
 $ kubectl delete crd k8scontainerlimits.constraints.gatekeeper.sh # this will remove the constraint
