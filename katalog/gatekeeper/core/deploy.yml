@@ -25,7 +25,7 @@ spec:
             - --audit-interval=30
             - --port=8443
             - --logtostderr
-            - --exempt-namespace=gatekeeper-system
+            - --exempt-namespace=$(POD_NAMESPACE)
           command:
             - /manager
           env:
