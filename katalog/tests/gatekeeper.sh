@@ -17,7 +17,9 @@ set -o pipefail
   info
   test(){
     status=$(kubectl get pods -n gatekeeper-system -l control-plane=controller-manager -o jsonpath="{.items[*].status.phase}")
-    if [ "${status}" != "Running" ]; then return 1; fi
+    for state in $status; do
+      if [ "${state}" != "Running" ]; then return 1; fi
+    done
   }
   loop_it test 30 2
   status=${loop_it_result}
