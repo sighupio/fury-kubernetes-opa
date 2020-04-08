@@ -1,0 +1,24 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run: deployment-not-allowed-by-resources
+  name: deployment-not-allowed-by-resources
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: deployment-not-allowed-by-resources
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        run: deployment-not-allowed-by-resources
+    spec:
+      containers:
+        - image: nginx:1.17.9
+          name: deployment-not-allowed-by-resources
+          resources: {}
+status: {}

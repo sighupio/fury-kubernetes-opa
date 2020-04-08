@@ -1,0 +1,38 @@
+---
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: k8slivenessprobe
+spec:
+  crd:
+    spec:
+      names:
+        kind: K8sLivenessProbe
+        listKind: K8sLivenessProbeList
+        plural: k8slivenessprobe
+        singular: k8slivenessprobe
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package k8slivenessprobe
+        violation[{"msg": msg}] {
+            containers := input.review.object.spec.template.spec.containers[_]
+            name := input.review.object.metadata.name
+            kind := input.review.kind.kind
+            not containers.livenessProbe
+            msg = sprintf("Rejecting \"%v/%v\" for not specifying a livenessProbe", [kind, name])
+        }
+        violation[{"msg": msg}] {
+            containers := input.review.object.spec.containers[_]
+            name := input.review.object.metadata.name
+            kind := input.review.kind.kind
+            not containers.livenessProbe
+            msg = sprintf("Rejecting \"%v/%v\" for not specifying a livenessProbe", [kind, name])
+        }
+        violation[{"msg": msg}] {
+            containers := input.review.object.spec.jobTemplate.spec.template.spec.containers[_]
+            name := input.review.object.metadata.name
+            kind := input.review.kind.kind
+            not containers.livenessProbe
+            msg = sprintf("Rejecting \"%v/%v\" for not specifying a livenessProbe", [kind, name])
+        }

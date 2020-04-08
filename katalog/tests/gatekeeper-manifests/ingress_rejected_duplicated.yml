@@ -1,0 +1,15 @@
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-allowed
+  namespace: kube-public
+spec:
+  rules:
+    - host: ingress-allowed.example.com
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: example-2
+              servicePort: 80

@@ -1,0 +1,38 @@
+---
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: k8sreadinessprobe
+spec:
+  crd:
+    spec:
+      names:
+        kind: K8sReadinessProbe
+        listKind: K8sReadinessProbeList
+        plural: k8sreadinessprobe
+        singular: k8sreadinessprobe
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package k8sreadinessprobe
+        violation[{"msg": msg}] {
+            containers := input.review.object.spec.template.spec.containers[_]
+            name := input.review.object.metadata.name
+            kind := input.review.kind.kind
+            not containers.readinessProbe
+            msg = sprintf("Rejecting \"%v/%v\" for not specifying a readinessProbe", [kind, name])
+        }
+        violation[{"msg": msg}] {
+            containers := input.review.object.spec.containers[_]
+            name := input.review.object.metadata.name
+            kind := input.review.kind.kind
+            not containers.readinessProbe
+            msg = sprintf("Rejecting \"%v/%v\" for not specifying a readinessProbe", [kind, name])
+        }
+        violation[{"msg": msg}] {
+            containers := input.review.object.spec.jobTemplate.spec.template.spec.containers[_]
+            name := input.review.object.metadata.name
+            kind := input.review.kind.kind
+            not containers.readinessProbe
+            msg = sprintf("Rejecting \"%v/%v\" for not specifying a readinessProbe", [kind, name])
+        }
