@@ -4,4 +4,4 @@ kind: K8sLivenessProbe
 metadata:
   name: liveness-probe
 spec:
-  enforcementaction: deny
+  enforcementAction: deny

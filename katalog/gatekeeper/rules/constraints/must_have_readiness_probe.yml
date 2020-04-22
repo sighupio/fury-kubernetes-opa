@@ -4,4 +4,4 @@ kind: K8sReadinessProbe
 metadata:
   name: readiness-probe
 spec:
-  enforcementaction: deny
+  enforcementAction: deny
