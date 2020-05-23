@@ -1,0 +1,19 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: gatekeeper
+  labels:
+    gatekeeper.sh/system: "yes"
+spec:
+  endpoints:
+    - interval: 10s
+      port: metrics
+      scheme: http
+      path: /metrics
+  jobLabel: k8s-app
+  namespaceSelector:
+    matchNames:
+      - gatekeeper-system
+  selector:
+    matchLabels:
+      gatekeeper.sh/system: "yes"
