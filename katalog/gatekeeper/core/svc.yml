@@ -9,6 +9,10 @@ spec:
   ports:
     - port: 443
       targetPort: 8443
+      name: gwebhook-service
+    - port: 8888
+      targetPort: 8888
+      name: metrics
   selector:
     control-plane: controller-manager
     gatekeeper.sh/system: "yes"
