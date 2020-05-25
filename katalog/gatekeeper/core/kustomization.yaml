@@ -12,3 +12,4 @@ resources:
   - deploy.yml
   - svc.yml
   - vwh.yml
+  - service-monitor.yml
