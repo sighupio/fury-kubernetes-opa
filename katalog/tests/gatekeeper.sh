@@ -30,7 +30,7 @@ set -o pipefail
   deploy() {
     kaction katalog/gatekeeper/rules apply
   }
-  loop_it deploy 30 2
+  loop_it deploy 30 10
   status=${loop_it_result}
   [[ "$status" -eq 0 ]]
 }
