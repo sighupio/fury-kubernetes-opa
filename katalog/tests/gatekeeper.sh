@@ -25,10 +25,30 @@ set -o pipefail
   [[ "$status" -eq 0 ]]
 }
 
-@test "Deploy Gatekeeper Rules" {
+@test "Deploy Gatekeeper Rules - templates" {
   info
   deploy() {
-    kaction katalog/gatekeeper/rules apply
+    kaction katalog/gatekeeper/rules/templates apply
+  }
+  loop_it deploy 30 10
+  status=${loop_it_result}
+  [[ "$status" -eq 0 ]]
+}
+
+@test "Deploy Gatekeeper Rules - constraints" {
+  info
+  deploy() {
+    kaction katalog/gatekeeper/rules/constraints apply
+  }
+  loop_it deploy 30 10
+  status=${loop_it_result}
+  [[ "$status" -eq 0 ]]
+}
+
+@test "Deploy Gatekeeper Rules - config" {
+  info
+  deploy() {
+    kaction katalog/gatekeeper/rules/config apply
   }
   loop_it deploy 30 10
   status=${loop_it_result}
