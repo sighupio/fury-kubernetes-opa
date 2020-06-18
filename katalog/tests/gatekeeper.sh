@@ -7,6 +7,7 @@ set -o pipefail
 @test "Deploy Gatekeeper Core" {
   info
   deploy() {
+    kubectl apply -f https://raw.githubusercontent.com/sighupio/fury-kubernetes-monitoring/v1.6.0/katalog/prometheus-operator/crd-servicemonitor.yml
     kaction katalog/gatekeeper/core apply
   }
   run deploy
