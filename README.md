@@ -28,9 +28,12 @@ specific dependencies please visit the single package's documentation:
 - [Furyctl](https://github.com/sighupio/furyctl) package manager to download
     Fury packages >= [`v0.2.2`](https://github.com/sighupio/furyctl/releases/tag/v0.2.2)
 - [Kustomize](https://github.com/kubernetes-sigs/kustomize) = `v3.3.0`
-- [prometheus-operator](https://github.com/sighupio/fury-kubernetes-monitoring/tree/master/katalog/prometheus-operator) from the [Fury Monitoring Module](https://github.com/sighupio/fury-kubernetes-monitoring) is required by [Service monitor](./katalog/gatekeeper/core/service-monitor.yml) to export metrics to Prometheus.
+- [prometheus-operator](https://github.com/sighupio/fury-kubernetes-monitoring/tree/master/katalog/prometheus-operator)
+from the [Fury Monitoring Module](https://github.com/sighupio/fury-kubernetes-monitoring) is required by
+[Service monitor](./katalog/gatekeeper/core/service-monitor.yml) to export metrics to Prometheus.
 
-> You can comment out the service monitor in the [kustomization.yaml](./katalog/gatekeeper/core/kustomization.yaml) file if you don't want to install the monitoring module.
+> You can comment out the service monitor in the [kustomization.yaml](./katalog/gatekeeper/core/kustomization.yaml)
+file if you don't want to install the monitoring module.
 
 ## Compatibility
 
