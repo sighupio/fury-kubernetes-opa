@@ -17,10 +17,8 @@ set -o pipefail
 @test "Wait for Gatekeeper Core" {
   info
   test(){
-    status=$(kubectl get pods -n gatekeeper-system -l control-plane=controller-manager -o jsonpath="{.items[*].status.phase}")
-    for state in $status; do
-      if [ "${state}" != "Running" ]; then return 1; fi
-    done
+    readyReplicas=$(kubectl get deploy gatekeeper-controller-manager -n gatekeeper-system -o jsonpath="{.status.readyReplicas}")
+    if [ "${readyReplicas}" != "1" ]; then return 1; fi
   }
   loop_it test 30 2
   status=${loop_it_result}
