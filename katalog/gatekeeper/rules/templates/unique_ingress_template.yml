@@ -12,17 +12,34 @@ spec:
       rego: |
         package k8suniqueingresshost
 
-        identical(obj, review) {
-          obj.metadata.namespace == review.object.metadata.namespace
-          obj.metadata.name == review.object.metadata.name
-        }
         violation[{"msg": msg}] {
           input.review.kind.kind == "Ingress"
           re_match("^(extensions|networking.k8s.io)$", input.review.kind.group)
-          host := input.review.object.spec.rules[_].host
-          other := data.inventory.namespace[ns][otherapiversion]["Ingress"][name]
-          re_match("^(extensions|networking.k8s.io)/.+$", otherapiversion)
-          other.spec.rules[_].host == host
-          not identical(other, input.review)
-          msg := sprintf("ingress host conflicts with an existing ingress <%v>", [host])
+          input.review.kind.version == "v1beta1"
+
+          some i
+          input_name := input.review.object.metadata.name
+          input_host := input.review.object.spec.rules[i].host
+          input_paths := { x | x := input.review.object.spec.rules[i].http.paths[_].path }
+          input_ns := input.review.object.metadata.namespace
+
+          some other_ns, other_name, other_group_version, j
+          other_ingress := data.inventory.namespace[other_ns][other_group_version]["Ingress"][other_name]
+          other_host := other_ingress.spec.rules[j].host
+          other_paths := { x | x := other_ingress.spec.rules[j].http.paths[_].path }
+          
+          # apigroup/version check
+          concat("/",[ x | x := [input.review.kind.group, input.review.kind.version][_]; x != ""]) == other_group_version
+
+          # if not the same resource (namespace and name) => false
+          [input_ns, input_name] != [other_ns, other_name]
+
+          ## if not the same host => false
+          input_host == other_host
+
+          ## if no common paths => false
+          common_paths := input_paths & other_paths
+          count(common_paths) != 0
+
+          msg := sprintf("Ingress %v/%v host conflicts with ingress %v/%v: ( '%v' ) & ( '%v' ) = ( '%v' )", [input_ns, input_name, other_ns, other_name, concat("', '",input_paths), concat("', '",other_paths), common_paths[_]])
         }
