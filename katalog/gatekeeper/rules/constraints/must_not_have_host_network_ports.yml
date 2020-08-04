@@ -1,0 +1,10 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sPSPHostNetworkingPorts
+metadata:
+  name: disallow-host-network-ports
+spec:
+  enforcementAction: deny
+  parameters:
+    hostNetwork: false
+    min: 0
+    max: 900000

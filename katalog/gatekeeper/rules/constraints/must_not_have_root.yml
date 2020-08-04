@@ -1,0 +1,8 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sPSPAllowedUsers
+metadata:
+  name: disallow-root
+spec:
+  parameters:
+    runAsUser:
+      rule: MustRunAsNonRoot # MustRunAsNonRoot # RunAsAny #MustRunAs
