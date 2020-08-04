@@ -6,6 +6,12 @@ resources:
   - must_have_unique_ingresses.yml
   - must_have_liveness_probe.yml
   - must_have_readiness_probe.yml
+  - must_not_escalate.yml
+  - must_not_have_capabilities.yml
+  - must_not_have_host_namespaces.yml
+  - must_not_have_host_network_ports.yml
+  - must_not_have_host_path.yml
+  - must_not_have_root.yml
 
 patchesJson6902:
   - target:
@@ -31,4 +37,40 @@ patchesJson6902:
       version: v1beta1
       kind: K8sReadinessProbe
       name: readiness-probe
+    path: patches/all-matches.yml
+  - target:
+      group: constraints.gatekeeper.sh
+      version: v1beta1
+      kind: K8sPSPAllowPrivilegeEscalationContainer
+      name: disallow-escalation
+    path: patches/all-matches.yml
+  - target:
+      group: constraints.gatekeeper.sh
+      version: v1beta1
+      kind: K8sPSPCapabilities
+      name: disallow-capabilities
+    path: patches/all-matches.yml
+  - target:
+      group: constraints.gatekeeper.sh
+      version: v1beta1
+      kind: K8sPSPHostNamespace
+      name: disallow-host-namespace
+    path: patches/all-matches.yml
+  - target:
+      group: constraints.gatekeeper.sh
+      version: v1beta1
+      kind: K8sPSPHostNetworkingPorts
+      name: disallow-host-network-ports
+    path: patches/all-matches.yml
+  - target:
+      group: constraints.gatekeeper.sh
+      version: v1beta1
+      kind: K8sPSPHostFilesystem
+      name: disallow-host-filesystem
+    path: patches/all-matches.yml
+  - target:
+      group: constraints.gatekeeper.sh
+      version: v1beta1
+      kind: K8sPSPAllowedUsers
+      name: disallow-root
     path: patches/all-matches.yml

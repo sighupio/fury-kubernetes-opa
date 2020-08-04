@@ -6,3 +6,9 @@ resources:
   - unique_ingress_template.yml
   - livenessprobe_template.yml
   - readinessproble_template.yml
+  - capabilities_template.yml
+  - container_privilege_escalation_template.yml
+  - host_namespaces_template.yml
+  - host_network_ports_template.yml
+  - host_path_template.yml
+  - users_template.yml
