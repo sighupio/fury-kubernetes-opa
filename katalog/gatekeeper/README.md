@@ -110,6 +110,6 @@ nor does it remove their accompanying `CRDs`.
 
 When Gatekeeper is running it is possible to remove unwanted constraints by:
 
--   Deleting all instances of the constraint resource.
--   Deleting the `ConstraintTemplate` resource, which should automatically clean up the `CRD`.
--   Deleting the `Config` resource removes finalizers on synced resources.
+- Deleting all instances of the constraint resource.
+- Deleting the `ConstraintTemplate` resource, which should automatically clean up the `CRD`.
+- Deleting the `Config` resource removes finalizers on synced resources.

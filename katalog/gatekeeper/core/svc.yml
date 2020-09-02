@@ -16,3 +16,4 @@ spec:
   selector:
     control-plane: controller-manager
     gatekeeper.sh/system: "yes"
+    gatekeeper.sh/operation: webhook
