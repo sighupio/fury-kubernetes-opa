@@ -12,3 +12,7 @@ resources:
   - deploy.yml
   - svc.yml
   - vwh.yml
+
+images:
+  - name: openpolicyagent/gatekeeper
+    newTag: v3.1.0
