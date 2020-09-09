@@ -17,3 +17,6 @@ spec:
       - group: ""
         version: "v1"
         kind: "Pod"
+  match:
+    - excludedNamespaces: ["kube-system", "gatekeeper-system"]
+      processes: ["*"]
