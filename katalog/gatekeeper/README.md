@@ -84,6 +84,7 @@ To uninstall rules you first need to remove the constraint, then the constraintT
 
 here is an example of the following resource:
 
+<!-- markdownlint-disable MD014 -->
 ```bash
 $ kubectl delete crd k8scontainerlimits.constraints.gatekeeper.sh # this will remove the constraint
 $ kubectl delete constrainttemplates.templates.gatekeeper.sh k8scontainerlimits  # this will remove the constraintTemplate
