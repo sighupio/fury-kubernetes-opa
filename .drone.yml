@@ -1,6 +1,21 @@
 ---
 kind: pipeline
+name: policeman
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+  - name: lint
+    image: quay.io/sighup/policeman
+    pull: always
+
+---
+kind: pipeline
 name: e2e-kubernetes-1.16
+depends_on:
+  - policeman
 
 platform:
   os: linux
@@ -82,6 +97,8 @@ volumes:
 ---
 kind: pipeline
 name: e2e-kubernetes-1.17
+depends_on:
+  - policeman
 
 platform:
   os: linux
@@ -163,6 +180,8 @@ volumes:
 ---
 kind: pipeline
 name: e2e-kubernetes-1.18
+depends_on:
+  - policeman
 
 platform:
   os: linux
