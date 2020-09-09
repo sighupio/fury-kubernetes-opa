@@ -5,7 +5,7 @@
 Changes between `1.1.0` and this release: `1.2.0`
 
 - Update gatekeeper from `v3.1.0-beta.9` -> `v3.1.0`
-- Reenable High Availability
+- Re-enable High Availability
 - The grafana dashboard is now part of this module
 - Namespaces `kube-system` and `gatekeeper-system` namespaces are exempted.
 
