@@ -8,6 +8,8 @@ kind: ValidatingWebhookConfiguration
 metadata:
   labels:
     gatekeeper.sh/system: "yes"
+  annotations:
+    cert-manager.io/inject-ca-from: "gatekeeper-system/gatekeeper-tls"
   name: gatekeeper-validating-webhook-configuration
 webhooks:
   - clientConfig:

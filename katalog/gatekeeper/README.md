@@ -5,6 +5,7 @@
 Minimum Kubernetes version >= 1.16
 
 > Requires the `ValidatingAdmissionWebhook` admission plugin
+> Requires cert-manager v1. Available at [Kubernetes Fury Ingress Module](https://github.com/sighupio/fury-kubernetes-ingress)
 
 ## Fury Setup
 
