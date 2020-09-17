@@ -19,7 +19,7 @@ set -o pipefail
   info
   test(){
     readyReplicas=$(kubectl get deploy gatekeeper-controller-manager -n gatekeeper-system -o jsonpath="{.status.readyReplicas}")
-    if [ "${readyReplicas}" != "1" ]; then return 1; fi
+    if [ "${readyReplicas}" != "3" ]; then return 1; fi
   }
   loop_it test 30 2
   status=${loop_it_result}
