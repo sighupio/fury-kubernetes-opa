@@ -154,6 +154,9 @@ set -o pipefail
 
 @test "Teardown - Delete resources" {
   info
+  if [[ -z "${DRONE}" ]]; then
+    skip "No need to tear down while running on CI"
+  fi
   resource_teardown() {
     kubectl delete -f katalog/tests/gatekeeper-manifests/deploy_ns_whitelisted.yml
     kubectl delete -f katalog/tests/gatekeeper-manifests/deployment_trusted.yml
@@ -165,6 +168,9 @@ set -o pipefail
 
 @test "Teardown - Delete Gatekeeper Rules" {
   info
+  if [[ -z "${DRONE}" ]]; then
+    skip "No need to tear down while running on CI"
+  fi
   gatekeeper_teardown() {
     kaction katalog/gatekeeper/rules delete
   }
@@ -174,6 +180,9 @@ set -o pipefail
 
 @test "Teardown - Delete Gatekeeper Core" {
   info
+  if [[ -z "${DRONE}" ]]; then
+    skip "No need to tear down while running on CI"
+  fi
   gatekeeper_teardown() {
     kaction katalog/gatekeeper/core delete
   }
