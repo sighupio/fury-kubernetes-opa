@@ -2,7 +2,7 @@
 
 ## Requirements
 
-Minimum Kubernetes version >= 1.14
+Minimum Kubernetes version >= 1.16
 
 > Requires the `ValidatingAdmissionWebhook` admission plugin
 
@@ -21,7 +21,7 @@ Once you'll did this, you can then proceed to integrate Gatekeeper into your pro
 
 ### Disable constraint
 
-If you need to disable already exisisting constraints that are usually enabled by default,
+If you need to disable already existing constraints that are usually enabled by default,
 you can just simply create a patch in kustomize like the following one:
 
 ```yml
@@ -44,8 +44,8 @@ in the `patches/allow.yml`:
 
 ### Exclude namespaces from gatekeeper constraints
 
-There are already a bunch of namespaces excluded by default by the rules of Gatekeeper, that basically are the one
-used by infra namespaces (logging,monitoring,kube-system,ingress-nginx). If this subset must be modified for whatever
+There are already a bunch of namespaces excluded by default by the rules of Gatekeeper, that are the one
+used by infra namespaces (logging, monitoring, kube-system, ingress-nginx). If this subset must be modified for whatever
 reason, you can just do it with a kustomize path like the following one:
 
 ```yml
@@ -92,7 +92,7 @@ $ kubectl delete constrainttemplates.templates.gatekeeper.sh k8scontainerlimits 
 
 ### Modify constraintTemplates rules (securityControls)
 
-There is a constraintTemplate (securityControl) that enables only a few subset of the available rules, this basically
+There is a constraintTemplate (securityControl) that enables only a few subsets of the available rules, this basically
 because there are a lot of rules that requires pretty much effort to achieve them. If you want to enable them, you can
 just make a patch with kustomize (following the examples above) and enable a part or all of them
 (you can find them here: [security_controls_template.yml](rules/templates/security_controls_template.yml)
@@ -101,11 +101,11 @@ just make a patch with kustomize (following the examples above) and enable a par
 
 Before uninstalling Gatekeeper, be sure to clean up old `Constraints`, `ConstraintTemplates`, and
 the `Config` resource in the `gatekeeper-system` namespace. This will make sure all finalizers
-are removed by Gatekeeper. Otherwise the finalizers will need to be removed manually.
+are removed by Gatekeeper. Otherwise, the finalizers will need to be removed manually.
 
 ### Before Uninstall, Clean Up Old Constraints
 
-Currently the uninstall mechanism only removes the Gatekeeper system,
+Currently, the uninstall mechanism only removes the Gatekeeper system,
 it does not remove any `ConstraintTemplate`, `Constraint`, and `Config` resources that have been created by the user,
 nor does it remove their accompanying `CRDs`.
 
