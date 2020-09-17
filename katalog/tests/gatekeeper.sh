@@ -13,11 +13,23 @@ set -o pipefail
   info
   deploy() {
     kubectl apply -f https://raw.githubusercontent.com/sighupio/fury-kubernetes-monitoring/v1.9.0/katalog/prometheus-operator/crd-servicemonitor.yml
-    kaction katalog/gatekeeper/core apply
+    force_apply katalog/gatekeeper/core
   }
   run deploy
   [[ "$status" -eq 0 ]]
 }
+
+@test "Wait for Gatekeeper Audit" {
+  info
+  test(){
+    readyReplicas=$(kubectl get deploy gatekeeper-audit -n gatekeeper-system -o jsonpath="{.status.readyReplicas}")
+    if [ "${readyReplicas}" != "1" ]; then return 1; fi
+  }
+  loop_it test 30 2
+  status=${loop_it_result}
+  [[ "$status" -eq 0 ]]
+}
+
 
 @test "Wait for Gatekeeper Core" {
   info
