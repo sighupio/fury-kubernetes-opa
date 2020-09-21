@@ -31,9 +31,6 @@ specific dependencies please visit the single package's documentation:
 - [prometheus-operator](https://github.com/sighupio/fury-kubernetes-monitoring/tree/master/katalog/prometheus-operator)
 from the [Fury Monitoring Module](https://github.com/sighupio/fury-kubernetes-monitoring) is required by
 [Service monitor](./katalog/gatekeeper/core/service-monitor.yml) to export metrics to Prometheus.
-- [cert-manager](https://github.com/sighupio/fury-kubernetes-ingress/tree/master/katalog/cert-manager)
-from the [Fury Ingress Module](https://github.com/sighupio/fury-kubernetes-ingress) is required by
-[the Kubernetes Webhook](./katalog/gatekeeper/core/vwh.yml) to expose a secure internal endpoint *(https)*.
 
 > You can comment out the service monitor in the [kustomization.yaml](./katalog/gatekeeper/core/kustomization.yaml)
 file if you don't want to install the monitoring module.

@@ -124,7 +124,6 @@ spec:
             - --logtostderr
             - --exempt-namespace=$(POD_NAMESPACE)
             - --operation=webhook
-            - --disable-cert-rotation
           command:
             - /manager
           env:
@@ -183,4 +182,4 @@ spec:
         - name: cert
           secret:
             defaultMode: 420
-            secretName: gatekeeper-tls
+            secretName: gatekeeper-webhook-server-cert

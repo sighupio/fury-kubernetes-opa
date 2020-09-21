@@ -9,19 +9,10 @@ load helper
 
 set -o pipefail
 
-@test "Deploy requirements" {
-  info
-  setup(){
-    kubectl apply -f https://raw.githubusercontent.com/sighupio/fury-kubernetes-monitoring/v1.9.0/katalog/prometheus-operator/crd-servicemonitor.yml
-    apply "github.com/sighupio/fury-kubernetes-ingress.git//katalog/cert-manager/?ref=v1.8.0"
-  }
-  loop_it setup 60 10
-  status=${loop_it_result:?}
-}
-
 @test "Deploy Gatekeeper Core" {
   info
   deploy() {
+    kubectl apply -f https://raw.githubusercontent.com/sighupio/fury-kubernetes-monitoring/v1.9.0/katalog/prometheus-operator/crd-servicemonitor.yml
     force_apply katalog/gatekeeper/core
   }
   run deploy

@@ -12,7 +12,7 @@ resources:
   - ns.yml
   - rbac.yml
   - sa.yml
-  - tls.yml
+  - secret.yml
   - deploy.yml
   - svc.yml
   - vwh.yml
