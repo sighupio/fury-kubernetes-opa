@@ -44,11 +44,12 @@ file if you don't want to install the monitoring module.
 | v1.0.2                              | :white_check_mark: | :white_check_mark: | :white_check_mark: |                    |                    |                    |
 | v1.1.0                              |                    |                    | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | v1.2.0                              |                    |                    | :white_check_mark: | :white_check_mark: | :white_check_mark: |     :warning:      |
+| v1.2.1                              |                    |                    | :white_check_mark: | :white_check_mark: | :white_check_mark: |     :warning:      |
 
 ### Warning
 
-- :warning: : module version: `v1.2.0` and Kubernetes Version: `1.19.x`. It works as expected. Marked as warning
-because it is not officially supported by [SIGHUP](https://sighup.io).
+- :warning: : module version: `v1.2.0` and `v1.2.1` along with Kubernetes Version: `1.19.x`. It works as expected.
+Marked as warning because it is not officially supported by [SIGHUP](https://sighup.io).
 
 ## License
 
