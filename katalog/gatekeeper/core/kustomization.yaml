@@ -19,4 +19,4 @@ resources:
 
 images:
   - name: openpolicyagent/gatekeeper
-    newTag: v3.1.0
+    newTag: v3.1.1
