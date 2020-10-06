@@ -27,7 +27,24 @@ steps:
   - name: lint
     image: quay.io/sighup/policeman
     pull: always
+    depends_on:
+      - clone
 
+  - name: render
+    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.4.0_1.18.8_3.3.0_2.4.1
+    pull: always
+    depends_on:
+      - clone
+    commands:
+      - kustomize build katalog/gatekeeper > gatekeeper.yml
+
+  - name: deprek8ion
+    image: eu.gcr.io/swade1987/deprek8ion:1.1.31
+    pull: always
+    depends_on:
+      - render
+    commands:
+      - /conftest test -p /policies gatekeeper.yml
 ---
 kind: pipeline
 name: e2e-kubernetes-1.16
