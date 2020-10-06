@@ -1,5 +1,7 @@
 #!/usr/bin/env bats
 
+# shellcheck disable=SC2086,SC2154,SC2034
+
 set -o pipefail
 
 kaction(){
