@@ -14,6 +14,11 @@ spec:
         listKind: SecurityControlsList
         plural: securitycontrols
         singular: securitycontrol
+      validation:
+        openAPIV3Schema:
+          properties:
+            excludeIstio:
+              type: boolean # Default is false
   targets:
     - libs:
         - |
@@ -101,37 +106,95 @@ spec:
                   has_field(c, "securityContext")
                   has_field(c.securityContext, "allowPrivilegeEscalation")
           }
+
       rego: |
         package main
         import data.lib.kubernetes
+
+        istio(image) {
+                contains(image, "istio/proxyv2")
+        }
+
+        # Latests
         violation[msg] {
                 kubernetes.containers[container]
                 [image_name, "latest"] = kubernetes.split_image(container.image)
+                not input.parameters.excludeIstio
                 msg = kubernetes.format(sprintf("%s in the %s %s has an image, %s, using the latest tag", [container.name, kubernetes.kind, image_name, kubernetes.name]))
         }
+        # ISTIO: Latests
+        violation[msg] {
+                kubernetes.containers[container]
+                [image_name, "latest"] = kubernetes.split_image(container.image)
+                input.parameters.excludeIstio
+                not istio(container.image)
+                msg = kubernetes.format(sprintf("%s in the %s %s has an image, %s, using the latest tag", [container.name, kubernetes.kind, image_name, kubernetes.name]))
+        }
+
         # https://kubesec.io/basics/containers-resources-limits-memory
         violation[msg] {
                 kubernetes.containers[container]
                 not container.resources.limits.memory
+                not input.parameters.excludeIstio
                 msg = kubernetes.format(sprintf("%s in the %s %s does not have a memory limit set", [container.name, kubernetes.kind, kubernetes.name]))
         }
+        # ISTIO: https://kubesec.io/basics/containers-resources-limits-memory
+        violation[msg] {
+                kubernetes.containers[container]
+                not container.resources.limits.memory
+                input.parameters.excludeIstio
+                not istio(container.image)
+                msg = kubernetes.format(sprintf("%s in the %s %s does not have a memory limit set", [container.name, kubernetes.kind, kubernetes.name]))
+        }
+
         # https://kubesec.io/basics/containers-resources-limits-cpu/
         violation[msg] {
                 kubernetes.containers[container]
                 not container.resources.limits.cpu
+                not input.parameters.excludeIstio
                 msg = kubernetes.format(sprintf("%s in the %s %s does not have a CPU limit set", [container.name, kubernetes.kind, kubernetes.name]))
         }
-         violation[msg] {
-                 kubernetes.containers[container]
-                 kubernetes.priviledge_escalation_allowed(container)
-                 msg = kubernetes.format(sprintf("%s in the %s %s allows priviledge escalation", [container.name, kubernetes.kind, kubernetes.name]))
-         }
+        # ISTIO: https://kubesec.io/basics/containers-resources-limits-cpu/
+        violation[msg] {
+                kubernetes.containers[container]
+                not container.resources.limits.cpu
+                input.parameters.excludeIstio
+                not istio(container.image)
+                msg = kubernetes.format(sprintf("%s in the %s %s does not have a CPU limit set", [container.name, kubernetes.kind, kubernetes.name]))
+        }
+
+        # Priviledge Escalation
+        violation[msg] {
+                kubernetes.containers[container]
+                kubernetes.priviledge_escalation_allowed(container)
+                not input.parameters.excludeIstio
+                msg = kubernetes.format(sprintf("%s in the %s %s allows priviledge escalation", [container.name, kubernetes.kind, kubernetes.name]))
+        }
+        # ISTIO: # Priviledge Escalation
+        violation[msg] {
+                kubernetes.containers[container]
+                kubernetes.priviledge_escalation_allowed(container)
+                input.parameters.excludeIstio
+                not istio(container.image)
+                msg = kubernetes.format(sprintf("%s in the %s %s allows priviledge escalation", [container.name, kubernetes.kind, kubernetes.name]))
+        }
+
         # https://kubesec.io/basics/containers-securitycontext-runasnonroot-true/
         violation[msg] {
                 kubernetes.containers[container]
                 not container.securityContext.runAsNonRoot = true
+                not input.parameters.excludeIstio
                 msg = kubernetes.format(sprintf("%s in the %s %s is running as root", [container.name, kubernetes.kind, kubernetes.name]))
         }
+        # ISTIO: https://kubesec.io/basics/containers-securitycontext-runasnonroot-true/
+        violation[msg] {
+                kubernetes.containers[container]
+                not container.securityContext.runAsNonRoot = true
+                input.parameters.excludeIstio
+                not istio(container.image)
+                msg = kubernetes.format(sprintf("%s in the %s %s is running as root", [container.name, kubernetes.kind, kubernetes.name]))
+        }
+
         # # https://kubesec.io/basics/containers-securitycontext-capabilities-add-index-sys-admin/
         # violation[msg] {
         #         kubernetes.containers[container]

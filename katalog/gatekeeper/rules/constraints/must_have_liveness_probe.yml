@@ -9,3 +9,5 @@ metadata:
   name: liveness-probe
 spec:
   enforcementAction: deny
+  parameters:
+    excludeIstio: false

@@ -9,3 +9,5 @@ metadata:
   name: readiness-probe
 spec:
   enforcementAction: deny
+  parameters:
+    excludeIstio: false
