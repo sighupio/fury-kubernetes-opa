@@ -9,3 +9,5 @@ metadata:
   name: enforce-deployment-and-pod-security-controls
 spec:
   enforcementAction: deny
+  parameters:
+    excludeIstio: false

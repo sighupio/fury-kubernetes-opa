@@ -15,6 +15,11 @@ spec:
         listKind: K8sLivenessProbeList
         plural: k8slivenessprobe
         singular: k8slivenessprobe
+      validation:
+        openAPIV3Schema:
+          properties:
+            excludeIstio:
+              type: boolean # Default is false
   targets:
     - target: admission.k8s.gatekeeper.sh
       rego: |
@@ -24,6 +29,7 @@ spec:
             name := input.review.object.metadata.name
             kind := input.review.kind.kind
             not containers.livenessProbe
+            not input.parameters.excludeIstio
             msg = sprintf("Rejecting \"%v/%v\" for not specifying a livenessProbe", [kind, name])
         }
         violation[{"msg": msg}] {
@@ -31,6 +37,7 @@ spec:
             name := input.review.object.metadata.name
             kind := input.review.kind.kind
             not containers.livenessProbe
+            not input.parameters.excludeIstio
             msg = sprintf("Rejecting \"%v/%v\" for not specifying a livenessProbe", [kind, name])
         }
         violation[{"msg": msg}] {
@@ -38,5 +45,40 @@ spec:
             name := input.review.object.metadata.name
             kind := input.review.kind.kind
             not containers.livenessProbe
+            not input.parameters.excludeIstio
             msg = sprintf("Rejecting \"%v/%v\" for not specifying a livenessProbe", [kind, name])
+        }
+
+        violation[{"msg": msg}] {
+            containers := input.review.object.spec.template.spec.containers[_]
+            name := input.review.object.metadata.name
+            kind := input.review.kind.kind
+            not containers.livenessProbe
+            input.parameters.excludeIstio
+            not istio(containers.image)
+            msg = sprintf("Rejecting \"%v/%v\" for not specifying a livenessProbe", [kind, name])
+        }
+
+        violation[{"msg": msg}] {
+            containers := input.review.object.spec.containers[_]
+            name := input.review.object.metadata.name
+            kind := input.review.kind.kind
+            not containers.livenessProbe
+            input.parameters.excludeIstio
+            not istio(containers.image)
+            msg = sprintf("Rejecting \"%v/%v\" for not specifying a livenessProbe", [kind, name])
+        }
+
+        violation[{"msg": msg}] {
+            containers := input.review.object.spec.jobTemplate.spec.template.spec.containers[_]
+            name := input.review.object.metadata.name
+            kind := input.review.kind.kind
+            not containers.livenessProbe
+            input.parameters.excludeIstio
+            not istio(containers.image)
+            msg = sprintf("Rejecting \"%v/%v\" for not specifying a livenessProbe", [kind, name])
+        }
+
+        istio(image) {
+          contains(image, "istio/proxyv2")
         }
