@@ -7,8 +7,8 @@ Kubernetes Cluster.
 
 The following packages are included in the Fury Kubernetes OPA module:
 
-- [Gatekeeper](katalog/gatekeeper): Ready to use gatekeeper deployment plus a set of rules. Version: **v3.1.1**
-  - [Gatekeeper Core](katalog/gatekeeper/core): Gatekeeper deployment, ready to apply rules. Version: **v3.1.1**
+- [Gatekeeper](katalog/gatekeeper): Ready to use gatekeeper deployment plus a set of rules. Version: **v3.2.2**
+  - [Gatekeeper Core](katalog/gatekeeper/core): Gatekeeper deployment, ready to apply rules. Version: **v3.2.2**
   - [Gatekeeper Rules](katalog/gatekeeper/rules): Gatekeeper rules:
     - deny of docker images with latest tag
     - deny of pods that have no limit declared (both CPU and memory)
