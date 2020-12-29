@@ -72,6 +72,11 @@ set -o pipefail
   [[ "$status" -eq 0 ]]
 }
 
+@test "Wait to apply all rules" {
+  info
+  sleep 120
+}
+
 # [ALLOW] Allowed by Gatekeeper Kubernetes requests
 
 @test "[ALLOW] Deployment in a Whitelisted Namespace (kube-system)" {
