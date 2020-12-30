@@ -16,6 +16,7 @@ The following packages are included in the Fury Kubernetes OPA module:
     - deny of pods that run as root
     - deny of pods that don't declare `livenessProbe` and `readinessProbe`
     - deny of duplicated ingresses
+  - [Gatekeeper Policy Manager](katalog/gatekeeper/gpm): Gatekeeper Policy Manager, a simple to use web-ui for Gatekeeper. Version: **v0.4.0**
 
 You can click on each package to see its documentation.
 
