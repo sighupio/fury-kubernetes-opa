@@ -2,7 +2,7 @@
 
 ## Requirements
 
-Minimum Kubernetes version >= 1.16
+Minimum Kubernetes version >= 1.17
 
 > Requires the `ValidatingAdmissionWebhook` admission plugin
 
@@ -17,7 +17,7 @@ bases:
     version: master
 ```
 
-Once you'll did this, you can then proceed to integrate Gatekeeper into your project.
+Once you'll do this, you can then proceed to integrate Gatekeeper into your project.
 
 ### Disable constraint
 
@@ -45,7 +45,7 @@ in the `patches/allow.yml`:
 ### Exclude namespaces from gatekeeper constraints
 
 There are already a bunch of namespaces excluded by default by the rules of Gatekeeper, that are the one
-used by infra namespaces (logging, monitoring, kube-system, ingress-nginx). If this subset must be modified for whatever
+used by infra namespaces *(logging, monitoring, kube-system, ingress-nginx)*. If this subset must be modified for whatever
 reason, you can just do it with a kustomize path like the following one:
 
 ```yml
@@ -75,25 +75,25 @@ in the `patches/allow.yml` :
 To be more explicit, it is useful to give a verbose name to constraints, such as:
 `all_pod_must_have_gatekeeper_namespaceselector.yml`
 In this way, the scope of the constraint that is going to be applied will be crystal clear.
-For the ConstraintTemplate (that is the general logic - a function basically -) could be reasonable to have something
+For the `ConstraintTemplate` (that is the general logic — a function basically —) could be reasonable to have something
 like: `k8srequiredlabels_template.yml`
 
 #### Uninstall Constraints
 
-To uninstall rules you first need to remove the constraint, then the constraintTemplate:
+To uninstall rules you first need to remove the constraint, then the `constraintTemplate`:
 
 here is an example of the following resource:
 
 <!-- markdownlint-disable MD014 -->
 ```bash
 $ kubectl delete crd k8scontainerlimits.constraints.gatekeeper.sh # this will remove the constraint
-$ kubectl delete constrainttemplates.templates.gatekeeper.sh k8scontainerlimits  # this will remove the constraintTemplate
+$ kubectl delete constrainttemplates.templates.gatekeeper.sh k8scontainerlimits # this will remove the constraintTemplate
 ```
 
 ### Modify constraintTemplates rules (securityControls)
 
-There is a constraintTemplate (securityControl) that enables only a few subsets of the available rules, this basically
-because there are a lot of rules that requires pretty much effort to achieve them. If you want to enable them, you can
+There is a `constraintTemplate` *(`securityControl`)* that enables only a few subsets of the available rules, basically
+because there are a lot of rules that require pretty much effort to achieve them. If you want to enable them, you can
 just make a patch with kustomize (following the examples above) and enable a part or all of them
 (you can find them here: [security_controls_template.yml](rules/templates/security_controls_template.yml)
 
