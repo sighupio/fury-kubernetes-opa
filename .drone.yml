@@ -39,99 +39,17 @@ steps:
       - kustomize build katalog/gatekeeper > gatekeeper.yml
 
   - name: deprek8ion
-    image: eu.gcr.io/swade1987/deprek8ion:1.1.31
+    image: eu.gcr.io/swade1987/deprek8ion:1.1.32
     pull: always
     depends_on:
       - render
     commands:
       - /conftest test -p /policies gatekeeper.yml
----
-kind: pipeline
-name: e2e-kubernetes-1.16
-
-depends_on:
-  - policeman
-
-platform:
-  os: linux
-  arch: amd64
-
-trigger:
-  ref:
-    include:
-      - refs/tags/**
-
-steps:
-  - name: init
-    image: quay.io/sighup/e2e-testing-drone-plugin:v0.6.0
-    pull: always
-    volumes:
-    - name: shared
-      path: /shared
-    depends_on: [ clone ]
-    settings:
-      action: cluster-116
-      pipeline_id: cluster-116
-      instance_path: /shared
-      aws_default_region:
-        from_secret: aws_region
-      aws_access_key_id:
-        from_secret: aws_access_key_id
-      aws_secret_access_key:
-        from_secret: aws_secret_access_key
-      terraform_tf_states_bucket_name:
-        from_secret: terraform_tf_states_bucket_name
-      vsphere_server:
-        from_secret: vsphere_server
-      vsphere_password:
-        from_secret: vsphere_password
-      vsphere_user:
-        from_secret: vsphere_user
-
-  - name: e2e
-    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.4.0_1.16.15_3.3.0_2.4.1
-    pull: always
-    volumes:
-    - name: shared
-      path: /shared
-    depends_on: [ init ]
-    commands:
-      - export KUBECONFIG=/shared/kube/kubeconfig-116
-      - bats -t katalog/tests/gatekeeper.sh
-
-  - name: destroy
-    image: quay.io/sighup/e2e-testing-drone-plugin:v0.6.0
-    pull: always
-    depends_on: [ e2e ]
-    settings:
-      action: destroy
-      pipeline_id: cluster-116
-      aws_default_region:
-        from_secret: aws_region
-      aws_access_key_id:
-        from_secret: aws_access_key_id
-      aws_secret_access_key:
-        from_secret: aws_secret_access_key
-      terraform_tf_states_bucket_name:
-        from_secret: terraform_tf_states_bucket_name
-      vsphere_server:
-        from_secret: vsphere_server
-      vsphere_password:
-        from_secret: vsphere_password
-      vsphere_user:
-        from_secret: vsphere_user
-    when:
-      status:
-      - success
-      - failure
-
-volumes:
-- name: shared
-  temp: {}
 
 ---
 kind: pipeline
 name: e2e-kubernetes-1.17
+
 depends_on:
   - policeman
 
@@ -146,15 +64,17 @@ trigger:
 
 steps:
   - name: init
-    image: quay.io/sighup/e2e-testing-drone-plugin:v0.6.0
+    image: quay.io/sighup/e2e-testing-drone-plugin:v0.8.0
     pull: always
     volumes:
     - name: shared
       path: /shared
     depends_on: [ clone ]
     settings:
-      action: cluster-117
+      action: custom-cluster-117
       pipeline_id: cluster-117
+      local_kind_config_path: katalog/tests/kind/config.yml
+      cluster_version: '1.17.5'
       instance_path: /shared
       aws_default_region:
         from_secret: aws_region
@@ -183,7 +103,7 @@ steps:
       - bats -t katalog/tests/gatekeeper.sh
 
   - name: destroy
-    image: quay.io/sighup/e2e-testing-drone-plugin:v0.6.0
+    image: quay.io/sighup/e2e-testing-drone-plugin:v0.8.0
     pull: always
     depends_on: [ e2e ]
     settings:
@@ -229,15 +149,17 @@ trigger:
 
 steps:
   - name: init
-    image: quay.io/sighup/e2e-testing-drone-plugin:v0.6.0
+    image: quay.io/sighup/e2e-testing-drone-plugin:v0.8.0
     pull: always
     volumes:
     - name: shared
       path: /shared
     depends_on: [ clone ]
     settings:
-      action: cluster-118
+      action: custom-cluster-118
       pipeline_id: cluster-118
+      local_kind_config_path: katalog/tests/kind/config.yml
+      cluster_version: '1.18.8'
       instance_path: /shared
       aws_default_region:
         from_secret: aws_region
@@ -266,7 +188,7 @@ steps:
       - bats -t katalog/tests/gatekeeper.sh
 
   - name: destroy
-    image: quay.io/sighup/e2e-testing-drone-plugin:v0.6.0
+    image: quay.io/sighup/e2e-testing-drone-plugin:v0.8.0
     pull: always
     depends_on: [ e2e ]
     settings:
@@ -312,15 +234,17 @@ trigger:
 
 steps:
   - name: init
-    image: quay.io/sighup/e2e-testing-drone-plugin:v0.6.0
+    image: quay.io/sighup/e2e-testing-drone-plugin:v0.8.0
     pull: always
     volumes:
     - name: shared
       path: /shared
     depends_on: [ clone ]
     settings:
-      action: cluster-119
+      action: custom-cluster-119
       pipeline_id: cluster-119
+      local_kind_config_path: katalog/tests/kind/config.yml
+      cluster_version: '1.19.4'
       instance_path: /shared
       aws_default_region:
         from_secret: aws_region
@@ -338,7 +262,7 @@ steps:
         from_secret: vsphere_user
 
   - name: e2e
-    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.4.0_1.19.0_3.3.0_2.4.1
+    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.4.0_1.19.4_3.3.0_2.4.1
     pull: always
     volumes:
     - name: shared
@@ -349,7 +273,7 @@ steps:
       - bats -t katalog/tests/gatekeeper.sh
 
   - name: destroy
-    image: quay.io/sighup/e2e-testing-drone-plugin:v0.6.0
+    image: quay.io/sighup/e2e-testing-drone-plugin:v0.8.0
     pull: always
     depends_on: [ e2e ]
     settings:
@@ -380,12 +304,98 @@ volumes:
 
 ---
 kind: pipeline
+name: e2e-kubernetes-1.20
+
+depends_on:
+  - policeman
+
+platform:
+  os: linux
+  arch: amd64
+
+trigger:
+  ref:
+    include:
+      - refs/tags/**
+
+steps:
+  - name: init
+    image: quay.io/sighup/e2e-testing-drone-plugin:v0.8.0
+    pull: always
+    volumes:
+    - name: shared
+      path: /shared
+    depends_on: [ clone ]
+    settings:
+      action: custom-cluster-120
+      pipeline_id: cluster-120
+      local_kind_config_path: katalog/tests/kind/config.yml
+      cluster_version: '1.20.0'
+      instance_path: /shared
+      aws_default_region:
+        from_secret: aws_region
+      aws_access_key_id:
+        from_secret: aws_access_key_id
+      aws_secret_access_key:
+        from_secret: aws_secret_access_key
+      terraform_tf_states_bucket_name:
+        from_secret: terraform_tf_states_bucket_name
+      vsphere_server:
+        from_secret: vsphere_server
+      vsphere_password:
+        from_secret: vsphere_password
+      vsphere_user:
+        from_secret: vsphere_user
+
+  - name: e2e
+    image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.4.0_1.20.0_3.3.0_2.4.1
+    pull: always
+    volumes:
+    - name: shared
+      path: /shared
+    depends_on: [ init ]
+    commands:
+      - export KUBECONFIG=/shared/kube/kubeconfig-120
+      - bats -t katalog/tests/gatekeeper.sh
+
+  - name: destroy
+    image: quay.io/sighup/e2e-testing-drone-plugin:v0.8.0
+    pull: always
+    depends_on: [ e2e ]
+    settings:
+      action: destroy
+      pipeline_id: cluster-120
+      aws_default_region:
+        from_secret: aws_region
+      aws_access_key_id:
+        from_secret: aws_access_key_id
+      aws_secret_access_key:
+        from_secret: aws_secret_access_key
+      terraform_tf_states_bucket_name:
+        from_secret: terraform_tf_states_bucket_name
+      vsphere_server:
+        from_secret: vsphere_server
+      vsphere_password:
+        from_secret: vsphere_password
+      vsphere_user:
+        from_secret: vsphere_user
+    when:
+      status:
+      - success
+      - failure
+
+volumes:
+- name: shared
+  temp: {}
+
+---
+kind: pipeline
 name: release
 
 depends_on:
-  - e2e-kubernetes-1.16
   - e2e-kubernetes-1.17
   - e2e-kubernetes-1.18
+  - e2e-kubernetes-1.19
 
 platform:
   os: linux
