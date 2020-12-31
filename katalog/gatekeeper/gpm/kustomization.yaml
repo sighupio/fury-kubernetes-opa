@@ -5,5 +5,5 @@
 namespace: gatekeeper-system
 
 bases:
-  - https://github.com/sighupio/gatekeeper-policy-manager/?ref=v0.4.0
+  - https://github.com/sighupio/gatekeeper-policy-manager/?ref=v0.4.1
 

@@ -53,4 +53,3 @@ patchesStrategicMerge:
 ```
 
 More information on the official repository: <https://github.com/sighupio/gatekeeper-policy-manager>
-
