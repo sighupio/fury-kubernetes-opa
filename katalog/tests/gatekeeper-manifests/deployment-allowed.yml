@@ -21,7 +21,7 @@ spec:
         run: deployment-allowed
     spec:
       containers:
-        - image: redis:5.0.8
+        - image: reg.sighup.io/sighupio/fury/redis:5.0.8
           name: deployment-allowed
           livenessProbe:
             httpGet:
@@ -61,7 +61,7 @@ spec:
         run: deployment-allowed-ns
     spec:
       containers:
-        - image: nginx:latest
+        - image: reg.sighup.io/sighupio/fury/nginx:latest
           name: deployment-allowed-ns
 ---
 apiVersion: networking.k8s.io/v1beta1

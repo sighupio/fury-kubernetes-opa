@@ -7,3 +7,7 @@ namespace: gatekeeper-system
 bases:
   - https://github.com/sighupio/gatekeeper-policy-manager/?ref=v0.4.1
 
+images:
+  - name: quay.io/sighup/gatekeeper-policy-manager
+    newName: reg.sighup.io/sighupio/fury/gatekeeper-policy-manager
+    newTag: v0.4.1

@@ -19,4 +19,5 @@ resources:
 
 images:
   - name: openpolicyagent/gatekeeper
+    newName: reg.sighup.io/sighupio/fury/openpolicyagent/gatekeeper
     newTag: v3.2.2

@@ -22,7 +22,7 @@ spec:
         run: deployment-not-allowed-by-label
     spec:
       containers:
-        - image: nginx:latest
+        - image: reg.sighup.io/sighupio/fury/nginx:latest
           name: deployment-not-allowed-by-label
           resources: {}
 status: {}
