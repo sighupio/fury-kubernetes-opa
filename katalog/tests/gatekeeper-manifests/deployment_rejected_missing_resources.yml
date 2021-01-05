@@ -22,7 +22,7 @@ spec:
         run: deployment-not-allowed-by-resources
     spec:
       containers:
-        - image: nginx:1.17.9
+        - image: reg.sighup.io/sighupio/fury/nginx:1.17.9
           name: deployment-not-allowed-by-resources
           resources: {}
 status: {}

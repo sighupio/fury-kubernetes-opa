@@ -10,7 +10,7 @@ metadata:
   name: nginx-pod-ok
 spec:
   containers:
-  - image: nginx:1.17.9
+  - image: reg.sighup.io/sighupio/fury/nginx:1.17.9
     name: nginx-container
     resources:
       requests:
