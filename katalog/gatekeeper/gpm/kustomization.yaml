@@ -2,9 +2,13 @@
 # Use of this source code is governed by a BSD-style
 # license that can be found in the LICENSE file.
 
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
 namespace: gatekeeper-system
 
-bases:
+resources:
   - https://github.com/sighupio/gatekeeper-policy-manager/?ref=v0.4.1
 
 images:
