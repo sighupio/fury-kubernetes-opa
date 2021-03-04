@@ -9,5 +9,5 @@ bases:
 
 images:
   - name: quay.io/sighup/gatekeeper-policy-manager
-    newName: reg.sighup.io/sighupio/fury/gatekeeper-policy-manager
+    newName: registry.sighup.io/fury/gatekeeper-policy-manager
     newTag: v0.4.1
