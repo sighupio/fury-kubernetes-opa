@@ -22,7 +22,7 @@ spec:
         run: deployment-allowed
     spec:
       containers:
-        - image: reg.sighup.io/sighupio/fury/redis:5.0.8
+        - image: registry.sighup.io/fury/redis:5.0.8
           name: deployment-allowed
           livenessProbe:
             httpGet:
