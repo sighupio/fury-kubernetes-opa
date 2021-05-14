@@ -7,8 +7,8 @@ Kubernetes Cluster.
 
 The following packages are included in the Fury Kubernetes OPA module:
 
-- [Gatekeeper](katalog/gatekeeper): Ready to use gatekeeper deployment plus a set of rules. Version: **v3.2.2**
-  - [Gatekeeper Core](katalog/gatekeeper/core): Gatekeeper deployment, ready to apply rules. Version: **v3.2.2**
+- [Gatekeeper](katalog/gatekeeper): Ready to use gatekeeper deployment plus a set of rules. Version: **v3.4.0**
+  - [Gatekeeper Core](katalog/gatekeeper/core): Gatekeeper deployment, ready to apply rules. Version: **v3.4.0**
   - [Gatekeeper Rules](katalog/gatekeeper/rules): Gatekeeper rules:
     - deny of docker images with the latest tag
     - deny of pods that have no limit declared (both CPU and memory)
@@ -16,7 +16,9 @@ The following packages are included in the Fury Kubernetes OPA module:
     - deny of pods that run as root
     - deny of pods that don't declare `livenessProbe` and `readinessProbe`
     - deny of duplicated ingresses
-  - [Gatekeeper Policy Manager](katalog/gatekeeper/gpm): Gatekeeper Policy Manager, a simple to use web-ui for Gatekeeper. Version: **v0.4.2**
+    - Unique service selector
+  - [Gatekeeper Policy Manager](katalog/gatekeeper/gpm): Gatekeeper Policy Manager, a simple to use web-ui for
+  Gatekeeper. Version: **v0.4.2**
 
 You can click on each package to see its documentation.
 
@@ -25,7 +27,7 @@ You can click on each package to see its documentation.
 All packages in this repository have the following dependencies, for package
 specific dependencies please visit the single package's documentation:
 
-- [Kubernetes](https://kubernetes.io) >= `v1.17.0`
+- [Kubernetes](https://kubernetes.io) >= `v1.18.0`
 - [Furyctl](https://github.com/sighupio/furyctl) package manager to download
     Fury packages >= [`v0.2.2`](https://github.com/sighupio/furyctl/releases/tag/v0.2.2)
 - [Kustomize](https://github.com/kubernetes-sigs/kustomize) = `v3.3.0`
@@ -47,6 +49,8 @@ file if you don't want to install the monitoring module.
 | v1.2.0                              |                    |                    | :white_check_mark: | :white_check_mark: | :white_check_mark: |     :warning:      |                    |
 | v1.2.1                              |                    |                    | :white_check_mark: | :white_check_mark: | :white_check_mark: |     :warning:      |                    |
 | v1.3.0                              |                    |                    |                    | :white_check_mark: | :white_check_mark: | :white_check_mark: |     :warning:      |
+| v1.3.1                              |                    |                    |                    | :white_check_mark: | :white_check_mark: | :white_check_mark: |     :warning:      |
+| v1.4.0                              |                    |                    |                    |                    | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 
 ### Warning
 
