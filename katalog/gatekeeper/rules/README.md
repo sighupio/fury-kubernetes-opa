@@ -6,6 +6,7 @@
 - deny of pods that run as root
 - deny of pods that don't declare `livenessProbe` and `readinessProbe`
 - deny duplicated ingresses
+- unique service selector
 
 [security_controls_template.yml](templates/security_controls_template.yml): it's an all in one pod security policies
 measures, that contains a lot more rules, that are currently commented on. This file can be splitter into several

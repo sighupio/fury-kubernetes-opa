@@ -17,8 +17,9 @@ resources:
   - deploy.yml
   - svc.yml
   - vwh.yml
+  - pdb.yml
 
 images:
   - name: openpolicyagent/gatekeeper
     newName: registry.sighup.io/fury/openpolicyagent/gatekeeper
-    newTag: v3.2.2
+    newTag: v3.4.0

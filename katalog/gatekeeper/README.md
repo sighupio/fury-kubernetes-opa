@@ -2,7 +2,7 @@
 
 ## Requirements
 
-Minimum Kubernetes version >= 1.17
+Minimum Kubernetes version >= 1.18
 
 > Requires the `ValidatingAdmissionWebhook` admission plugin
 
