@@ -136,7 +136,7 @@ set -o pipefail
   }
   run deploy
   [[ "$status" -ne 0 ]]
-  [[ "$output" == *"denied by enforce-deployment-and-pod-security-controls"* ]]
+  [[ "$output" == *"using the latest tag"* ]]
 }
 
 @test "[DENY] Deployment without resources" {
@@ -146,7 +146,7 @@ set -o pipefail
   }
   run deploy
   [[ "$status" -ne 0 ]]
-  [[ "$output" == *"denied by enforce-deployment-and-pod-security-controls"* ]]
+  [[ "$output" == *"enforce-deployment-and-pod-security-controls"* ]]
 }
 
 @test "[DENY] Pod without liveness/readiness probes" {
@@ -156,7 +156,7 @@ set -o pipefail
   }
   run deploy
   [[ "$status" -ne 0 ]]
-  [[ "$output" == *"denied by liveness-probe"* ]]
+  [[ "$output" == *"liveness-probe"* ]]
 }
 
 @test "[DENY] Duplicated ingress" {
@@ -166,7 +166,7 @@ set -o pipefail
   }
   run deploy
   [[ "$status" -ne 0 ]]
-  [[ "$output" == *"denied by unique-ingress-host"* ]]
+  [[ "$output" == *"unique-ingress-host"* ]]
 }
 
 @test "Teardown - Delete resources" {
