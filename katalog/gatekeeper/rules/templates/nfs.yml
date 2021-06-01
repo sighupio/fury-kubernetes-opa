@@ -1,0 +1,86 @@
+---
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: nfsexport
+  annotations:
+    description: Controls usage of NFS exports
+spec:
+  crd:
+    spec:
+      names:
+        kind: NFSExport
+      validation:
+        # Schema for the `parameters` field
+        openAPIV3Schema:
+          properties:
+            allowedNFSExport:
+              type: array
+              items:
+                type: object
+                properties:
+                  namespace:
+                    type: string
+                  server:
+                    type: string
+                  path:
+                    type: string
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package k8snfsexport
+        violation[{"msg": msg, "details": {}}] {
+          namespace := input.request.object.metadata.namespace
+          volume := input_nfs_volumes[_]
+          allowedNFS := get_allowed_nfs(args)
+          input_nfs_violation(allowedNFS, namespace, volume)
+          msg := sprintf("NFS export %v is not allowed, pod: %v. Allowed path: %v", [volume, input.request.object.metadata.name, allowedNFS])
+        }
+        input_nfs_volumes[v] {
+            v := input.request.object.spec.volumes[_]
+            has_field(v, "nfs")
+        }
+        # has_field returns whether an object has a field
+        has_field(object, field) = true {
+            object[field]
+        }
+        get_allowed_nfs(arg) = out {
+            not arg.parameters
+            out = []
+        }
+        get_allowed_nfs(arg) = out {
+            not arg.parameters.allowedNFSExport
+            out = []
+        }
+        get_allowed_nfs(arg) = out {
+            out = arg.parameters.allowedNFSExport
+        }
+        input_nfs_violation(allowedNFS, namespace, volume) {
+            # An empty list means all NFS exports are blocked
+            allowedNFS == []
+        }
+        input_nfs_violation(allowedNFS, namespace, volume) {
+            not input_nfs_allowed(allowedNFS, namespace, volume)
+        }
+        input_nfs_allowed(allowedNFS, namespace, volume) {
+            allowedNFSExport := allowedNFS[_]
+            allowedNFSExport.namespace == namespace
+            allowedNFSExport.server == volume.nfs.server
+            allowedNFSExport.path == volume.nfs.path
+        }
+---
+# Example
+# apiVersion: constraints.gatekeeper.sh/v1beta1
+# kind: NFSExport
+# metadata:
+#   name: nfs-export
+# spec:
+#   match:
+#     kinds:
+#     - apiGroups: [""]
+#       kinds: ["Pod"]
+#   parameters:
+#     allowedNFSExport:
+#     - namespace: "demo"
+#       server: "10.0.0.1"
+#       path: "/export"
