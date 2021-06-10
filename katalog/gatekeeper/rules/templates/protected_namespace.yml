@@ -11,28 +11,21 @@ spec:
   crd:
     spec:
       names:
-        kind: K8sProtectedNamespace
-        listKind: K8sProtectedNamespaceList
-        plural: k8sprotectednamespace
+        kind: k8sprotectednamespace
+        listKind: k8sprotectednamespacesList
+        plural: k8sprotectednamespaces
         singular: k8sprotectednamespace
-      validation:
-        openAPIV3Schema:
-          properties:
-            namespaces:
-              type: list # Default is empty list
   targets:
     - target: admission.k8s.gatekeeper.sh
       rego: |
         package k8sprotectednamespace
-
+        
         violation[{"msg": msg}] {
           name := input.review.object.metadata.name
-          labels := input.review.object.metadata.labels
           kind := input.review.object.kind
-          operation :=  input.review.object.operation
+          operation :=  input.review.operation
           kind == "Namespace"
           operation == "DELETE"
-          annotation := input.review.object.metadata.annotations["protected"]
-          not annotation == "no"
-          msg := sprintf("the namespace %s is protected so cannot be deleted. To unprotect the namespace add the annotation protected=no", [name])
+          not input.review.object.metadata.annotations["protected"] == "no"
+          msg := sprintf("the namespace '%s' is protected, so it cannot be deleted. Add an annotation 'protected=no' to it to unprotect it.", [name])
         }
