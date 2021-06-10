@@ -12,3 +12,4 @@ resources:
   - livenessprobe_template.yml
   - readinessproble_template.yml
   - unique_service_selector_template.yml
+  - protected_namespace.yml
