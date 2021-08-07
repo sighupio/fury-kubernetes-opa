@@ -20,7 +20,7 @@ spec:
         violation[{"msg": msg}] {
           input.review.kind.kind == "Ingress"
           re_match("^(extensions|networking.k8s.io)$", input.review.kind.group)
-          input.review.kind.version == "v1beta1"
+          input.review.kind.version == "v1"
 
           some i
           input_name := input.review.object.metadata.name
@@ -32,7 +32,7 @@ spec:
           other_ingress := data.inventory.namespace[other_ns][other_group_version]["Ingress"][other_name]
           other_host := other_ingress.spec.rules[j].host
           other_paths := { x | x := other_ingress.spec.rules[j].http.paths[_].path }
-          
+
           # apigroup/version check
           concat("/",[ x | x := [input.review.kind.group, input.review.kind.version][_]; x != ""]) == other_group_version
 
