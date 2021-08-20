@@ -42,7 +42,6 @@ GPM is a stateless application, but it can be configured using environment varia
 | `GPM_LOG_LEVEL`                   | Log level (see [python logging docs](https://docs.python.org/2/library/logging.html#levels) for available levels) | `INFO`                 |
 | `KUBECONFIG`                      | Path to a [kubeconfig](https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/) file, if provided while running inside a cluster this configuration file will be used instead of the cluster's API. |
 
-> ⚠️ Please notice that OIDC Authentication is 
 > ⚠️ Please notice that OIDC Authentication is in beta state. It has been tested to work with Keycloak as a provider.
 
 You can find a sample patch for these environment variables in the upstream [`enable-oidc.yaml`](https://github.com/sighupio/gatekeeper-policy-manager/blob/v0.4.0/manifests/enable-oidc.yaml) file.
