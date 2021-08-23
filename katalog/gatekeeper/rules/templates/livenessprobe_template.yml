@@ -12,9 +12,6 @@ spec:
     spec:
       names:
         kind: K8sLivenessProbe
-        listKind: K8sLivenessProbeList
-        plural: k8slivenessprobe
-        singular: k8slivenessprobe
       validation:
         openAPIV3Schema:
           properties:
