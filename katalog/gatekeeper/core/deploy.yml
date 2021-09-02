@@ -33,6 +33,8 @@ spec:
         - --operation=audit
         - --operation=status
         - --logtostderr
+        - --health-addr=:9090
+        - --prometheus-port=8888
         command:
         - /manager
         env:
@@ -124,6 +126,8 @@ spec:
       containers:
         - args:
             - --port=8443
+            - --health-addr=:9090
+            - --prometheus-port=8888
             - --logtostderr
             - --exempt-namespace=$(POD_NAMESPACE)
             - --operation=webhook
