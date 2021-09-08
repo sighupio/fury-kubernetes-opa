@@ -3,7 +3,7 @@
 # license that can be found in the LICENSE file.
 
 ---
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ingress-not-allowed
@@ -14,6 +14,9 @@ spec:
       http:
         paths:
           - path: /
+            pathType: ImplementationSpecific
             backend:
-              serviceName: example-2
-              servicePort: 80
+              service:
+                name: example-2
+                port:
+                  number: 80

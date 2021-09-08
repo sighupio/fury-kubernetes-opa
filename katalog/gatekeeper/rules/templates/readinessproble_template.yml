@@ -12,9 +12,6 @@ spec:
     spec:
       names:
         kind: K8sReadinessProbe
-        listKind: K8sReadinessProbeList
-        plural: k8sreadinessprobe
-        singular: k8sreadinessprobe
       validation:
         openAPIV3Schema:
           properties:

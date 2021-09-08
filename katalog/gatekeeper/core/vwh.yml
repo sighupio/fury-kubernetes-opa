@@ -3,14 +3,17 @@
 # license that can be found in the LICENSE file.
 
 ---
-apiVersion: admissionregistration.k8s.io/v1beta1
+apiVersion: admissionregistration.k8s.io/v1
 kind: ValidatingWebhookConfiguration
 metadata:
   labels:
     gatekeeper.sh/system: "yes"
   name: gatekeeper-validating-webhook-configuration
 webhooks:
-  - clientConfig:
+  - admissionReviewVersions:
+    - v1
+    - v1beta1
+    clientConfig:
       caBundle: Cg==
       service:
         name: gatekeeper-webhook-service
@@ -35,7 +38,10 @@ webhooks:
           - "*"
     sideEffects: None
     timeoutSeconds: 3
-  - clientConfig:
+  - admissionReviewVersions:
+    - v1
+    - v1beta1
+    clientConfig:
       caBundle: Cg==
       service:
         name: gatekeeper-webhook-service

@@ -12,9 +12,6 @@ spec:
     spec:
       names:
         kind: SecurityControls
-        listKind: SecurityControlsList
-        plural: securitycontrols
-        singular: securitycontrol
       validation:
         openAPIV3Schema:
           properties:
