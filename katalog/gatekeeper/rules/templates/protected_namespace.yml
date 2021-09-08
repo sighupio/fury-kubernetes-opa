@@ -19,13 +19,14 @@ spec:
     - target: admission.k8s.gatekeeper.sh
       rego: |
         package k8sprotectednamespace
-        
+
         violation[{"msg": msg}] {
           name := input.review.object.metadata.name
           kind := input.review.object.kind
           operation :=  input.review.operation
           kind == "Namespace"
-          operation == "DELETE"
+          any([ operation == "CREATE", operation == "UPDATE" ])
+          operation != "DELETE"
           not input.review.object.metadata.annotations["protected"] == "no"
           msg := sprintf("the namespace '%s' is protected, so it cannot be deleted. Add an annotation 'protected=no' to it to unprotect it.", [name])
         }
