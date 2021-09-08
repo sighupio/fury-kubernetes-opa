@@ -10,6 +10,9 @@
 - added to all the rules the condition for avoiding the DELETE operation
 - changed the rule accordingly with [@ralgonzino](https://github.com/ralgonzino) discovered
 
+### Features
+- added git-chglog
+
 
 <a name="v1.5.0-rc"></a>
 ## [v1.5.0-rc] - 2021-09-02
