@@ -1,0 +1,7 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: my-unprotected-namespace
+  annotations:
+    protected: "no"

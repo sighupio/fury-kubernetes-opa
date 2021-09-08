@@ -121,6 +121,9 @@ spec:
                 kubernetes.containers[container]
                 [image_name, "latest"] = kubernetes.split_image(container.image)
                 not input.parameters.excludeIstio
+                operation := input.review.operation
+                any([ operation == "CREATE", operation == "UPDATE" ])
+                operation != "DELETE"
                 msg = kubernetes.format(sprintf("%s in the %s %s has an image, %s, using the latest tag", [container.name, kubernetes.kind, image_name, kubernetes.name]))
         }
         # ISTIO: Latests
@@ -129,6 +132,9 @@ spec:
                 [image_name, "latest"] = kubernetes.split_image(container.image)
                 input.parameters.excludeIstio
                 not istio(container.image)
+                operation := input.review.operation
+                any([ operation == "CREATE", operation == "UPDATE" ])
+                operation != "DELETE"
                 msg = kubernetes.format(sprintf("%s in the %s %s has an image, %s, using the latest tag", [container.name, kubernetes.kind, image_name, kubernetes.name]))
         }
 
@@ -137,6 +143,9 @@ spec:
                 kubernetes.containers[container]
                 not container.resources.limits.memory
                 not input.parameters.excludeIstio
+                operation := input.review.operation
+                any([ operation == "CREATE", operation == "UPDATE" ])
+                operation != "DELETE"
                 msg = kubernetes.format(sprintf("%s in the %s %s does not have a memory limit set", [container.name, kubernetes.kind, kubernetes.name]))
         }
         # ISTIO: https://kubesec.io/basics/containers-resources-limits-memory
@@ -145,6 +154,9 @@ spec:
                 not container.resources.limits.memory
                 input.parameters.excludeIstio
                 not istio(container.image)
+                operation := input.review.operation
+                any([ operation == "CREATE", operation == "UPDATE" ])
+                operation != "DELETE"
                 msg = kubernetes.format(sprintf("%s in the %s %s does not have a memory limit set", [container.name, kubernetes.kind, kubernetes.name]))
         }
 
@@ -153,6 +165,9 @@ spec:
                 kubernetes.containers[container]
                 not container.resources.limits.cpu
                 not input.parameters.excludeIstio
+                operation := input.review.operation
+                any([ operation == "CREATE", operation == "UPDATE" ])
+                operation != "DELETE"
                 msg = kubernetes.format(sprintf("%s in the %s %s does not have a CPU limit set", [container.name, kubernetes.kind, kubernetes.name]))
         }
         # ISTIO: https://kubesec.io/basics/containers-resources-limits-cpu/
@@ -161,6 +176,9 @@ spec:
                 not container.resources.limits.cpu
                 input.parameters.excludeIstio
                 not istio(container.image)
+                operation := input.review.operation
+                any([ operation == "CREATE", operation == "UPDATE" ])
+                operation != "DELETE"
                 msg = kubernetes.format(sprintf("%s in the %s %s does not have a CPU limit set", [container.name, kubernetes.kind, kubernetes.name]))
         }
 
@@ -169,6 +187,9 @@ spec:
                 kubernetes.containers[container]
                 kubernetes.priviledge_escalation_allowed(container)
                 not input.parameters.excludeIstio
+                operation := input.review.operation
+                any([ operation == "CREATE", operation == "UPDATE" ])
+                operation != "DELETE"
                 msg = kubernetes.format(sprintf("%s in the %s %s allows priviledge escalation", [container.name, kubernetes.kind, kubernetes.name]))
         }
         # ISTIO: # Priviledge Escalation
@@ -177,6 +198,9 @@ spec:
                 kubernetes.priviledge_escalation_allowed(container)
                 input.parameters.excludeIstio
                 not istio(container.image)
+                operation := input.review.operation
+                any([ operation == "CREATE", operation == "UPDATE" ])
+                operation != "DELETE"
                 msg = kubernetes.format(sprintf("%s in the %s %s allows priviledge escalation", [container.name, kubernetes.kind, kubernetes.name]))
         }
 
@@ -185,6 +209,9 @@ spec:
                 kubernetes.containers[container]
                 not container.securityContext.runAsNonRoot = true
                 not input.parameters.excludeIstio
+                operation := input.review.operation
+                any([ operation == "CREATE", operation == "UPDATE" ])
+                operation != "DELETE"
                 msg = kubernetes.format(sprintf("%s in the %s %s is running as root", [container.name, kubernetes.kind, kubernetes.name]))
         }
         # ISTIO: https://kubesec.io/basics/containers-securitycontext-runasnonroot-true/
@@ -193,6 +220,9 @@ spec:
                 not container.securityContext.runAsNonRoot = true
                 input.parameters.excludeIstio
                 not istio(container.image)
+                operation := input.review.operation
+                any([ operation == "CREATE", operation == "UPDATE" ])
+                operation != "DELETE"
                 msg = kubernetes.format(sprintf("%s in the %s %s is running as root", [container.name, kubernetes.kind, kubernetes.name]))
         }
 

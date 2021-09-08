@@ -11,8 +11,8 @@ spec:
   crd:
     spec:
       names:
-        kind: k8sprotectednamespace
-        listKind: k8sprotectednamespacesList
+        kind: K8sProtectedNamespace
+        listKind: K8sProtectedNamespacesList
         plural: k8sprotectednamespaces
         singular: k8sprotectednamespace
   targets:
@@ -25,8 +25,7 @@ spec:
           kind := input.review.object.kind
           operation :=  input.review.operation
           kind == "Namespace"
-          any([ operation == "CREATE", operation == "UPDATE" ])
-          operation != "DELETE"
+          operation == "DELETE"
           not input.review.object.metadata.annotations["protected"] == "no"
           msg := sprintf("the namespace '%s' is protected, so it cannot be deleted. Add an annotation 'protected=no' to it to unprotect it.", [name])
         }

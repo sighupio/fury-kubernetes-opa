@@ -46,5 +46,9 @@ spec:
           common_paths := input_paths & other_paths
           count(common_paths) != 0
 
+          operation := input.review.operation
+          any([ operation == "CREATE", operation == "UPDATE" ])
+          operation != "DELETE"
+
           msg := sprintf("Ingress %v/%v host conflicts with ingress %v/%v: ( '%v' ) & ( '%v' ) = ( '%v' )", [input_ns, input_name, other_ns, other_name, concat("', '",input_paths), concat("', '",other_paths), common_paths[_]])
         }

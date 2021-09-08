@@ -127,6 +127,17 @@ set -o pipefail
   [[ "$status" -eq 0 ]]
 }
 
+
+@test "[ALLOW] Delete namespace" {
+  info
+  deploy() {
+    kubectl apply -f katalog/tests/gatekeeper-manifests/ns-can-be-deleted-with-protection-disabled.yml
+    kubectl delete ns my-unprotected-namespace
+  }
+  run deploy
+  [[ "$status" -eq 0 ]]
+}
+
 # [DENY] Denied by Gatekeeper Kubernetes requests
 
 @test "[DENY] Deployment using latest tag" {
@@ -167,6 +178,17 @@ set -o pipefail
   run deploy
   [[ "$status" -ne 0 ]]
   [[ "$output" == *"unique-ingress-host"* ]]
+}
+
+@test "[DENY] Delete namespace" {
+  info
+  deploy() {
+    kubectl apply -f katalog/tests/gatekeeper-manifests/ns-cannot-be-deleted-without-protection-disabled.yml
+    kubectl delete ns my-protected-namespace
+  }
+  run deploy
+  [[ "$status" -ne 0 ]]
+  [[ "$output" == *"namespace-protected"* ]]
 }
 
 @test "Teardown - Delete resources" {
