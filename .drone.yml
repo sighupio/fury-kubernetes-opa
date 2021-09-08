@@ -3,6 +3,7 @@
 # license that can be found in the LICENSE file.
 
 kind: pipeline
+type: docker
 name: license
 
 steps:
@@ -14,6 +15,7 @@ steps:
       - addlicense -c "SIGHUP s.r.l" -v -l bsd --check .
 ---
 kind: pipeline
+type: docker
 name: policeman
 
 depends_on:
@@ -27,6 +29,9 @@ steps:
   - name: lint
     image: quay.io/sighup/policeman
     pull: always
+    environment:
+      VALIDATE_KUBERNETES_KUBEVAL: false
+      VALIDATE_JSCPD: false
     depends_on:
       - clone
 
@@ -48,6 +53,7 @@ steps:
 
 ---
 kind: pipeline
+type: docker
 name: e2e-kubernetes-1.18
 depends_on:
   - policeman
@@ -141,6 +147,7 @@ volumes:
 
 ---
 kind: pipeline
+type: docker
 name: e2e-kubernetes-1.19
 depends_on:
   - policeman
@@ -234,6 +241,7 @@ volumes:
 
 ---
 kind: pipeline
+type: docker
 name: e2e-kubernetes-1.20
 
 depends_on:
@@ -328,6 +336,7 @@ volumes:
 
 ---
 kind: pipeline
+type: docker
 name: e2e-kubernetes-1.21
 
 depends_on:
@@ -422,6 +431,7 @@ volumes:
 
 ---
 kind: pipeline
+type: docker
 name: release
 
 depends_on:
