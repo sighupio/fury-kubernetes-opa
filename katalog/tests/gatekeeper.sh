@@ -189,7 +189,7 @@ set -o pipefail
 @test "[DENY] Delete namespace" {
   info
   deploy() {
-    kubectl apply -f katalog/tests/ns-cannot-be-deleted-without-protection-enabled.yml
+    kubectl apply -f katalog/tests/gatekeeper-manifests/ns-cannot-be-deleted-without-protection-enabled.yml
     kubectl delete ns my-protected-namespace
   }
   run deploy
