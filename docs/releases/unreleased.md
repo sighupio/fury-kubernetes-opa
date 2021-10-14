@@ -13,7 +13,8 @@ Continue reading the [Changelog](#changelog) to discover them:
 annotations:
   protected: "yes"
 ```
-Otherwise to enable deletion use the annotation: 
+
+Otherwise to enable deletion use the annotation:
 
 ```yaml
 annotations:
@@ -24,12 +25,13 @@ If you don't put any annotation, the default is to protect the namespace.
 ## Breaking Changes
 
 - Now Gatekeeper watches also for `DELETE` events as well. If you have custom constraints *you have to* adapt them in order to handle this with something like the follow rego code:
+
 ```go
 operation := input.review.operation
 any([ operation == "CREATE", operation == "UPDATE" ])
 operation != "DELETE"
 ```
- 
+
 ## Upgrade path
 
 To upgrade this core module from `v1.3.1`, you need to download this new version, then apply the
