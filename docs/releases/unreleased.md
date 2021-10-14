@@ -22,6 +22,8 @@ annotations:
 ```
 If you don't put any annotation, the default is to protect the namespace.
 
+By default the constraint is disabled - while the constrainttemplate is deployed - , but you can enable it by removing the comment in the line in the [kustomization.yaml](../../katalog/gatekeeper/rules/constraints/kustomization.yaml)
+
 ## Breaking Changes
 
 - Now Gatekeeper watches also for `DELETE` events as well. If you have custom constraints *you have to* adapt them in order to handle this with something like the follow rego code:
