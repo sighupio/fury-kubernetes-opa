@@ -34,6 +34,11 @@ any([ operation == "CREATE", operation == "UPDATE" ])
 operation != "DELETE"
 ```
 
+
+## Warning
+
+Since the introduction of the protected namespace constrainttemplate, implies the `DELETE` events filtering by Gatekeeper, please check that the Gatekeeper resources are set accordingly with this change, because now the load will increase.
+
 ## Upgrade path
 
 To upgrade this core module from `v1.3.1`, you need to download this new version, then apply the
