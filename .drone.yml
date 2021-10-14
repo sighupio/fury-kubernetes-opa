@@ -70,7 +70,6 @@ trigger:
     include:
       - refs/heads/master
       - refs/tags/**
-      - refs/heads/protected-namespace
 
 steps:
   - name: init
