@@ -56,7 +56,10 @@ set -o pipefail
   info
   deploy() {
     # enabling all constraints for testing purposes
-    sed -i 's/#//g' katalog/gatekeeper/rules/constraints/kustomization.yaml
+    sed -i -e 's/---//g' katalog/gatekeeper/rules/constraints/kustomization.yaml
+    cd  katalog/gatekeeper/rules/constraints &&\
+      kustomize edit add resource must_have_namespace_label_to_be_safely_deleted.yml;\
+      cd -
     kaction katalog/gatekeeper/rules/constraints apply
 
   }
@@ -186,7 +189,7 @@ set -o pipefail
 @test "[DENY] Delete namespace" {
   info
   deploy() {
-    kubectl apply -f katalog/tests/gatekeeper-manifests/ns-cannot-be-deleted-without-protection-disabled.yml
+    kubectl apply -f katalog/tests/ns-cannot-be-deleted-without-protection-enabled.yml
     kubectl delete ns my-protected-namespace
   }
   run deploy
