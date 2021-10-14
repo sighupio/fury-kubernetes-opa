@@ -8,4 +8,4 @@ kind: Namespace
 metadata:
   name: my-protected-namespace
   annotations:
-    protected: "yes"
+    opa.sighup.io/indelible-ns: "yes"

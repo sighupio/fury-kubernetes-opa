@@ -11,14 +11,14 @@ Continue reading the [Changelog](#changelog) to discover them:
 - Add a Constraint Template to protect namespaces for being deleted. If you want to avoid accidental deletion of namespace, add annotation to your namespace
 ```yaml
 annotations:
-  protected: "yes"
+  opa.sighup.io/indelible-ns: "yes"
 ```
 
 Otherwise to enable deletion use the annotation:
 
 ```yaml
 annotations:
-  protected: "no"
+  opa.sighup.io/indelible-ns: "no"
 ```
 If you don't put any annotation, the default is to protect the namespace.
 

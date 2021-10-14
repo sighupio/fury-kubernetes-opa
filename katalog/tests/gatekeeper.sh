@@ -55,7 +55,10 @@ set -o pipefail
 @test "Deploy Gatekeeper Rules - constraints" {
   info
   deploy() {
+    # enabling all constraints for testing purposes
+    sed -i 's/#//g' katalog/gatekeeper/rules/constraints/kustomization.yaml
     kaction katalog/gatekeeper/rules/constraints apply
+
   }
   loop_it deploy 30 10
   status=${loop_it_result}

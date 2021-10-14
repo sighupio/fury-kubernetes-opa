@@ -26,6 +26,6 @@ spec:
           operation :=  input.review.operation
           kind == "Namespace"
           operation == "DELETE"
-          not input.review.object.metadata.annotations["protected"] == "no"
-          msg := sprintf("the namespace '%s' is protected, so it cannot be deleted. Add an annotation 'protected=no' to it to unprotect it.", [name])
+          not input.review.object.metadata.annotations["opa.sighup.io/indelible-ns"] == "no"
+          msg := sprintf("the namespace '%s' is protected, so it cannot be deleted. Add an annotation 'opa.sighup.io/indelible-ns=no' to it to unprotect it.", [name])
         }
