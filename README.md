@@ -45,8 +45,8 @@ file if you don't want to install the monitoring module.
 | v1.0.0                              | :white_check_mark: | :white_check_mark: | :white_check_mark: |                    |                    |                    |                    |                    |            |
 | v1.0.1                              | :white_check_mark: | :white_check_mark: | :white_check_mark: |                    |                    |                    |                    |                    |            |
 | v1.0.2                              | :white_check_mark: | :white_check_mark: | :white_check_mark: |                    |                    |                    |                    |                    |            |
-| v1.1.0                              |                    |                    | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |                    |                    |            |
-| v1.2.0                              |                    |                    | :white_check_mark: | :white_check_mark: | :white_check_mark: | :warning:          |                    |                    |            |
+| v1.1.0                              |                    |                    | :white_check_mark: | :white_check_mark: | :white_check_mark: | :x:                |                    |                    |            |
+| v1.2.0                              |                    |                    | :white_check_mark: | :white_check_mark: | :white_check_mark: | :x:                |                    |                    |            |
 | v1.2.1                              |                    |                    | :white_check_mark: | :white_check_mark: | :white_check_mark: | :warning:          |                    |                    |            |
 | v1.3.0                              |                    |                    |                    | :white_check_mark: | :white_check_mark: | :white_check_mark: | :warning:          |                    |            |
 | v1.3.1                              |                    |                    |                    | :white_check_mark: | :white_check_mark: | :white_check_mark: | :warning:          |                    |            |
@@ -61,6 +61,7 @@ Marked as a warning because it is not officially supported by [SIGHUP](https://s
 Marked as a warning because it is not officially supported by [SIGHUP](https://sighup.io).
 - :warning: : module version: `v1.5.0` along with Kubernetes Version: `1.22.x`. It works as expected.
 Marked as a warning because it is not officially supported by [SIGHUP](https://sighup.io).
+- :x: : module version: `v1.1.0` and `v1.2.0` do not work on Kubernetes > `1.19.x` due to this [issue](https://github.com/open-policy-agent/gatekeeper/issues/820).
 
 ## License
 
