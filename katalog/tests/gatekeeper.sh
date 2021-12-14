@@ -55,7 +55,13 @@ set -o pipefail
 @test "Deploy Gatekeeper Rules - constraints" {
   info
   deploy() {
+    # enabling all constraints for testing purposes
+    sed -i -e 's/---//g' katalog/gatekeeper/rules/constraints/kustomization.yaml
+    cd  katalog/gatekeeper/rules/constraints &&\
+      kustomize edit add resource must_have_namespace_label_to_be_safely_deleted.yml;\
+      cd -
     kaction katalog/gatekeeper/rules/constraints apply
+
   }
   loop_it deploy 30 10
   status=${loop_it_result}
@@ -127,6 +133,17 @@ set -o pipefail
   [[ "$status" -eq 0 ]]
 }
 
+
+@test "[ALLOW] Delete namespace" {
+  info
+  deploy() {
+    kubectl apply -f katalog/tests/gatekeeper-manifests/ns-can-be-deleted-with-protection-disabled.yml
+    kubectl delete ns my-unprotected-namespace
+  }
+  run deploy
+  [[ "$status" -eq 0 ]]
+}
+
 # [DENY] Denied by Gatekeeper Kubernetes requests
 
 @test "[DENY] Deployment using latest tag" {
@@ -167,6 +184,17 @@ set -o pipefail
   run deploy
   [[ "$status" -ne 0 ]]
   [[ "$output" == *"unique-ingress-host"* ]]
+}
+
+@test "[DENY] Delete namespace" {
+  info
+  deploy() {
+    kubectl apply -f katalog/tests/gatekeeper-manifests/ns-cannot-be-deleted-without-protection-enabled.yml
+    kubectl delete ns my-protected-namespace
+  }
+  run deploy
+  [[ "$status" -ne 0 ]]
+  [[ "$output" == *"namespace-protected"* ]]
 }
 
 @test "Teardown - Delete resources" {

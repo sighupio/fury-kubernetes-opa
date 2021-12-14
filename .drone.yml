@@ -3,6 +3,7 @@
 # license that can be found in the LICENSE file.
 
 kind: pipeline
+type: docker
 name: license
 
 steps:
@@ -14,6 +15,7 @@ steps:
       - addlicense -c "SIGHUP s.r.l" -v -l bsd --check .
 ---
 kind: pipeline
+type: docker
 name: policeman
 
 depends_on:
@@ -54,6 +56,7 @@ steps:
 
 ---
 kind: pipeline
+type: docker
 name: e2e-kubernetes-1.19
 depends_on:
   - policeman
@@ -73,8 +76,8 @@ steps:
     image: quay.io/sighup/e2e-testing-drone-plugin:v0.12.0
     pull: always
     volumes:
-    - name: shared
-      path: /shared
+      - name: shared
+        path: /shared
     depends_on: [ clone ]
     settings:
       action: custom-cluster-119
@@ -105,8 +108,8 @@ steps:
     image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.9.4_1.19.11_3.8.7_2.4.1
     pull: always
     volumes:
-    - name: shared
-      path: /shared
+      - name: shared
+        path: /shared
     depends_on: [ init ]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-119
@@ -139,15 +142,16 @@ steps:
         from_secret: dockerhub_password
     when:
       status:
-      - success
-      - failure
+        - success
+        - failure
 
 volumes:
-- name: shared
-  temp: {}
+  - name: shared
+    temp: {}
 
 ---
 kind: pipeline
+type: docker
 name: e2e-kubernetes-1.20
 
 depends_on:
@@ -168,8 +172,8 @@ steps:
     image: quay.io/sighup/e2e-testing-drone-plugin:v0.12.0
     pull: always
     volumes:
-    - name: shared
-      path: /shared
+      - name: shared
+        path: /shared
     depends_on: [ clone ]
     settings:
       action: custom-cluster-120
@@ -200,8 +204,8 @@ steps:
     image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.9.4_1.20.7_3.8.7_2.4.1
     pull: always
     volumes:
-    - name: shared
-      path: /shared
+      - name: shared
+        path: /shared
     depends_on: [ init ]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-120
@@ -234,15 +238,16 @@ steps:
         from_secret: dockerhub_password
     when:
       status:
-      - success
-      - failure
+        - success
+        - failure
 
 volumes:
-- name: shared
-  temp: {}
+  - name: shared
+    temp: {}
 
 ---
 kind: pipeline
+type: docker
 name: e2e-kubernetes-1.21
 
 depends_on:
@@ -263,8 +268,8 @@ steps:
     image: quay.io/sighup/e2e-testing-drone-plugin:v0.12.0
     pull: always
     volumes:
-    - name: shared
-      path: /shared
+      - name: shared
+        path: /shared
     depends_on: [ clone ]
     settings:
       action: custom-cluster-121
@@ -295,8 +300,8 @@ steps:
     image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.9.4_1.21.1_3.8.7_2.4.1
     pull: always
     volumes:
-    - name: shared
-      path: /shared
+      - name: shared
+        path: /shared
     depends_on: [ init ]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-121
@@ -329,15 +334,16 @@ steps:
         from_secret: dockerhub_password
     when:
       status:
-      - success
-      - failure
+        - success
+        - failure
 
 volumes:
-- name: shared
-  temp: {}
+  - name: shared
+    temp: {}
 
 ---
 kind: pipeline
+type: docker
 name: e2e-kubernetes-1.22
 depends_on:
   - policeman
@@ -357,8 +363,8 @@ steps:
     image: quay.io/sighup/e2e-testing-drone-plugin:v0.12.0
     pull: always
     volumes:
-    - name: shared
-      path: /shared
+      - name: shared
+        path: /shared
     depends_on: [ clone ]
     settings:
       action: custom-cluster-122
@@ -389,8 +395,8 @@ steps:
     image: quay.io/sighup/e2e-testing:1.1.0_0.2.2_2.16.1_1.9.4_1.22.0_3.8.7_2.4.1
     pull: always
     volumes:
-    - name: shared
-      path: /shared
+      - name: shared
+        path: /shared
     depends_on: [ init ]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-122
@@ -423,15 +429,16 @@ steps:
         from_secret: dockerhub_password
     when:
       status:
-      - success
-      - failure
+        - success
+        - failure
 
 volumes:
-- name: shared
-  temp: {}
+  - name: shared
+    temp: {}
 
 ---
 kind: pipeline
+type: docker
 name: release
 
 depends_on:
