@@ -13,6 +13,13 @@ steps:
     commands:
       - go get -u github.com/google/addlicense
       - addlicense -c "SIGHUP s.r.l" -v -l bsd --check .
+
+  - name: checklabels
+    image: openpolicyagent/conftest:v0.28.1
+    pull: always
+    commands:
+      -  conftest pull https://raw.githubusercontent.com/sighupio/ci-commons/main/conftest/kustomization/kfd-labels.rego
+      -  conftest test katalog/**/kustomization.yaml
 ---
 kind: pipeline
 type: docker
@@ -35,6 +42,8 @@ steps:
       VALIDATE_KUBERNETES_KUBEVAL: "false"
       # Some duplicated code is intended.
       VALIDATE_JSCPD: "false"
+      # hadolint already validated dockerfiles
+      VALIDATE_DOCKERFILE: "false"
     depends_on:
       - clone
 
@@ -457,6 +466,17 @@ trigger:
       - refs/tags/**
 
 steps:
+  - name: prepare-canonical-json
+    image: registry.sighup.io/poc/fury-repo-automations:v0.0.3
+    pull: always
+    depends_on: [ clone ]
+    commands:
+      - spock module-json -m=fury-kubernetes-opa -r=False -v=${DRONE_TAG}
+    when:
+      ref:
+        include:
+          - refs/tags/**
+
   - name: prepare-tar-gz
     image: alpine:latest
     pull: always
@@ -483,6 +503,7 @@ steps:
     image: plugins/github-release
     pull: always
     depends_on:
+      - prepare-canonical-json
       - prepare-tar-gz
       - prepare-release-notes
     settings:
@@ -491,6 +512,7 @@ steps:
       file_exists: overwrite
       files:
         - fury-kubernetes-opa-${DRONE_TAG}.tar.gz
+        - fury-kubernetes-opa-canonical-definition-${DRONE_TAG}.json
       prerelease: true
       overwrite: true
       title: "Preview ${DRONE_TAG}"
@@ -507,6 +529,7 @@ steps:
     image: plugins/github-release
     pull: always
     depends_on:
+      - prepare-canonical-json
       - prepare-tar-gz
       - prepare-release-notes
     settings:
@@ -515,6 +538,7 @@ steps:
       file_exists: overwrite
       files:
         - fury-kubernetes-opa-${DRONE_TAG}.tar.gz
+        - fury-kubernetes-opa-canonical-definition-${DRONE_TAG}.json
       prerelease: false
       overwrite: true
       title: "Release ${DRONE_TAG}"
