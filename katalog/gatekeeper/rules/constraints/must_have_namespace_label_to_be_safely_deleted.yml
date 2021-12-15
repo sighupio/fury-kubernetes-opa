@@ -1,0 +1,13 @@
+# Copyright (c) 2020 SIGHUP s.r.l All rights reserved.
+# Use of this source code is governed by a BSD-style
+# license that can be found in the LICENSE file.
+
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sProtectedNamespace
+metadata:
+  name: namespace-protected
+spec:
+  match:
+    kinds:
+      - apiGroups: [""]
+        kinds: ["Namespace"]

@@ -11,6 +11,7 @@ resources:
   - must_have_unique_ingresses.yml
   - must_have_liveness_probe.yml
   - must_have_readiness_probe.yml
+#  - must_have_namespace_label_to_be_safely_deleted.yml
 
 patchesJson6902:
   - target:

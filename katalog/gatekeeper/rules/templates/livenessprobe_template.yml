@@ -27,6 +27,9 @@ spec:
             kind := input.review.kind.kind
             not containers.livenessProbe
             not input.parameters.excludeIstio
+            operation := input.review.operation
+            any([ operation == "CREATE", operation == "UPDATE" ])
+            operation != "DELETE"
             msg = sprintf("Rejecting \"%v/%v\" for not specifying a livenessProbe", [kind, name])
         }
         violation[{"msg": msg}] {
@@ -35,6 +38,9 @@ spec:
             kind := input.review.kind.kind
             not containers.livenessProbe
             not input.parameters.excludeIstio
+            operation := input.review.operation
+            any([ operation == "CREATE", operation == "UPDATE" ])
+            operation != "DELETE"
             msg = sprintf("Rejecting \"%v/%v\" for not specifying a livenessProbe", [kind, name])
         }
         violation[{"msg": msg}] {
@@ -43,6 +49,9 @@ spec:
             kind := input.review.kind.kind
             not containers.livenessProbe
             not input.parameters.excludeIstio
+            operation := input.review.operation
+            any([ operation == "CREATE", operation == "UPDATE" ])
+            operation != "DELETE"
             msg = sprintf("Rejecting \"%v/%v\" for not specifying a livenessProbe", [kind, name])
         }
 
@@ -53,6 +62,9 @@ spec:
             not containers.livenessProbe
             input.parameters.excludeIstio
             not istio(containers.image)
+            operation := input.review.operation
+            any([ operation == "CREATE", operation == "UPDATE" ])
+            operation != "DELETE"
             msg = sprintf("Rejecting \"%v/%v\" for not specifying a livenessProbe", [kind, name])
         }
 
@@ -63,6 +75,9 @@ spec:
             not containers.livenessProbe
             input.parameters.excludeIstio
             not istio(containers.image)
+            operation := input.review.operation
+            any([ operation == "CREATE", operation == "UPDATE" ])
+            operation != "DELETE"
             msg = sprintf("Rejecting \"%v/%v\" for not specifying a livenessProbe", [kind, name])
         }
 
@@ -73,6 +88,9 @@ spec:
             not containers.livenessProbe
             input.parameters.excludeIstio
             not istio(containers.image)
+            operation := input.review.operation
+            any([ operation == "CREATE", operation == "UPDATE" ])
+            operation != "DELETE"
             msg = sprintf("Rejecting \"%v/%v\" for not specifying a livenessProbe", [kind, name])
         }
 

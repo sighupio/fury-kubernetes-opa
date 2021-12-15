@@ -27,6 +27,9 @@ spec:
             kind := input.review.kind.kind
             not containers.readinessProbe
             not input.parameters.excludeIstio
+            operation := input.review.operation
+            any([ operation == "CREATE", operation == "UPDATE" ])
+            operation != "DELETE"
             msg = sprintf("Rejecting \"%v/%v\" for not specifying a readinessProbe", [kind, name])
         }
         violation[{"msg": msg}] {
@@ -35,6 +38,9 @@ spec:
             kind := input.review.kind.kind
             not containers.readinessProbe
             not input.parameters.excludeIstio
+            operation := input.review.operation
+            any([ operation == "CREATE", operation == "UPDATE" ])
+            operation != "DELETE"
             msg = sprintf("Rejecting \"%v/%v\" for not specifying a readinessProbe", [kind, name])
         }
         violation[{"msg": msg}] {
@@ -43,6 +49,9 @@ spec:
             kind := input.review.kind.kind
             not containers.readinessProbe
             not input.parameters.excludeIstio
+            operation := input.review.operation
+            any([ operation == "CREATE", operation == "UPDATE" ])
+            operation != "DELETE"
             msg = sprintf("Rejecting \"%v/%v\" for not specifying a readinessProbe", [kind, name])
         }
 
@@ -53,6 +62,9 @@ spec:
             not containers.readinessProbe
             input.parameters.excludeIstio
             not istio(containers.image)
+            operation := input.review.operation
+            any([ operation == "CREATE", operation == "UPDATE" ])
+            operation != "DELETE"
             msg = sprintf("Rejecting \"%v/%v\" for not specifying a readinessProbe", [kind, name])
         }
         violation[{"msg": msg}] {
@@ -62,6 +74,9 @@ spec:
             not containers.readinessProbe
             input.parameters.excludeIstio
             not istio(containers.image)
+            operation := input.review.operation
+            any([ operation == "CREATE", operation == "UPDATE" ])
+            operation != "DELETE"
             msg = sprintf("Rejecting \"%v/%v\" for not specifying a readinessProbe", [kind, name])
         }
         violation[{"msg": msg}] {
@@ -71,6 +86,9 @@ spec:
             not containers.readinessProbe
             input.parameters.excludeIstio
             not istio(containers.image)
+            operation := input.review.operation
+            any([ operation == "CREATE", operation == "UPDATE" ])
+            operation != "DELETE"
             msg = sprintf("Rejecting \"%v/%v\" for not specifying a readinessProbe", [kind, name])
         }
 

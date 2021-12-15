@@ -6,6 +6,12 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
+commonLabels:
+  module.kfd.sighup.io/name: "opa"
+  module.kfd.sighup.io/version: "v1.5.0"
+  module.kfd.sighup.io/component: "gatekeeper"
+  kfd.sighup.io/source: "kustomize"
+
 resources:
   - core
   - rules
