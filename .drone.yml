@@ -75,6 +75,9 @@ platform:
   os: linux
   arch: amd64
 
+node:
+  runner: internal
+
 trigger:
   ref:
     include:
@@ -167,6 +170,9 @@ name: e2e-kubernetes-1.21
 
 depends_on:
   - policeman
+
+node:
+  runner: internal
 
 platform:
   os: linux
@@ -265,6 +271,9 @@ name: e2e-kubernetes-1.22
 depends_on:
   - policeman
 
+node:
+  runner: internal
+
 platform:
   os: linux
   arch: amd64
@@ -361,6 +370,9 @@ name: e2e-kubernetes-1.23
 
 depends_on:
   - policeman
+
+node:
+  runner: internal
 
 platform:
   os: linux
