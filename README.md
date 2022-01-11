@@ -18,7 +18,7 @@ The following packages are included in the Fury Kubernetes OPA module:
     - deny of duplicated ingresses
     - Unique service selector
   - [Gatekeeper Policy Manager](katalog/gatekeeper/gpm): Gatekeeper Policy Manager, a simple to use web-ui for
-  Gatekeeper. Version: **v0.5.0**
+  Gatekeeper. Version: **v0.5.1**
 
 You can click on each package to see its documentation.
 

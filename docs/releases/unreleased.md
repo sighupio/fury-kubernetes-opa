@@ -1,14 +1,14 @@
 # OPA Core Module version XXX
 
-SIGHUP team maintains this module updated and tested. That is the main reason why we worked on this new release.
-With the Kubernetes 1.21 release, it became the perfect time to start testing this module against this Kubernetes
-release.
+SIGHUP team maintains this module updated and tested.
 
 Continue reading the [Changelog](#changelog) to discover them:
 
 ## Changelog
 
+- Update Gatekeeper Policy Manager to v0.5.1
 - Add a Constraint Template to protect namespaces for being deleted. If you want to avoid accidental deletion of namespace, add annotation to your namespace
+
 ```yaml
 annotations:
   opa.sighup.io/indelible-ns: "yes"
@@ -20,6 +20,7 @@ Otherwise to enable deletion use the annotation:
 annotations:
   opa.sighup.io/indelible-ns: "no"
 ```
+
 If you don't put any annotation, the default is to protect the namespace.
 
 By default the constraint is disabled - while the constrainttemplate is deployed - , but you can enable it by removing the comment in the line in the [kustomization.yaml](../../katalog/gatekeeper/rules/constraints/kustomization.yaml)
@@ -33,7 +34,6 @@ operation := input.review.operation
 any([ operation == "CREATE", operation == "UPDATE" ])
 operation != "DELETE"
 ```
-
 
 ## Warning
 

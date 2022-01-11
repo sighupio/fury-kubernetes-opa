@@ -2,11 +2,16 @@
 
 Gatekeeper Policy Manager is a simple **read-only** web UI for viewing OPA Gatekeeper policies' status in a Kubernetes Cluster.
 
-It can display all the defined **Constraint Templates** with their rego code, and all the **Contraints** with its current status, violations, enforcement action, matches definitions, etc.
+The target Kubernetes Cluster can be the one where GPM is deployed or some [remote cluster(s) using a kubeconfig file](#Multi-cluster-support). You can also run GPM [locally in a client machine](#Running-locally) and connect to a remote cluster.
+
+GPM can display all the defined **Constraint Templates** with their rego code, all the Gatekeeper Configuration CRDs, and all the **Constraints** with its current status, violations, enforcement action, matches definitions, etc.
+
 
 ## Requirements
 
 You'll need OPA Gatekeeper running in your cluster and at least some constraint templates and constraints defined to take advantage of this tool.
+
+ℹ You can easily deploy Gatekeeper to your cluster using the (also open source) [Fury Kubernetes OPA](https://github.com/sighupio/fury-kubernetes-opa) module.
 
 ## Deploying GPM
 
@@ -18,7 +23,7 @@ kubectl apply -k .
 
 By default, this will create a deployment and a service both with the name `gatekeper-policy-manager` in the `gatekeeper-system` namespace. We invite you to take a look into the `kustomization.yaml` file to do further configuration.
 
-We recommend you to create an ingress for the application, you can find a sample [here](https://github.com/sighupio/gatekeeper-policy-manager/blob/v0.5.0/manifests/ingress.yaml)
+We recommend you to create an ingress for the application, you can find a sample [here](https://github.com/sighupio/gatekeeper-policy-manager/blob/v0.5.1/manifests/ingress.yaml)
 
 ## Configuration
 

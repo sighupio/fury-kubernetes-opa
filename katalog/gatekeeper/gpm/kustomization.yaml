@@ -9,9 +9,9 @@ kind: Kustomization
 namespace: gatekeeper-system
 
 resources:
-  - https://github.com/sighupio/gatekeeper-policy-manager/?ref=v0.5.0
+  - https://github.com/sighupio/gatekeeper-policy-manager/?ref=v0.5.1
 
 images:
   - name: quay.io/sighup/gatekeeper-policy-manager
     newName: registry.sighup.io/fury/gatekeeper-policy-manager
-    newTag: v0.5.0
+    newTag: v0.5.1
