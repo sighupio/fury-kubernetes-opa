@@ -82,7 +82,6 @@ trigger:
   ref:
     include:
       - refs/heads/master
-      - refs/heads/upgrade_image
       - refs/tags/**
 
 steps:
@@ -165,8 +164,8 @@ volumes:
 
 ---
 kind: pipeline
-type: docker
 name: e2e-kubernetes-1.21
+type: docker
 
 depends_on:
   - policeman
@@ -182,7 +181,6 @@ trigger:
   ref:
     include:
       - refs/heads/master
-      - refs/heads/upgrade_image
       - refs/tags/**
 
 steps:
@@ -282,7 +280,6 @@ trigger:
   ref:
     include:
       - refs/heads/master
-      - refs/heads/upgrade_image
       - refs/tags/**
 
 steps:
@@ -382,7 +379,6 @@ trigger:
   ref:
     include:
       - refs/heads/master
-      - refs/heads/upgrade_image
       - refs/tags/**
 
 steps:
