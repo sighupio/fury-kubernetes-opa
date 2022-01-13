@@ -65,6 +65,7 @@ steps:
 
 ---
 kind: pipeline
+type: docker
 name: e2e-kubernetes-1.20
 
 depends_on:
@@ -164,6 +165,7 @@ volumes:
 
 ---
 kind: pipeline
+type: docker
 name: e2e-kubernetes-1.21
 
 depends_on:
@@ -263,6 +265,7 @@ volumes:
 
 ---
 kind: pipeline
+type: docker
 name: e2e-kubernetes-1.22
 
 depends_on:
@@ -362,6 +365,7 @@ volumes:
 
 ---
 kind: pipeline
+type: docker
 name: e2e-kubernetes-1.23
 
 depends_on:
