@@ -33,7 +33,7 @@ webhooks:
         operations:
           - CREATE
           - UPDATE
-          - DELETE
+          # - DELETE
         resources:
           - "*"
     sideEffects: None
