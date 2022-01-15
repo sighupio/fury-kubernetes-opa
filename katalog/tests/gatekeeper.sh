@@ -12,6 +12,7 @@ set -o pipefail
 @test "Deploy Gatekeeper Core" {
   info
   deploy() {
+    sed -i  -e '/# - DELETE/s/#//g' katalog/gatekeeper/core/vwh.yml
     kubectl apply -f https://raw.githubusercontent.com/sighupio/fury-kubernetes-monitoring/v1.9.0/katalog/prometheus-operator/crd-servicemonitor.yml
     force_apply katalog/gatekeeper/core
   }
