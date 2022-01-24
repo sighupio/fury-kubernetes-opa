@@ -131,7 +131,7 @@ kubectl delete ValidatingWebhookConfiguration gatekeeper-validating-webhook-conf
 [kfd-repo]: https://github.com/sighupio/fury-distribution
 [kustomize-repo]: https://github.com/kubernetes-sigs/kustomize
 [kfd-docs]: https://docs.kubernetesfury.com/docs/distribution/
-[compatibility-matrix]: https://github.com/sighupio/fury-kubernetes-opa/blob/feat/improve-docs/docs/COMPATIBILITY_MATRIX.md
+[compatibility-matrix]: https://github.com/sighupio/fury-kubernetes-opa/blob/master/docs/COMPATIBILITY_MATRIX.md
 
 <!-- </KFD-DOCS> -->
 
