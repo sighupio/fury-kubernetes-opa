@@ -1,4 +1,6 @@
-# Gatekeeper
+# OPA Gatekeeper
+
+<!-- <KFD-DOCS> -->
 
 ## Requirements
 
@@ -19,7 +21,7 @@ bases:
 
 Once you'll do this, you can then proceed to integrate Gatekeeper into your project.
 
-### Disable constraint
+### Disable constraints
 
 If you need to disable already existing constraints that are usually enabled by default,
 you can just simply create a patch in kustomize like the following one:
@@ -114,3 +116,11 @@ When Gatekeeper is running it is possible to remove unwanted constraints by:
 - Deleting all instances of the constraint resource.
 - Deleting the `ConstraintTemplate` resource, which should automatically clean up the `CRD`.
 - Deleting the `Config` resource removes finalizers on synced resources.
+
+For more details please refer to [Gatekeeper's official repository][gatekeeper-repo] and the [official Gatekeeper documentation site][gatekeeper-docs].
+
+<!-- Links -->
+[gatekeeper-repo]: https://github.com/open-policy-agent/gatekeeper
+[gatekeeper-docs]: https://open-policy-agent.github.io/gatekeeper/website/docs/
+
+<!-- </KFD-DOCS> -->
