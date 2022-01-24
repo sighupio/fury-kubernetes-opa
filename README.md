@@ -56,17 +56,6 @@ Check the [compatibility matrix][compatibility-matrix] for additional informatio
 
 > You can comment out the service monitor in the [kustomization.yaml][core-kustomization] file if you don't want to install the monitoring module.
 
-#### Resources
-
-Gatekeeper core package gets deployed by default with the following resource limits:
-
-- CPU: 1000m
-- Memory: 512Mi
-
-Gatekeeper Policy Manager package gets deployed by default with the following resource limits:
-
-- CPU: 500m
-- Memory: 256Mi
 
 ### Deployment
 

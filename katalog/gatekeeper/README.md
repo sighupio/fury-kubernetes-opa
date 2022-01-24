@@ -4,9 +4,17 @@
 
 ## Requirements
 
-Minimum Kubernetes version >= 1.18
+Minimum Kubernetes version `>=v1.18` with the API server `ValidatingAdmissionWebhook` plugin enabled.
 
-> Requires the `ValidatingAdmissionWebhook` admission plugin
+Gatekeeper core package gets deployed by default with the following resource limits:
+
+- CPU: 1000m
+- Memory: 512Mi
+
+Gatekeeper Policy Manager package gets deployed by default with the following resource limits:
+
+- CPU: 500m
+- Memory: 256Mi
 
 ## Fury Setup
 
