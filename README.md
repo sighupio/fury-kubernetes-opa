@@ -9,7 +9,7 @@
 
 <!-- <KFD-DOCS> -->
 
-**Fury Kubernetes OPA** provides a policy engine based on OPA Gatekeeper to enable enforcement of custom policies in a Kubernetes Cluster for the [Kubernetes Fury Distribution (KFD)][kfd-repo] via a [Validating Admission Webhook][kubernetes-vaw-docs].
+**Kubernetes Fury OPA** provides a policy engine based on OPA Gatekeeper to enable enforcement of custom policies in a Kubernetes Cluster for the [Kubernetes Fury Distribution (KFD)][kfd-repo] via a [Validating Admission Webhook][kubernetes-vaw-docs].
 
 If you are new to KFD please refer to the [official documentation][kfd-docs] on how to get started with KFD.
 
