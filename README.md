@@ -52,7 +52,7 @@ Check the [compatibility matrix][compatibility-matrix] for additional informatio
 | --------------------------- | --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [furyctl][furyctl-repo]     | `>=0.6.0` | The recommended tool to download and manage KFD modules and their packages. To learn more about `furyctl` read the [official documentation][furyctl-repo]. |
 | [kustomize][kustomize-repo] | `>=3.5.0` | Packages are customized using `kustomize`. To learn how to create your customization layer with `kustomize`, please refer to the [repository][kustomize-repo]. |
-| [KFD Monitoring Module][kfd-monitoring] | `>v1.10.0` | (optional) Expose metrics to Prometheus |
+| [KFD Monitoring Module][kfd-monitoring] | `>v1.10.0` | Expose metrics to Prometheus *(optional)* |
 
 > You can comment out the service monitor in the [kustomization.yaml][core-kustomization] file if you don't want to install the monitoring module.
 
