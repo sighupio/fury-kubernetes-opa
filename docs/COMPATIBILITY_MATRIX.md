@@ -15,11 +15,11 @@
 | v1.5.0                              |                    |                    |                    |                    |                    | :white_check_mark: | :white_check_mark: | :white_check_mark: |     :warning:      |           |
 | v1.6.0                              |                    |                    |                    |                    |                    | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :warning: |
 
-| Legend             | Description  |
-|:------------------:|--------------|
-| :white_check_mark: | Compatible   |
-| :warning:          | Has issues   |
-| :x:                | Incompatible |
+:white_check_mark: Compatible
+
+:warning: Has issues
+
+:x: Incompatible
 
 ## Warnings
 

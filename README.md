@@ -9,7 +9,7 @@
 
 <!-- <KFD-DOCS> -->
 
-**Kubernetes Fury OPA** provides a policy engine based on OPA Gatekeeper to enable enforcement of custom policies in a Kubernetes Cluster for the [Kubernetes Fury Distribution (KFD)][kfd-repo] via a [Validating Admission Webhook][kubernetes-vaw-docs].
+**Kubernetes Fury OPA** provides policy enforcement for the [Kubernetes Fury Distribution (KFD)][kfd-repo] using OPA Gatekeeper.
 
 If you are new to KFD please refer to the [official documentation][kfd-docs] on how to get started with KFD.
 
@@ -25,18 +25,18 @@ The Kubernetes API server provides a mechanism to review every request that is m
 
 Fury Kubernetes OPA provides the following packages:
 
-| Package                                             | Version  | Description                                                                      |
-|-----------------------------------------------------|----------|----------------------------------------------------------------------------------|
-| [Gatekeeper Core](katalog/gatekeeper/core)          | `v3.7.0` | Gatekeeper deployment, ready to apply rules.                                     |
-| [Gatekeeper Rules](katalog/gatekeeper/rules)        | `N.A.`   | A set of custom rules to get started. See the package documentation for details. |
-| [Gatekeeper Policy Manager](katalog/gatekeeper/gpm) | `v0.5.1` | Gatekeeper Policy Manager, a simple to use web-ui for Gatekeeper.                |
+| Package                                             | Version  | Description                                                       |
+|-----------------------------------------------------|----------|-------------------------------------------------------------------|
+| [Gatekeeper Core](katalog/gatekeeper/core)          | `v3.7.0` | Gatekeeper deployment, ready to apply rules.                      |
+| [Gatekeeper Rules](katalog/gatekeeper/rules)        | `N.A.`   | A set of custom rules to get started.                             |
+| [Gatekeeper Policy Manager](katalog/gatekeeper/gpm) | `v0.5.1` | Gatekeeper Policy Manager, a simple to use web-ui for Gatekeeper. |
 
 Click on each package to see its full documentation.
 
 ## Compatibility
 
-| Kubernetes Version |   Compatibility    |                        Notes                        |
-| ------------------ | :----------------: | --------------------------------------------------- |
+| Kubernetes Version |   Compatibility    | Notes                                               |
+|--------------------|:------------------:|-----------------------------------------------------|
 | `1.20.x`           | :white_check_mark: | No known issues                                     |
 | `1.21.x`           | :white_check_mark: | No known issues                                     |
 | `1.22.x`           | :white_check_mark: | No known issues                                     |
@@ -48,14 +48,13 @@ Check the [compatibility matrix][compatibility-matrix] for additional informatio
 
 ### Prerequisites
 
-|            Tool             |  Version  |                                                                          Description                                                                           |
-| --------------------------- | --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [furyctl][furyctl-repo]     | `>=0.6.0` | The recommended tool to download and manage KFD modules and their packages. To learn more about `furyctl` read the [official documentation][furyctl-repo]. |
-| [kustomize][kustomize-repo] | `>=3.5.0` | Packages are customized using `kustomize`. To learn how to create your customization layer with `kustomize`, please refer to the [repository][kustomize-repo]. |
-| [KFD Monitoring Module][kfd-monitoring] | `>v1.10.0` | Expose metrics to Prometheus *(optional)* |
+| Tool                                    | Version    | Description                                                                                                                                                    |
+|-----------------------------------------|------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [furyctl][furyctl-repo]                 | `>=0.6.0`  | The recommended tool to download and manage KFD modules and their packages. To learn more about `furyctl` read the [official documentation][furyctl-repo].     |
+| [kustomize][kustomize-repo]             | `>=3.5.0`  | Packages are customized using `kustomize`. To learn how to create your customization layer with `kustomize`, please refer to the [repository][kustomize-repo]. |
+| [KFD Monitoring Module][kfd-monitoring] | `>v1.10.0` | Expose metrics to Prometheus *(optional)*                                                                                                                      |
 
 > You can comment out the service monitor in the [kustomization.yaml][core-kustomization] file if you don't want to install the monitoring module.
-
 
 ### Deployment
 
@@ -69,20 +68,20 @@ bases:
 
 > See `furyctl` [documentation][furyctl-repo] for additional details about `Furyfile.yml` format.
 
-1. Execute `furyctl vendor -H` to download the packages
+2. Execute `furyctl vendor -H` to download the packages
 
-1. Inspect the download packages under `./vendor/katalog/opa/gatekeeper`.
+3. Inspect the download packages under `./vendor/katalog/opa/gatekeeper`.
 
-1. Define a `kustomization.yaml` that includes the `./vendor/katalog/opa/gatekeeper` directory as resource.
+4. Define a `kustomization.yaml` that includes the `./vendor/katalog/opa/gatekeeper` directory as resource.
 
 ```yaml
 resources:
 - ./vendor/katalog/opa/gatekeeper
 ```
 
-1. Apply the necessary patches. You can find a list of common customization [here](#common-customizations).
+5. Apply the necessary patches. You can find a list of common customization [here](#common-customizations).
 
-1. To deploy the packages to your cluster, execute:
+6. To deploy the packages to your cluster, execute:
 
 ```bash
 kustomize build . | kubectl apply -f -
@@ -92,8 +91,7 @@ kustomize build . | kubectl apply -f -
 
 #### Disable constraints
 
-If you need to disable one of the constraints thats provided by default,
-you can do it by creating a kustomize patch like the following:
+Disable one of the default constraints by creating the following kustomize patch:
 
 ```yml
 patchesJson6902:

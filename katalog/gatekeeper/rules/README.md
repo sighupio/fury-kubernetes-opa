@@ -2,7 +2,7 @@
 
 <!-- <KFD-DOCS> -->
 
-The KFD OPA module provides out of the box a set of common polciies (rules) to get started in securing your cluster.
+The KFD OPA module provides out of the box a set of common policies (rules) to get started in securing your cluster.
 
 A policy from Gatekeeper's point of view is defined by two objects: a `ConstraintTemplate` and a `Constraint`.
 
