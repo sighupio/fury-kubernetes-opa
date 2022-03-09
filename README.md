@@ -63,7 +63,7 @@ Check the [compatibility matrix][compatibility-matrix] for additional informatio
 ```yaml
 bases:
   - name: opa/gatekeeper
-    version: "v1.6.1"
+    version: "v1.6.2"
 ```
 
 > See `furyctl` [documentation][furyctl-repo] for additional details about `Furyfile.yml` format.
