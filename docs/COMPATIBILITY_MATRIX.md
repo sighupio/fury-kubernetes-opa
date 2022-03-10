@@ -13,7 +13,9 @@
 | v1.3.1                              |                    |                    |                    | :white_check_mark: | :white_check_mark: | :white_check_mark: |     :warning:      |                    |                    |           |
 | v1.4.0                              |                    |                    |                    |                    | :white_check_mark: | :white_check_mark: | :white_check_mark: |     :warning:      |                    |           |
 | v1.5.0                              |                    |                    |                    |                    |                    | :white_check_mark: | :white_check_mark: | :white_check_mark: |     :warning:      |           |
-| v1.6.0                              |                    |                    |                    |                    |                    | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :warning: |
+| v1.6.0                              |                    |                    |                    |                    |                    |        :x:         |        :x:         |        :x:         |        :x:         |    :x:    |
+| v1.6.1                              |                    |                    |                    |                    |                    |        :x:         |        :x:         |        :x:         |        :x:         |    :x:    |
+| v1.6.2                              |                    |                    |                    |                    |                    | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :warning: |
 
 :white_check_mark: Compatible
 
@@ -23,8 +25,9 @@
 
 ## Warnings
 
+- :x: module versions `v1.1.0` and `v1.2.0` do not work on Kubernetes > `1.19.x` due to this [issue](https://github.com/open-policy-agent/gatekeeper/issues/820).
 - :warning: module version `v1.3.0` along with Kubernetes Version `1.20.x` works as expected,Marked as a warning because it is not officially supported.
 - :warning: module version `v1.4.0` along with Kubernetes Version `1.21.x` works as expected,Marked as a warning because it is not officially supported.
 - :warning: module version `v1.5.0` along with Kubernetes Version `1.22.x` works as expected,Marked as a warning because it is not officially supported.
-- :warning: module version `v1.6.0` along with Kubernetes Version `1.23.x` works as expected,Marked as a warning because it is not officially supported.
-- :x: module versions `v1.1.0` and `v1.2.0` do not work on Kubernetes > `1.19.x` due to this [issue](https://github.com/open-policy-agent/gatekeeper/issues/820).
+- :x: module version `v1.6.0` has a known bug breaking upgrades. Please do not use.
+- :x: module version `v1.6.1` has a known bug breaking upgrades. Please do not use.
