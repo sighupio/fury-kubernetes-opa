@@ -44,6 +44,8 @@ steps:
       VALIDATE_JSCPD: "false"
       # hadolint already validated dockerfiles
       VALIDATE_DOCKERFILE: "false"
+      # Disable natural language checks
+      VALIDATE_NATURAL_LANGUAGE: "false"
     depends_on:
       - clone
 
