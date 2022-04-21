@@ -1,0 +1,42 @@
+# Copyright (c) 2022 SIGHUP s.r.l All rights reserved.
+# Use of this source code is governed by a BSD-style
+# license that can be found in the LICENSE file.
+
+# Taken from: https://github.com/sighupio/gatekeeper-policy-manager/blob/main/manifests/rbac.yaml
+
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: gatekeeper-policy-manager
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: gatekeeper-policy-manager-crd-view
+rules:
+- apiGroups: ["constraints.gatekeeper.sh"]
+  resources: ["*"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["templates.gatekeeper.sh"]
+  resources: ["*"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["config.gatekeeper.sh"]
+  resources: ["*"]
+  verbs: ["get", "list", "watch"]
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: gatekeeper-policy-manager-crd-view
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: gatekeeper-policy-manager-crd-view
+subjects:
+- kind: ServiceAccount
+  name: gatekeeper-policy-manager
+  namespace: gatekeeper-system
