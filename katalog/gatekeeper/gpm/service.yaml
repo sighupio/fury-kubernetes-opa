@@ -1,0 +1,16 @@
+# Copyright (c) 2022 SIGHUP s.r.l All rights reserved.
+# Use of this source code is governed by a BSD-style
+# license that can be found in the LICENSE file.
+
+# Taken from: https://github.com/sighupio/gatekeeper-policy-manager/blob/main/manifests/service.yaml
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: gatekeeper-policy-manager
+spec:
+  selector:
+    app: gatekeeper-policy-manager
+  ports:
+  - port: 80
+    targetPort: http
