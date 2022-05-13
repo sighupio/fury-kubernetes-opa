@@ -35,6 +35,10 @@ spec:
         - --logtostderr
         - --health-addr=:9090
         - --prometheus-port=8888
+        # setting audit-chunk-size to avoid audit going in OOM.
+        # This is not a default from upstream.
+        # see: https://github.com/sighupio/fury-kubernetes-opa/issues/49
+        - --audit-chunk-size=500
         command:
         - /manager
         env:
