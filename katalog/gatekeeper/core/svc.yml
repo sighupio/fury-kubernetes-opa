@@ -1,4 +1,4 @@
-# Copyright (c) 2020 SIGHUP s.r.l All rights reserved.
+# Copyright (c) 2022 SIGHUP s.r.l All rights reserved.
 # Use of this source code is governed by a BSD-style
 # license that can be found in the LICENSE file.
 
@@ -11,16 +11,16 @@ metadata:
   name: gatekeeper-webhook-service
 spec:
   ports:
-    - port: 443
-      targetPort: 8443
-      name: webhook-server
-    - port: 8888
-      targetPort: 8888
-      name: metrics
+  - name: https-webhook-server
+    port: 443
+    targetPort: webhook-server
+  - name: metrics
+    port: 8888
+    targetPort: 8888
   selector:
     control-plane: controller-manager
-    gatekeeper.sh/system: "yes"
     gatekeeper.sh/operation: webhook
+    gatekeeper.sh/system: "yes"
 ---
 apiVersion: v1
 kind: Service
@@ -30,9 +30,9 @@ metadata:
   name: gatekeeper-audit-service
 spec:
   ports:
-    - port: 8888
+    - name: metrics
+      port: 8888
       targetPort: 8888
-      name: metrics
   selector:
     control-plane: audit-controller
     gatekeeper.sh/operation: audit

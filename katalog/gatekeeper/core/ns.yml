@@ -1,4 +1,4 @@
-# Copyright (c) 2020 SIGHUP s.r.l All rights reserved.
+# Copyright (c) 2022 SIGHUP s.r.l All rights reserved.
 # Use of this source code is governed by a BSD-style
 # license that can be found in the LICENSE file.
 
@@ -11,3 +11,20 @@ metadata:
     control-plane: controller-manager
     gatekeeper.sh/system: "yes"
   name: gatekeeper-system
+---
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  labels:
+    gatekeeper.sh/system: "yes"
+  name: gatekeeper-critical-pods
+  namespace: gatekeeper-system
+spec:
+  hard:
+    pods: 100
+  scopeSelector:
+    matchExpressions:
+    - operator: In
+      scopeName: PriorityClass
+      values:
+      - system-cluster-critical

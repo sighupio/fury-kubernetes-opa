@@ -27,7 +27,7 @@ Fury Kubernetes OPA provides the following packages:
 
 | Package                                             | Version  | Description                                                       |
 |-----------------------------------------------------|----------|-------------------------------------------------------------------|
-| [Gatekeeper Core](katalog/gatekeeper/core)          | `v3.7.0` | Gatekeeper deployment, ready to apply rules.                      |
+| [Gatekeeper Core](katalog/gatekeeper/core)          | `v3.8.1` | Gatekeeper deployment, ready to apply rules.                      |
 | [Gatekeeper Rules](katalog/gatekeeper/rules)        | `N.A.`   | A set of custom rules to get started.                             |
 | [Gatekeeper Policy Manager](katalog/gatekeeper/gpm) | `v0.5.1` | Gatekeeper Policy Manager, a simple to use web-ui for Gatekeeper. |
 
@@ -42,7 +42,7 @@ Click on each package to see its full documentation.
 | `1.22.x`           | :white_check_mark: | No known issues                                     |
 | `1.23.x`           |     :warning:      | Conformance tests passed. Not officially supported. |
 
-Check the [compatibility matrix][compatibility-matrix] for additional informations about previous releases of the modules.
+Check the [compatibility matrix][compatibility-matrix] for additional information on previous releases of the module.
 
 ## Usage
 
@@ -87,6 +87,8 @@ resources:
 kustomize build . | kubectl apply -f -
 ```
 
+> ⚠️ if you decide to deploy Gatekeeper to a different namespace than the default `gatekeeper-system`, you'll need to patch the file `vwh.yml` to point to the right namespace for the webhook service due to limitations in the `kustomize` tool.
+
 ### Common Customizations
 
 #### Disable constraints
@@ -103,7 +105,7 @@ patchesJson6902:
       path: patches/allow.yml
 ```
 
-add this in the `patches/allow.yml` file:
+add this to the `patches/allow.yml` file:
 
 ```yml
 - op: "replace"

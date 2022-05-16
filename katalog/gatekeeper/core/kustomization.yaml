@@ -9,17 +9,19 @@ kind: Kustomization
 namespace: gatekeeper-system
 
 resources:
-  - crd.yml
   - ns.yml
-  - rbac.yml
+  - crd.yml
   - sa.yml
+  - psp.yml
+  - rbac.yml
   - secret.yml
-  - deploy.yml
   - svc.yml
-  - vwh.yml
+  - deploy.yml
   - pdb.yml
+  - mwh.yml
+  - vwh.yml
 
 images:
   - name: openpolicyagent/gatekeeper
     newName: registry.sighup.io/fury/openpolicyagent/gatekeeper
-    newTag: v3.7.0
+    newTag: v3.8.1
