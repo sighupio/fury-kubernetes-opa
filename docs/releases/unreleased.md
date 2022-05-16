@@ -3,7 +3,7 @@
 
 Welcome to the latest release of `OPA` module of [Kubernetes Fury Distribution](https://github.com/sighupio/fury-distribution) maintained by team SIGHUP.
 
-This is a major release updating the Gatekeeper package to the latest version upstream.
+This is a major release updating the Gatekeeper package to the latest version upstream and fixing a bug in the provided ConstraintTemplates that made the audit not to trigger.
 
 ## Component Images 🚢
 

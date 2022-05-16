@@ -16,7 +16,16 @@ spec:
     - target: admission.k8s.gatekeeper.sh
       rego: |
         package k8suniqueingresshost
-
+        is_create_update_or_audit {
+            operation := input.review.operation
+            any([ operation == "CREATE", operation == "UPDATE" ])
+            operation != "DELETE"
+        }
+        is_create_update_or_audit {
+            # When the constraint is run by the audit process input.review is not set
+            input.review.operation == ""
+        }
+        
         violation[{"msg": msg}] {
           input.review.kind.kind == "Ingress"
           re_match("^(extensions|networking.k8s.io)$", input.review.kind.group)
@@ -46,9 +55,7 @@ spec:
           common_paths := input_paths & other_paths
           count(common_paths) != 0
 
-          operation := input.review.operation
-          any([ operation == "CREATE", operation == "UPDATE" ])
-          operation != "DELETE"
+          is_create_update_or_audit
 
           msg := sprintf("Ingress %v/%v host conflicts with ingress %v/%v: ( '%v' ) & ( '%v' ) = ( '%v' )", [input_ns, input_name, other_ns, other_name, concat("', '",input_paths), concat("', '",other_paths), common_paths[_]])
         }

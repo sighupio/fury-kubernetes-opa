@@ -1,4 +1,4 @@
-# Copyright (c) 2020 SIGHUP s.r.l All rights reserved.
+# Copyright (c) 2022 SIGHUP s.r.l All rights reserved.
 # Use of this source code is governed by a BSD-style
 # license that can be found in the LICENSE file.
 
@@ -16,13 +16,21 @@ spec:
     - target: admission.k8s.gatekeeper.sh
       rego: |
         package k8sprotectednamespace
+        is_delete_or_audit {
+            operation := input.review.operation
+            operation == "DELETE"
+        }
+        is_delete_or_audit {
+            # When the constraint is run by the audit process input.review is not set
+            input.review.operation == ""
+        }
 
         violation[{"msg": msg}] {
           name := input.review.object.metadata.name
           kind := input.review.object.kind
           operation :=  input.review.operation
           kind == "Namespace"
-          operation == "DELETE"
+          is_delete_or_audit
           not input.review.object.metadata.annotations["opa.sighup.io/indelible-ns"] == "no"
           msg := sprintf("the namespace '%s' is protected, so it cannot be deleted. Add an annotation 'opa.sighup.io/indelible-ns=no' to it to unprotect it.", [name])
         }
