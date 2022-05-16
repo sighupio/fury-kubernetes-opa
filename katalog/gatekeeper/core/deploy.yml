@@ -32,7 +32,9 @@ spec:
       - args:
         - --operation=audit
         - --operation=status
+        - --operation=mutation-status
         - --logtostderr
+        - --disable-opa-builtin={http.send}
         - --health-addr=:9090
         - --prometheus-port=8888
         # setting audit-chunk-size to avoid audit going in OOM.
@@ -90,6 +92,7 @@ spec:
           name: tmp-volume
       nodeSelector:
         kubernetes.io/os: linux
+      priorityClassName: system-cluster-critical
       serviceAccountName: gatekeeper-admin
       terminationGracePeriodSeconds: 60
       volumes:
@@ -134,70 +137,75 @@ spec:
             weight: 100
       automountServiceAccountToken: true
       containers:
-        - args:
-            - --port=8443
-            - --health-addr=:9090
-            - --prometheus-port=8888
-            - --logtostderr
-            - --exempt-namespace=$(POD_NAMESPACE)
-            - --operation=webhook
-          command:
-            - /manager
-          env:
-            - name: POD_NAMESPACE
-              valueFrom:
-                fieldRef:
-                  apiVersion: v1
-                  fieldPath: metadata.namespace
-            - name: POD_NAME
-              valueFrom:
-                fieldRef:
-                  fieldPath: metadata.name
-          image: openpolicyagent/gatekeeper
-          imagePullPolicy: Always
-          livenessProbe:
-            httpGet:
-              path: /healthz
-              port: 9090
-          name: manager
-          ports:
-            - containerPort: 8443
-              name: webhook-server
-              protocol: TCP
-            - containerPort: 8888
-              name: metrics
-              protocol: TCP
-            - containerPort: 9090
-              name: healthz
-              protocol: TCP
-          readinessProbe:
-            httpGet:
-              path: /readyz
-              port: 9090
-          resources:
-            limits:
-              cpu: 1000m
-              memory: 512Mi
-            requests:
-              cpu: 100m
-              memory: 256Mi
-          securityContext:
-            allowPrivilegeEscalation: false
-            capabilities:
-              drop:
-                - all
-            readOnlyRootFilesystem: true
-            runAsGroup: 999
-            runAsNonRoot: true
-            runAsUser: 1000
-          volumeMounts:
-            - mountPath: /certs
-              name: cert
-              readOnly: true
+      - args:
+        - --port=8443
+        - --health-addr=:9090
+        - --prometheus-port=8888
+        - --logtostderr
+        - --exempt-namespace=$(POD_NAMESPACE)
+        - --operation=webhook
+        - --operation=mutation-webhook
+        - --disable-opa-builtin={http.send}
+        command:
+        - /manager
+        env:
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        image: openpolicyagent/gatekeeper
+        imagePullPolicy: Always
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 9090
+        name: manager
+        ports:
+        - containerPort: 8443
+          name: webhook-server
+          protocol: TCP
+        - containerPort: 8888
+          name: metrics
+          protocol: TCP
+        - containerPort: 9090
+          name: healthz
+          protocol: TCP
+        readinessProbe:
+          httpGet:
+            path: /readyz
+            port: 9090
+        resources:
+          limits:
+            cpu: 1000m
+            memory: 512Mi
+          requests:
+            cpu: 100m
+            memory: 256Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - all
+          readOnlyRootFilesystem: true
+          runAsGroup: 999
+          runAsNonRoot: true
+          runAsUser: 1000
+        volumeMounts:
+        - mountPath: /certs
+          name: cert
+          readOnly: true
+      nodeSelector:
+        kubernetes.io/os: linux
+      priorityClassName: system-cluster-critical
       serviceAccountName: gatekeeper-admin
       terminationGracePeriodSeconds: 60
       volumes:
-        - name: cert
-          secret:
-            defaultMode: 420
-            secretName: gatekeeper-webhook-server-cert
+      - name: cert
+        secret:
+          defaultMode: 420
+          secretName: gatekeeper-webhook-server-cert
