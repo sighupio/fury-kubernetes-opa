@@ -2,11 +2,11 @@
 
 <!-- KFD-DOCS -->
 
-Gatekeeper Policy Manager is a simple **read-only** web UI for viewing OPA Gatekeeper policies' status in a Kubernetes Cluster.
+**Gatekeeper Policy Manager** is a simple *read-only* web UI for viewing OPA Gatekeeper policies' status in a Kubernetes Cluster.
 
-GPM can display all the defined **Constraint Templates** with their rego code, all the Gatekeeper Configuration CRDs, and all the **Constraints** with its current status, violations, enforcement action, matches definitions, etc.
+The target Kubernetes Cluster can be the same where GPM is running or some other [remote cluster(s) using a `kubeconfig` file](#Multi-cluster-support). You can also run GPM [locally in a client machine](#Running-locally) and connect to a remote cluster.
 
-The target Kubernetes Cluster can be the one where GPM is deployed or some [remote cluster(s) using a kubeconfig file][gpm-multicluster-readme].
+GPM can display all the defined **Constraint Templates** with their rego code, all the Gatekeeper Configuration CRDs, and all the **Constraints** with their current status, violations, enforcement action, matches definitions, etc.
 
 ## Requirements
 
@@ -25,13 +25,13 @@ To deploy Gatekeeper Policy Manager to your cluster, apply the provided `kustomi
 kubectl apply -k .
 ```
 
-By default, this will create a deployment and a service both with the name `gatekeper-policy-manager` in the `gatekeeper-system` namespace. We invite you to take a look into the `kustomization.yaml` file to do further configuration.
+By default, this will create a deployment and a service both with the name `gatekeper-policy-manager` in the `gatekeeper-system` namespace. We invite you to take a look at the `kustomization.yaml` file to do further customizations.
 
-We recommend you to create an ingress for the application, you can find a sample [here][gpm-ingress-ex]
+We recommend you create an ingress for the application, you can find a sample [here][gpm-ingress-ex]
 
 ## Configuration
 
-GPM is a stateless application, but it can be configured using environment variables. The possible configuration options are:
+GPM is a stateless application, but it can be configured using environment variables. The possible configurations are:
 
 | Env Var Name                      | Description                                                                                                      | Default                                  |
 |-----------------------------------|------------------------------------------------------------------------------------------------------------------|------------------------------------------|
