@@ -1,4 +1,4 @@
-# Copyright (c) 2020 SIGHUP s.r.l All rights reserved.
+# Copyright (c) 2022 SIGHUP s.r.l All rights reserved.
 # Use of this source code is governed by a BSD-style
 # license that can be found in the LICENSE file.
 
@@ -25,7 +25,7 @@ spec:
             # When the constraint is run by the audit process input.review is not set
             input.review.operation == ""
         }
-        
+
         violation[{"msg": msg}] {
           input.review.kind.kind == "Ingress"
           re_match("^(extensions|networking.k8s.io)$", input.review.kind.group)
