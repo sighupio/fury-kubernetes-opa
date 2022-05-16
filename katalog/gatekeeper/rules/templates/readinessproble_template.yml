@@ -1,4 +1,4 @@
-# Copyright (c) 2020 SIGHUP s.r.l All rights reserved.
+# Copyright (c) 2022 SIGHUP s.r.l All rights reserved.
 # Use of this source code is governed by a BSD-style
 # license that can be found in the LICENSE file.
 
@@ -21,15 +21,22 @@ spec:
     - target: admission.k8s.gatekeeper.sh
       rego: |
         package k8sreadinessprobe
+        is_create_update_or_audit {
+            operation := input.review.operation
+            any([ operation == "CREATE", operation == "UPDATE" ])
+            operation != "DELETE"
+        }
+        is_create_update_or_audit {
+            # When the constraint is run by the audit process input.review is not set
+            input.review.operation == ""
+        }
         violation[{"msg": msg}] {
             containers := input.review.object.spec.template.spec.containers[_]
             name := input.review.object.metadata.name
             kind := input.review.kind.kind
             not containers.readinessProbe
             not input.parameters.excludeIstio
-            operation := input.review.operation
-            any([ operation == "CREATE", operation == "UPDATE" ])
-            operation != "DELETE"
+            is_create_update_or_audit
             msg = sprintf("Rejecting \"%v/%v\" for not specifying a readinessProbe", [kind, name])
         }
         violation[{"msg": msg}] {
@@ -38,9 +45,7 @@ spec:
             kind := input.review.kind.kind
             not containers.readinessProbe
             not input.parameters.excludeIstio
-            operation := input.review.operation
-            any([ operation == "CREATE", operation == "UPDATE" ])
-            operation != "DELETE"
+            is_create_update_or_audit
             msg = sprintf("Rejecting \"%v/%v\" for not specifying a readinessProbe", [kind, name])
         }
         violation[{"msg": msg}] {
@@ -49,9 +54,7 @@ spec:
             kind := input.review.kind.kind
             not containers.readinessProbe
             not input.parameters.excludeIstio
-            operation := input.review.operation
-            any([ operation == "CREATE", operation == "UPDATE" ])
-            operation != "DELETE"
+            is_create_update_or_audit
             msg = sprintf("Rejecting \"%v/%v\" for not specifying a readinessProbe", [kind, name])
         }
 
@@ -62,9 +65,7 @@ spec:
             not containers.readinessProbe
             input.parameters.excludeIstio
             not istio(containers.image)
-            operation := input.review.operation
-            any([ operation == "CREATE", operation == "UPDATE" ])
-            operation != "DELETE"
+            is_create_update_or_audit
             msg = sprintf("Rejecting \"%v/%v\" for not specifying a readinessProbe", [kind, name])
         }
         violation[{"msg": msg}] {
@@ -74,9 +75,7 @@ spec:
             not containers.readinessProbe
             input.parameters.excludeIstio
             not istio(containers.image)
-            operation := input.review.operation
-            any([ operation == "CREATE", operation == "UPDATE" ])
-            operation != "DELETE"
+            is_create_update_or_audit
             msg = sprintf("Rejecting \"%v/%v\" for not specifying a readinessProbe", [kind, name])
         }
         violation[{"msg": msg}] {
@@ -86,9 +85,7 @@ spec:
             not containers.readinessProbe
             input.parameters.excludeIstio
             not istio(containers.image)
-            operation := input.review.operation
-            any([ operation == "CREATE", operation == "UPDATE" ])
-            operation != "DELETE"
+            is_create_update_or_audit
             msg = sprintf("Rejecting \"%v/%v\" for not specifying a readinessProbe", [kind, name])
         }
 

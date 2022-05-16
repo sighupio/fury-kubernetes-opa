@@ -1,4 +1,4 @@
-# Copyright (c) 2020 SIGHUP s.r.l All rights reserved.
+# Copyright (c) 2022 SIGHUP s.r.l All rights reserved.
 # Use of this source code is governed by a BSD-style
 # license that can be found in the LICENSE file.
 
@@ -16,6 +16,15 @@ spec:
     - target: admission.k8s.gatekeeper.sh
       rego: |
         package k8suniqueserviceselector
+        is_create_update_or_audit {
+            operation := input.review.operation
+            any([ operation == "CREATE", operation == "UPDATE" ])
+            operation != "DELETE"
+        }
+        is_create_update_or_audit {
+            # When the constraint is run by the audit process input.review is not set
+            input.review.operation == ""
+        }
         make_apiversion(kind) = apiVersion {
           g := kind.group
           v := kind.version
@@ -45,8 +54,6 @@ spec:
           not identical(other, input.review)
           other_selector := flatten_selector(other)
           input_selector == other_selector
-          operation := input.review.operation
-          any([ operation == "CREATE", operation == "UPDATE" ])
-          operation != "DELETE"
+          is_create_update_or_audit
           msg := sprintf("same selector as service <%v> in namespace <%v>", [name, namespace])
         }
