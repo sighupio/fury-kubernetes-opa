@@ -3,7 +3,7 @@
 
 Welcome to the latest release of `OPA` module of [Kubernetes Fury Distribution](https://github.com/sighupio/fury-distribution) maintained by team SIGHUP.
 
-This is a major release updating the Gatekeeper package to the latest version upstream.
+This is a major release updating the Gatekeeper and Gatekeeper Policy Manager packages to the latest version upstream.
 
 ## Component Images 🚢
 
