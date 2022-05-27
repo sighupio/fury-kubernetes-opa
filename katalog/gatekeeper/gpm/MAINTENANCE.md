@@ -1,6 +1,6 @@
 # Gatekeeper Policy Manager Package Maintenance
 
-To maintain the GPM package, you'll need to keep updated with upstream the following files (check the main `README.md` for the upstream prioject link):
+To maintain the GPM package, you'll need to keep updated [with upstream](https://github.com/sighupio/gatekeeper-policy-manager/tree/main/manifests) the following files:
 
 - `README.md`
 - `*.yaml`
