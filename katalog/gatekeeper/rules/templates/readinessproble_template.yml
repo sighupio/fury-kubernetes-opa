@@ -3,10 +3,14 @@
 # license that can be found in the LICENSE file.
 
 ---
-apiVersion: templates.gatekeeper.sh/v1beta1
+apiVersion: templates.gatekeeper.sh/v1
 kind: ConstraintTemplate
 metadata:
   name: k8sreadinessprobe
+  annotations:
+    description: >-
+      Requires containers to have a Readiness Probe defined.
+      https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
 spec:
   crd:
     spec:
@@ -14,9 +18,14 @@ spec:
         kind: K8sReadinessProbe
       validation:
         openAPIV3Schema:
+          type: object
           properties:
             excludeIstio:
               type: boolean # Default is false
+              description: >-
+                Setting this parameter to true will make the rule except containers that use Istio image. Otherwise,
+                when using Isito the pods will be rejected because the sidecar injected does not comply with the liveness
+                probe requirement.
   targets:
     - target: admission.k8s.gatekeeper.sh
       rego: |

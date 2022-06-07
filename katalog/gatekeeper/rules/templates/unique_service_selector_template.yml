@@ -3,10 +3,13 @@
 # license that can be found in the LICENSE file.
 
 ---
-apiVersion: templates.gatekeeper.sh/v1beta1
+apiVersion: templates.gatekeeper.sh/v1
 kind: ConstraintTemplate
 metadata:
   name: k8suniqueserviceselector
+  annotations:
+    description: >-
+      Deny duplicated services selector in the same namespace.
 spec:
   crd:
     spec:
