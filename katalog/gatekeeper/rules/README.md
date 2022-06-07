@@ -28,6 +28,8 @@ Below, you can find a list of constraint templates shipped with Kubernetes Fury 
 > This file can be splitted into several `ConstraintTemplates` with the counterpart of having to manage an additional `constraint`/`constraintTemplate` resource for each one.
 <!-- space left blank on purpose to separate both quotes -->
 > The KFD OPA package provides both `ConstraintTemplates` and `Constraints` for each rule out of the box.
+<!-- space left blank on purpose to separate both quotes -->
+> All the `Constraints` exclude by default KFD "infra" namespaces (`kube-system`, `logging`, `monitoring`, `ingress-nginx`, `cert-manager`) to avoid service disruption.
 
 ### Usage
 
