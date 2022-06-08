@@ -9,6 +9,15 @@ load helper
 
 set -o pipefail
 
+@test "Deploy pod with violations" {
+  info
+  deploy() {
+    kubectl run bad-pod --image busybox -- sleep 5000
+  }
+  run deploy
+  [[ "$status" -eq 0 ]]
+}
+
 @test "Deploy Gatekeeper Core" {
   info
   deploy() {
@@ -196,6 +205,16 @@ set -o pipefail
   run deploy
   [[ "$status" -ne 0 ]]
   [[ "$output" == *"namespace-protected"* ]]
+}
+
+@test "[AUDIT] Check Violations from bad-pod are present" {
+  info
+  violations() {
+    kubectl get k8slivenessprobe.constraints.gatekeeper.sh liveness-probe  -o go-template='{{.status.totalViolations}}'
+  }
+  run violations
+  [[ "$status" -ne 0 ]]
+  [[ "$output" -ne 1 ]]
 }
 
 @test "Teardown - Delete resources" {
