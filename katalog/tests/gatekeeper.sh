@@ -214,7 +214,7 @@ set -o pipefail
   echo "number of violations for liveness-probe constraint is: ${output}"
   echo "command status is: ${status}"
   [[ "$status" -eq 0 ]]
-  [[ "$output" -eq 1 ]]
+  [[ "$output" -eq 3 ]]
 }
 
 @test "Teardown - Delete resources" {
