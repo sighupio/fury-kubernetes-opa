@@ -74,10 +74,10 @@ in the `patches/allow.yml`:
 - op: "replace"
   path: "/spec/match/excludedNamespaces"
   value:
-      - myNs1
-      - myNs2
-      - myNs3
-      - myNs4
+      - my-ns-1
+      - my-ns-2
+      - my-ns-3
+      - my-ns-4
 ```
 
 ### The naming of Constraints and ConstraintTemplates
