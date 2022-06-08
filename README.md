@@ -1,7 +1,9 @@
+<!-- markdownlint-disable MD033 -->
 <h1>
     <img src="https://github.com/sighupio/fury-distribution/blob/master/docs/assets/fury-epta-white.png?raw=true" align="left" width="90" style="margin-right: 15px"/>
     Kubernetes Fury OPA
 </h1>
+<!-- markdownlint-enable MD033 -->
 
 ![Release](https://img.shields.io/github/v/release/sighupio/fury-kubernetes-opa?label=Latest%20Release)
 ![License](https://img.shields.io/github/license/sighupio/fury-kubernetes-opa?label=License)
@@ -15,9 +17,9 @@ If you are new to KFD please refer to the [official documentation][kfd-docs] on 
 
 ## Overview
 
-The Kubernetes API server provides a mechanism to review every request that is made, being objects creation, modification or deletion. To use this mechanism the API server allow us to create a [Validating Admission Webhook][kubernetes-vaw-docs] that, as the name says, will validate every requests and let the API server know if the request is allowed or not based on some logic (policy).
+The Kubernetes API server provides a mechanism to review every request that is made, being object creation, modification or deletion. To use this mechanism the API server allows us to create a [Validating Admission Webhook][kubernetes-vaw-docs] that, as the name says, will validate every request and let the API server know if the request is allowed or not based on some logic (policy).
 
-**Kubernetes Fury OPA** module is based on [OPA Gatekeeper][gatekeeper-page], a popular open-source Kubernetes-native policy engine with [OPA](https://www.openpolicyagent.org/) as its core that runs as a Validating Admission Webhook. It allows writing custom constraints (policies) in `rego` (a tailor-made language) as Kubernetes objects and enforce at runtime.
+**Kubernetes Fury OPA** module is based on [OPA Gatekeeper][gatekeeper-page], a popular open-source Kubernetes-native policy engine with [OPA](https://www.openpolicyagent.org/) as its core that runs as a Validating Admission Webhook. It allows writing custom constraints (policies) in `rego` (a tailor-made language) as Kubernetes objects and enforcing them at runtime.
 
 [SIGHUP][sighup-page] provides a set of base constraints that could be used both as a starting point to apply constraints to your current workloads or to give you an idea on how to implement new rules matching your requirements.
 
@@ -31,7 +33,7 @@ Fury Kubernetes OPA provides the following packages:
 | [Gatekeeper Rules](katalog/gatekeeper/rules)        | `N.A.`   | A set of custom rules to get started.                             |
 | [Gatekeeper Policy Manager](katalog/gatekeeper/gpm) | `v1.0.0` | Gatekeeper Policy Manager, a simple to use web-ui for Gatekeeper. |
 
-Click on each package to see its full documentation.
+Click on each package name to see its full documentation.
 
 ## Compatibility
 
@@ -52,7 +54,7 @@ Check the [compatibility matrix][compatibility-matrix] for additional informatio
 |-----------------------------------------|------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | [furyctl][furyctl-repo]                 | `>=0.6.0`  | The recommended tool to download and manage KFD modules and their packages. To learn more about `furyctl` read the [official documentation][furyctl-repo].     |
 | [kustomize][kustomize-repo]             | `>=3.5.0`  | Packages are customized using `kustomize`. To learn how to create your customization layer with `kustomize`, please refer to the [repository][kustomize-repo]. |
-| [KFD Monitoring Module][kfd-monitoring] | `>v1.10.0` | Expose metrics to Prometheus *(optional)*                                                                                                                      |
+| [KFD Monitoring Module][kfd-monitoring] | `>v1.10.0` | Expose metrics to Prometheus *(optional)*.                                                                                                                     |
 
 > You can comment out the service monitor in the [kustomization.yaml][core-kustomization] file if you don't want to install the monitoring module.
 
@@ -72,7 +74,7 @@ bases:
 
 3. Inspect the download packages under `./vendor/katalog/opa/gatekeeper`.
 
-4. Define a `kustomization.yaml` that includes the `./vendor/katalog/opa/gatekeeper` directory as resource.
+4. Define a `kustomization.yaml` that includes the `./vendor/katalog/opa/gatekeeper` directory as a resource.
 
 ```yaml
 resources:
@@ -113,7 +115,7 @@ add this to the `patches/allow.yml` file:
   value: "allow"
 ```
 
-### Emergency break
+### Emergency brake
 
 If for some reason OPA Gatekeeper is giving you issues and blocking normal operations in your cluster, you can disable it by removing the Validating Admission Webhook definition from your cluster:
 
@@ -139,7 +141,7 @@ kubectl delete ValidatingWebhookConfiguration gatekeeper-validating-webhook-conf
 
 ## Contributing
 
-Before contributing, please read first the [Contributing Guidelines](docs/CONTRIBUTING.md).
+Before contributing, please read the [Contributing Guidelines](docs/CONTRIBUTING.md).
 
 ### Reporting Issues
 

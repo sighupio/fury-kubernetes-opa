@@ -3,10 +3,13 @@
 # license that can be found in the LICENSE file.
 
 ---
-apiVersion: templates.gatekeeper.sh/v1beta1
+apiVersion: templates.gatekeeper.sh/v1
 kind: ConstraintTemplate
 metadata:
   name: k8suniqueingresshost
+  annotations:
+    description: >-
+      Denies the creation of ingress with the same host on more than 1 namespace to avoid accidental overlap.
 spec:
   crd:
     spec:

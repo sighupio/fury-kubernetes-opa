@@ -2,9 +2,9 @@
 # Use of this source code is governed by a BSD-style
 # license that can be found in the LICENSE file.
 
+name: license
 kind: pipeline
 type: docker
-name: license
 
 steps:
   - name: check
@@ -21,9 +21,9 @@ steps:
   #     -  conftest pull https://raw.githubusercontent.com/sighupio/ci-commons/main/conftest/kustomization/kfd-labels.rego
   #     -  conftest test katalog/**/kustomization.yaml
 ---
+name: policeman
 kind: pipeline
 type: docker
-name: policeman
 
 depends_on:
   - license
@@ -66,9 +66,9 @@ steps:
       - /conftest test -p /policies gatekeeper.yml
 
 ---
+name: e2e-kubernetes-1.20
 kind: pipeline
 type: docker
-name: e2e-kubernetes-1.20
 
 depends_on:
   - policeman
@@ -165,9 +165,9 @@ volumes:
     temp: {}
 
 ---
+name: e2e-kubernetes-1.21
 kind: pipeline
 type: docker
-name: e2e-kubernetes-1.21
 
 depends_on:
   - policeman
@@ -264,9 +264,9 @@ volumes:
     temp: {}
 
 ---
+name: e2e-kubernetes-1.22
 kind: pipeline
 type: docker
-name: e2e-kubernetes-1.22
 
 depends_on:
   - policeman
@@ -363,9 +363,9 @@ volumes:
     temp: {}
 
 ---
+name: e2e-kubernetes-1.23
 kind: pipeline
 type: docker
-name: e2e-kubernetes-1.23
 
 depends_on:
   - policeman
@@ -462,9 +462,9 @@ volumes:
     temp: {}
 
 ---
+name: release
 kind: pipeline
 type: docker
-name: release
 
 depends_on:
   - e2e-kubernetes-1.20

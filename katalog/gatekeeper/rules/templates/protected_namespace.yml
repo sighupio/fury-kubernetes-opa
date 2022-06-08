@@ -3,10 +3,15 @@
 # license that can be found in the LICENSE file.
 
 ---
-apiVersion: templates.gatekeeper.sh/v1beta1
+apiVersion: templates.gatekeeper.sh/v1
 kind: ConstraintTemplate
 metadata:
   name: k8sprotectednamespace
+  annotations:
+    description: >-
+      Allows protecting a namespace from deletion. The rule will deny all the
+      namespace deletion requests except when the namespace has the annotation
+      "opa.sighup.io/indelible-ns" == "no"
 spec:
   crd:
     spec:

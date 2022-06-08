@@ -3,7 +3,7 @@
 # license that can be found in the LICENSE file.
 
 ---
-apiVersion: templates.gatekeeper.sh/v1beta1
+apiVersion: templates.gatekeeper.sh/v1
 kind: ConstraintTemplate
 metadata:
   name: securitycontrols
@@ -14,11 +14,17 @@ spec:
         kind: SecurityControls
       validation:
         openAPIV3Schema:
+          type: object
           properties:
             excludeIstio:
               type: boolean # Default is false
+              description: >-
+                Setting this parameter to true will make the rule except containers that use Istio image. Otherwise,
+                when using Isito the pods will be rejected because the sidecar injected does not comply with the liveness
+                probe requirement.
   targets:
-    - libs:
+    - target: admission.k8s.gatekeeper.sh
+      libs:
         - |
           package lib.kubernetes
           default is_gatekeeper = false
@@ -127,7 +133,7 @@ spec:
                 [image_name, "latest"] = kubernetes.split_image(container.image)
                 not input.parameters.excludeIstio
                 is_create_update_or_audit
-                msg = kubernetes.format(sprintf("%s in the %s %s has an image, %s, using the latest tag", [container.name, kubernetes.kind, image_name, kubernetes.name]))
+                msg = kubernetes.format(sprintf("container '%s' in the %s '%s' has an image '%s' using the latest tag", [container.name, kubernetes.kind, kubernetes.name, image_name]))
         }
         # ISTIO: Latests
         violation[msg] {
@@ -136,7 +142,7 @@ spec:
                 input.parameters.excludeIstio
                 not istio(container.image)
                 is_create_update_or_audit
-                msg = kubernetes.format(sprintf("%s in the %s %s has an image, %s, using the latest tag", [container.name, kubernetes.kind, image_name, kubernetes.name]))
+                msg = kubernetes.format(sprintf("container '%s' in the %s '%s' has an image '%s' using the latest tag", [container.name, kubernetes.kind, kubernetes.name, image_name]))
         }
 
         # https://kubesec.io/basics/containers-resources-limits-memory
@@ -147,7 +153,7 @@ spec:
                 operation := input.review.operation
                 any([ operation == "CREATE", operation == "UPDATE" ])
                 operation != "DELETE"
-                msg = kubernetes.format(sprintf("%s in the %s %s does not have a memory limit set", [container.name, kubernetes.kind, kubernetes.name]))
+                msg = kubernetes.format(sprintf("container '%s' in the '%s' %s does not have a memory limit set", [container.name, kubernetes.name, kubernetes.kind]))
         }
         # ISTIO: https://kubesec.io/basics/containers-resources-limits-memory
         violation[msg] {
@@ -156,7 +162,7 @@ spec:
                 input.parameters.excludeIstio
                 not istio(container.image)
                 is_create_update_or_audit
-                msg = kubernetes.format(sprintf("%s in the %s %s does not have a memory limit set", [container.name, kubernetes.kind, kubernetes.name]))
+                msg = kubernetes.format(sprintf("container '%s' in the '%s' %s does not have a memory limit set", [container.name, kubernetes.name, kubernetes.kind]))
         }
 
         # https://kubesec.io/basics/containers-resources-limits-cpu/
@@ -165,7 +171,7 @@ spec:
                 not container.resources.limits.cpu
                 not input.parameters.excludeIstio
                 is_create_update_or_audit
-                msg = kubernetes.format(sprintf("%s in the %s %s does not have a CPU limit set", [container.name, kubernetes.kind, kubernetes.name]))
+                msg = kubernetes.format(sprintf("container '%s' in the '%s' %s does not have a CPU limit set", [container.name, kubernetes.name, kubernetes.kind]))
         }
         # ISTIO: https://kubesec.io/basics/containers-resources-limits-cpu/
         violation[msg] {
@@ -174,7 +180,7 @@ spec:
                 input.parameters.excludeIstio
                 not istio(container.image)
                 is_create_update_or_audit
-                msg = kubernetes.format(sprintf("%s in the %s %s does not have a CPU limit set", [container.name, kubernetes.kind, kubernetes.name]))
+                msg = kubernetes.format(sprintf("container '%s' in the '%s' %s does not have a CPU limit set", [container.name, kubernetes.name, kubernetes.kind]))
         }
 
         # Priviledge Escalation
@@ -183,7 +189,7 @@ spec:
                 kubernetes.priviledge_escalation_allowed(container)
                 not input.parameters.excludeIstio
                 is_create_update_or_audit
-                msg = kubernetes.format(sprintf("%s in the %s %s allows priviledge escalation", [container.name, kubernetes.kind, kubernetes.name]))
+                msg = kubernetes.format(sprintf("container '%s' in the '%s' %s allows priviledge escalation", [container.name, kubernetes.name, kubernetes.kind]))
         }
         # ISTIO: # Priviledge Escalation
         violation[msg] {
@@ -192,7 +198,7 @@ spec:
                 input.parameters.excludeIstio
                 not istio(container.image)
                 is_create_update_or_audit
-                msg = kubernetes.format(sprintf("%s in the %s %s allows priviledge escalation", [container.name, kubernetes.kind, kubernetes.name]))
+                msg = kubernetes.format(sprintf("container '%s' in the '%s' %s allows priviledge escalation", [container.name, kubernetes.name, kubernetes.kind]))
         }
 
         # https://kubesec.io/basics/containers-securitycontext-runasnonroot-true/
@@ -201,7 +207,7 @@ spec:
                 not container.securityContext.runAsNonRoot = true
                 not input.parameters.excludeIstio
                 is_create_update_or_audit
-                msg = kubernetes.format(sprintf("%s in the %s %s is running as root", [container.name, kubernetes.kind, kubernetes.name]))
+                msg = kubernetes.format(sprintf("container '%s' in the '%s' %s is running as root", [container.name, kubernetes.name, kubernetes.kind]))
         }
         # ISTIO: https://kubesec.io/basics/containers-securitycontext-runasnonroot-true/
         violation[msg] {
@@ -210,39 +216,39 @@ spec:
                 input.parameters.excludeIstio
                 not istio(container.image)
                 is_create_update_or_audit
-                msg = kubernetes.format(sprintf("%s in the %s %s is running as root", [container.name, kubernetes.kind, kubernetes.name]))
+                msg = kubernetes.format(sprintf("container '%s' in the '%s' %s is running as root", [container.name, kubernetes.kind, kubernetes.name]))
         }
 
         # # https://kubesec.io/basics/containers-securitycontext-capabilities-add-index-sys-admin/
         # violation[msg] {
         #         kubernetes.containers[container]
         #         kubernetes.added_capability(container, "CAP_SYS_ADMIN")
-        #         msg = kubernetes.format(sprintf("%s in the %s %s has SYS_ADMIN capabilties", [container.name, kubernetes.kind, kubernetes.name]))
+        #         msg = kubernetes.format(sprintf("container '%s' in the '%s' %s has SYS_ADMIN capabilties", [container.name, kubernetes.kind, kubernetes.name]))
         # }
         #
         # # https://kubesec.io/basics/containers-securitycontext-capabilities-drop-index-all/
         # violation[msg] {
         #         kubernetes.containers[container]
         #         not kubernetes.dropped_capability(container, "all")
-        #         msg = kubernetes.format(sprintf("%s in the %s %s doesn't drop all capabilities", [container.name, kubernetes.kind, kubernetes.name]))
+        #         msg = kubernetes.format(sprintf("container '%s' in the %s %s doesn't drop all capabilities", [container.name, kubernetes.name, kubernetes.kind]))
         # }
         # https://kubesec.io/basics/containers-securitycontext-privileged-true/
         # violation[msg] {
         #         kubernetes.containers[container]
         #         container.securityContext.privileged
-        #         msg = kubernetes.format(sprintf("%s in the %s %s is privileged", [container.name, kubernetes.kind, kubernetes.name]))
+        #         msg = kubernetes.format(sprintf("container '%s' in the %s %s is privileged", [container.name, kubernetes.name, kubernetes.kind]))
         # }
         # # https://kubesec.io/basics/containers-securitycontext-readonlyrootfilesystem-true/
         # violation[msg] {
         #         kubernetes.containers[container]
         #         kubernetes.no_read_only_filesystem(container)
-        #         msg = kubernetes.format(sprintf("%s in the %s %s is not using a read only root filesystem", [container.name, kubernetes.kind, kubernetes.name]))
+        #         msg = kubernetes.format(sprintf("container '%s' in the %s %s is not using a read only root filesystem", [container.name, kubernetes.name, kubernetes.kind]))
         # }
         # # https://kubesec.io/basics/containers-securitycontext-runasuser/
         # violation[msg] {
         #         kubernetes.containers[container]
         #         container.securityContext.runAsUser < 10000
-        #         msg = kubernetes.format(sprintf("%s in the %s %s has a UID of less than 10000", [container.name, kubernetes.kind, kubernetes.name]))
+        #         msg = kubernetes.format(sprintf("container '%s' in the %s %s has a UID of less than 10000", [container.name, kubernetes.name, kubernetes.kind]))
         # }
         # # https://kubesec.io/basics/spec-hostaliases/
         # violation[msg] {
@@ -274,4 +280,3 @@ spec:
         #         volume.hostpath.path = "/var/run/docker.sock"
         #         msg = kubernetes.format(sprintf("The %s %s is mounting the Docker socket", [kubernetes.kind, kubernetes.name]))
         # }
-      target: admission.k8s.gatekeeper.sh

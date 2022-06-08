@@ -20,45 +20,45 @@ Gatekeeper Policy Manager package gets deployed by default with the following re
 
 This module can easily be added to your existing Fury setup adding to your `Furyfile.yml`:
 
-```yml
+```yaml
 bases:
   (...)
   - name: opa/gatekeeper
-    version: v1.6.2
+    version: "v1.6.2"
 ```
 
-Once you'll do this, you can then proceed to integrate Gatekeeper into your project.
+Once you'll do this, you can then proceed to integrate Gatekeeper into your Kustomize project.
 
 ### Disable constraints
 
 If you need to disable already existing constraints that are usually enabled by default,
-you can just simply create a patch in kustomize like the following one:
+you can just simply create a patch in Kustomize like the following one:
 
-```yml
+```yaml
 patchesJson6902:
     - target:
           group: constraints.gatekeeper.sh
           version: v1beta1
           kind: K8sUniqueIngressHost # is just an example of already enabled constraints
           name: unique-ingress-host
-      path: patches/allow.yml
+      path: patches/dryrun.yml
 ```
 
 in the `patches/allow.yml`:
 
-```yml
+```yaml
 - op: "replace"
-  path: "/spec/enforcementaction"
-  value: "allow"
+  path: "/spec/enforcementAction"
+  value: "dryrun"
 ```
 
 ### Exclude namespaces from gatekeeper constraints
 
-There are already a bunch of namespaces excluded by default by the rules of Gatekeeper, that are the one
+There are already a bunch of namespaces excluded by default by the rules of Gatekeeper, that are the ones
 used by infra namespaces *(logging, monitoring, kube-system, ingress-nginx)*. If this subset must be modified for whatever
 reason, you can just do it with a kustomize path like the following one:
 
-```yml
+```yaml
 patchesJson6902:
     - target:
           group: constraints.gatekeeper.sh
@@ -68,36 +68,35 @@ patchesJson6902:
       path: patches/ns.yml
 ```
 
-in the `patches/allow.yml` :
+in the `patches/allow.yml`:
 
-```yml
+```yaml
 - op: "replace"
   path: "/spec/match/excludedNamespaces"
   value:
-      - myNs1
-      - myNs2
-      - myNs3
-      - myNs4
+      - my-ns-1
+      - my-ns-2
+      - my-ns-3
+      - my-ns-4
 ```
 
-### Naming of Constraints and ConstraintTemplates
+### The naming of Constraints and ConstraintTemplates
 
-To be more explicit, it is useful to give a verbose name to constraints, such as:
-`all_pod_must_have_gatekeeper_namespaceselector.yml`
+To be more explicit, it is useful to give a verbose name to constraints, such as `all_pod_must_have_gatekeeper_namespaceselector.yml`.
 In this way, the scope of the constraint that is going to be applied will be crystal clear.
+
 For the `ConstraintTemplate` (that is the general logic — a function basically —) could be reasonable to have something
 like: `k8srequiredlabels_template.yml`
 
 #### Uninstall Constraints
 
-To uninstall rules you first need to remove the constraint, then the `constraintTemplate`:
+To uninstall rules you first need to remove the `Constraint`, then the `constraintTemplate`:
 
 here is an example of the following resource:
 
-<!-- markdownlint-disable MD014 -->
 ```bash
-$ kubectl delete crd k8scontainerlimits.constraints.gatekeeper.sh # this will remove the constraint
-$ kubectl delete constrainttemplates.templates.gatekeeper.sh k8scontainerlimits # this will remove the constraintTemplate
+kubectl delete crd k8scontainerlimits.constraints.gatekeeper.sh # this will remove the constraint
+kubectl delete constrainttemplates.templates.gatekeeper.sh k8scontainerlimits # this will remove the constraintTemplate
 ```
 
 ### Modify constraintTemplates rules (securityControls)
