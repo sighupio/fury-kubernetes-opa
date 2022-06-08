@@ -22,7 +22,7 @@ set -o pipefail
   info
   deploy() {
     sed -i  -e '/# - DELETE/s/# //g' katalog/gatekeeper/core/vwh.yml
-    kubectl apply -f https://raw.githubusercontent.com/sighupio/fury-kubernetes-monitoring/v1.9.0/katalog/prometheus-operator/crd-servicemonitor.yml
+    kubectl apply -f https://raw.githubusercontent.com/sighupio/fury-kubernetes-monitoring/v1.14.2/katalog/prometheus-operator/crd-servicemonitor.yml
     force_apply katalog/gatekeeper/core
   }
   run deploy
@@ -64,12 +64,13 @@ set -o pipefail
 
 @test "Deploy Gatekeeper Rules - constraints" {
   info
+  sleep 30
   deploy() {
     # enabling all constraints for testing purposes
     sed -i -e 's/---//g' katalog/gatekeeper/rules/constraints/kustomization.yaml
     cd  katalog/gatekeeper/rules/constraints &&\
-      kustomize edit add resource must_have_namespace_label_to_be_safely_deleted.yml;\
-      cd -
+    kustomize edit add resource must_have_namespace_label_to_be_safely_deleted.yml;\
+    cd -
     kaction katalog/gatekeeper/rules/constraints apply
 
   }
@@ -109,7 +110,7 @@ set -o pipefail
   [[ "$status" -eq 0 ]]
 }
 
-@test "Wait to apply all rules" {
+@test "Wait for Gatekeeper to process all the constraints to test all rules" {
   info
   sleep 120
 }
@@ -207,14 +208,13 @@ set -o pipefail
   [[ "$output" == *"namespace-protected"* ]]
 }
 
-@test "[AUDIT] Check Violations from bad-pod are present" {
+@test "[AUDIT] check violations triggered by bad-pod are present" {
   info
-  violations() {
-    kubectl get k8slivenessprobe.constraints.gatekeeper.sh liveness-probe  -o go-template='{{.status.totalViolations}}'
-  }
-  run violations
-  [[ "$status" -ne 0 ]]
-  [[ "$output" -ne 1 ]]
+  run kubectl get k8slivenessprobe.constraints.gatekeeper.sh liveness-probe -o go-template="{{.status.totalViolations}}"
+  echo "number of violations for liveness-probe constraint is: ${output}"
+  echo "command status is: ${status}"
+  [[ "$status" -eq 0 ]]
+  [[ "$output" -eq 1 ]]
 }
 
 @test "Teardown - Delete resources" {
@@ -224,6 +224,7 @@ set -o pipefail
     kubectl delete -f katalog/tests/gatekeeper-manifests/deploy_ns_whitelisted.yml
     kubectl delete -f katalog/tests/gatekeeper-manifests/deployment_trusted.yml
     kubectl delete -f katalog/tests/gatekeeper-manifests/ingress_trusted.yml
+    kubectl delete pod bad-pod
   }
   run resource_teardown
   [[ "$status" -eq 0 ]]
