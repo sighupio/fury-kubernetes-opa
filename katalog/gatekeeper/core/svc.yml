@@ -11,12 +11,12 @@ metadata:
   name: gatekeeper-webhook-service
 spec:
   ports:
-  - name: https-webhook-server
-    port: 443
-    targetPort: webhook-server
-  - name: metrics
-    port: 8888
-    targetPort: 8888
+    - name: https-webhook-server
+      port: 443
+      targetPort: webhook-server
+    - name: metrics
+      port: 8888
+      targetPort: 8888
   selector:
     control-plane: controller-manager
     gatekeeper.sh/operation: webhook
