@@ -14,12 +14,6 @@ steps:
       - go get -u github.com/google/addlicense
       - addlicense -c "SIGHUP s.r.l" -v -l bsd -y "2017-present" --check .
 
-  # - name: checklabels
-  #   image: openpolicyagent/conftest:v0.28.1
-  #   pull: always
-  #   commands:
-  #     -  conftest pull https://raw.githubusercontent.com/sighupio/ci-commons/main/conftest/kustomization/kfd-labels.rego
-  #     -  conftest test katalog/**/kustomization.yaml
 ---
 name: policeman
 kind: pipeline
@@ -93,12 +87,12 @@ steps:
     volumes:
       - name: shared
         path: /shared
-    depends_on: [ clone ]
+    depends_on: [clone]
     settings:
       action: custom-cluster-121
       pipeline_id: cluster-121
       local_kind_config_path: katalog/tests/kind/config.yml
-      cluster_version: '1.21.1'
+      cluster_version: "1.21.1"
       instance_path: /shared
       aws_default_region:
         from_secret: aws_region
@@ -125,7 +119,7 @@ steps:
     volumes:
       - name: shared
         path: /shared
-    depends_on: [ init ]
+    depends_on: [init]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-121
       - bats -t katalog/tests/gatekeeper.sh
@@ -133,7 +127,7 @@ steps:
   - name: destroy
     image: quay.io/sighup/e2e-testing-drone-plugin:v1.24.0
     pull: always
-    depends_on: [ e2e ]
+    depends_on: [e2e]
     settings:
       action: destroy
       pipeline_id: cluster-121
@@ -192,12 +186,12 @@ steps:
     volumes:
       - name: shared
         path: /shared
-    depends_on: [ clone ]
+    depends_on: [clone]
     settings:
       action: custom-cluster-122
       pipeline_id: cluster-122
       local_kind_config_path: katalog/tests/kind/config.yml
-      cluster_version: '1.22.0'
+      cluster_version: "1.22.0"
       instance_path: /shared
       aws_default_region:
         from_secret: aws_region
@@ -224,7 +218,7 @@ steps:
     volumes:
       - name: shared
         path: /shared
-    depends_on: [ init ]
+    depends_on: [init]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-122
       - bats -t katalog/tests/gatekeeper.sh
@@ -232,7 +226,7 @@ steps:
   - name: destroy
     image: quay.io/sighup/e2e-testing-drone-plugin:v1.24.0
     pull: always
-    depends_on: [ e2e ]
+    depends_on: [e2e]
     settings:
       action: destroy
       pipeline_id: cluster-122
@@ -291,12 +285,12 @@ steps:
     volumes:
       - name: shared
         path: /shared
-    depends_on: [ clone ]
+    depends_on: [clone]
     settings:
       action: custom-cluster-123
       pipeline_id: cluster-123
       local_kind_config_path: katalog/tests/kind/config.yml
-      cluster_version: '1.23.0'
+      cluster_version: "1.23.0"
       instance_path: /shared
       aws_default_region:
         from_secret: aws_region
@@ -323,7 +317,7 @@ steps:
     volumes:
       - name: shared
         path: /shared
-    depends_on: [ init ]
+    depends_on: [init]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-123
       - bats -t katalog/tests/gatekeeper.sh
@@ -331,7 +325,7 @@ steps:
   - name: destroy
     image: quay.io/sighup/e2e-testing-drone-plugin:v1.24.0
     pull: always
-    depends_on: [ e2e ]
+    depends_on: [e2e]
     settings:
       action: destroy
       pipeline_id: cluster-123
@@ -390,12 +384,12 @@ steps:
     volumes:
       - name: shared
         path: /shared
-    depends_on: [ clone ]
+    depends_on: [clone]
     settings:
       action: custom-cluster-124
       pipeline_id: cluster-124
       local_kind_config_path: katalog/tests/kind/config.yml
-      cluster_version: '1.24.0'
+      cluster_version: "1.24.0"
       instance_path: /shared
       aws_default_region:
         from_secret: aws_region
@@ -422,7 +416,7 @@ steps:
     volumes:
       - name: shared
         path: /shared
-    depends_on: [ init ]
+    depends_on: [init]
     commands:
       - export KUBECONFIG=/shared/kube/kubeconfig-124
       - bats -t katalog/tests/gatekeeper.sh
@@ -430,10 +424,10 @@ steps:
   - name: destroy
     image: quay.io/sighup/e2e-testing-drone-plugin:v1.24.0
     pull: always
-    depends_on: [ e2e ]
+    depends_on: [e2e]
     settings:
       action: destroy
-      pipeline_id: cluster-123
+      pipeline_id: cluster-124
       aws_default_region:
         from_secret: aws_region
       aws_access_key_id:
@@ -485,7 +479,7 @@ steps:
   - name: prepare-canonical-json
     image: registry.sighup.io/poc/fury-repo-automations:v0.0.3
     pull: always
-    depends_on: [ clone ]
+    depends_on: [clone]
     commands:
       - spock module-json -m=fury-kubernetes-opa -r=False -v=${DRONE_TAG}
     when:
@@ -496,7 +490,7 @@ steps:
   - name: prepare-tar-gz
     image: alpine:latest
     pull: always
-    depends_on: [ clone ]
+    depends_on: [clone]
     commands:
       - tar -zcvf fury-kubernetes-opa-${DRONE_TAG}.tar.gz katalog/ LICENSE README.md
     when:
@@ -507,7 +501,7 @@ steps:
   - name: prepare-release-notes
     image: quay.io/sighup/fury-release-notes-plugin:3.7_2.8.4
     pull: always
-    depends_on: [ clone ]
+    depends_on: [clone]
     settings:
       release_notes_file_path: release-notes.md
     when:

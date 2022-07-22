@@ -28,8 +28,8 @@ The Kubernetes API server provides a mechanism to review every request that is m
 Fury Kubernetes OPA provides the following packages:
 
 | Package                                             | Version  | Description                                                       |
-|-----------------------------------------------------|----------|-------------------------------------------------------------------|
-| [Gatekeeper Core](katalog/gatekeeper/core)          | `v3.8.1` | Gatekeeper deployment, ready to apply rules.                      |
+| --------------------------------------------------- | -------- | ----------------------------------------------------------------- |
+| [Gatekeeper Core](katalog/gatekeeper/core)          | `v3.9.0` | Gatekeeper deployment, ready to apply rules.                      |
 | [Gatekeeper Rules](katalog/gatekeeper/rules)        | `N.A.`   | A set of custom rules to get started.                             |
 | [Gatekeeper Policy Manager](katalog/gatekeeper/gpm) | `v1.0.0` | Gatekeeper Policy Manager, a simple to use web-ui for Gatekeeper. |
 
@@ -38,7 +38,7 @@ Click on each package name to see its full documentation.
 ## Compatibility
 
 | Kubernetes Version |   Compatibility    | Notes                                               |
-|--------------------|:------------------:|-----------------------------------------------------|
+| ------------------ | :----------------: | --------------------------------------------------- |
 | `1.20.x`           | :white_check_mark: | No known issues                                     |
 | `1.21.x`           | :white_check_mark: | No known issues                                     |
 | `1.22.x`           | :white_check_mark: | No known issues                                     |
@@ -51,7 +51,7 @@ Check the [compatibility matrix][compatibility-matrix] for additional informatio
 ### Prerequisites
 
 | Tool                                    | Version    | Description                                                                                                                                                    |
-|-----------------------------------------|------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| --------------------------------------- | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [furyctl][furyctl-repo]                 | `>=0.6.0`  | The recommended tool to download and manage KFD modules and their packages. To learn more about `furyctl` read the [official documentation][furyctl-repo].     |
 | [kustomize][kustomize-repo]             | `>=3.5.0`  | Packages are customized using `kustomize`. To learn how to create your customization layer with `kustomize`, please refer to the [repository][kustomize-repo]. |
 | [KFD Monitoring Module][kfd-monitoring] | `>v1.10.0` | Expose metrics to Prometheus *(optional)*.                                                                                                                     |
