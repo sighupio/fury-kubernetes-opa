@@ -27,4 +27,4 @@ Please notice that it is expected that some objects don't have the namespace set
 
 - We enable monitoring of metrics by default, so we added some parameters to scrape them.
 
-- We add a list of ` infrastructure` namespaces as `--exempt-namespace` flag to the deployment to exempt them from the Admission Validation chain.
+- We add a list of _infrastructure_ namespaces as `--exempt-namespace` flag to the deployment to exempt them from the Admission Validation chain.
