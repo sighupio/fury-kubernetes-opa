@@ -89,9 +89,50 @@ resources:
 kustomize build . | kubectl apply -f -
 ```
 
+> ⛔️ Gatekeeper is deployed by default as a Fail open (`Ignore` mode) Admission Webhook. Should you decide to change it to `Fail` mode read carefully [the project's documentation on the topic first][gatekeeper-failmode].
+<!-- space left blank -->
 > ⚠️ if you decide to deploy Gatekeeper to a different namespace than the default `gatekeeper-system`, you'll need to patch the file `vwh.yml` to point to the right namespace for the webhook service due to limitations in the `kustomize` tool.
 
 ### Common Customizations
+
+#### Exempting a namespace
+
+There are three points where you can exempt a namespace from Gatekeeper's policy enforcement:
+
+1. The API webhook configuration & Gatekeeper's command flag (exempt at API server level)
+2. Gatekeeper's configuration CRD (exempt at Gatekeeper global configuration level)
+3. Constraint definition (exempt at constraint level)
+
+Method `1` has the advantage that API requests for the namespace won't be sent to the webhook.
+
+The following namespaces are already included as `--exempt-namespace` in the default deployment:
+
+- `kube-node-lease`
+- `kube-public`
+- `kube-system`
+- `gatekeeper-system`
+- `monitoring`
+- `logging`
+- `ingress-nginx`
+- `cert-manager`
+
+To completely exempt one of them, label it with the following command:
+
+```bash
+kubectl label namespace <NAMESPACE> admission.gatekeeper.sh/ignore=yes
+```
+
+> ✋🏻 replace `<NAMESPACE>` with the namespace you want to exempt.
+
+If you prefer, you can label all the namespaces at once (namespaces that are not exempted as flags won't be labeled because Gatekeeper will reject the request):
+
+```bash
+kubectl label namespace --all admission.gatekeeper.sh/ignore=yes
+```
+
+> ⚠️ please notice that exempting these namespaces [won't guarantee that the cluster will function properly with Gatekeeper webhook in `Fail` mode][gatekeeper-failmode].
+
+For more details, head to the [official Gatekeeper documentation][gatekeeper-exemption].
 
 #### Disable constraints
 
@@ -125,6 +166,8 @@ kubectl delete ValidatingWebhookConfiguration gatekeeper-validating-webhook-conf
 
 <!-- Links -->
 [gatekeeper-page]: https://github.com/open-policy-agent/gatekeeper
+[gatekeeper-failmode]: https://open-policy-agent.github.io/gatekeeper/website/docs/failing-closed/
+[gatekeeper-exemption]: https://open-policy-agent.github.io/gatekeeper/website/docs/exempt-namespaces/
 [kubernetes-vaw-docs]: https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/
 [kfd-monitoring]: https://github.com/sighupio/fury-kubernetes-monitoring
 [core-kustomization]: ./katalog/gatekeeper/core/kustomization.yaml
