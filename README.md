@@ -89,8 +89,8 @@ resources:
 kustomize build . | kubectl apply -f -
 ```
 
-> ⛔️ Gatekeeper is deployed by default as a Fail open (`Ignore` mode) Admission Webhook. Should you decide to change it to `Fail` mode read carefully [the project's documentation on the topic first][gatekeeper-failmode].
-<!-- space left blank -->
+> ⚠️ Gatekeeper is deployed by default as a Fail open (`Ignore` mode) Admission Webhook. Should you decide to change it to `Fail` mode read carefully [the project's documentation on the topic first][gatekeeper-failmode].
+<!-- space intentionally left blank -->
 > ⚠️ if you decide to deploy Gatekeeper to a different namespace than the default `gatekeeper-system`, you'll need to patch the file `vwh.yml` to point to the right namespace for the webhook service due to limitations in the `kustomize` tool.
 
 ### Common Customizations
