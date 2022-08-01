@@ -103,9 +103,9 @@ There are three points where you can exempt a namespace from Gatekeeper's policy
 2. Gatekeeper's configuration CRD (exempt at Gatekeeper global configuration level)
 3. Constraint definition (exempt at constraint level)
 
-Method `1` has the advantage that API requests for the namespace won't be sent to the webhook.
+Method `1` has the advantage that API requests for the exempted namespaces won't be sent to the webhook. Exemption for this method works via 2 mechanisms: 1. a [label selector](https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/) at the webhook configuration and 2. a flag `--exempt-namespace=<ns>` in Gatekeeper's launch command.
 
-The following namespaces are already included as `--exempt-namespace` in the default deployment:
+The following namespaces are already included as `--exempt-namespace` flags for Gatekeeper in the default deployment:
 
 - `kube-node-lease`
 - `kube-public`
@@ -130,7 +130,7 @@ If you prefer, you can label all the namespaces at once (namespaces that are not
 kubectl label namespace --all admission.gatekeeper.sh/ignore=yes
 ```
 
-> ⚠️ please notice that exempting these namespaces [won't guarantee that the cluster will function properly with Gatekeeper webhook in `Fail` mode][gatekeeper-failmode].
+> ⚠️ please notice that exempting these namespaces [won't guarantee that the cluster will function properly when Gatekeeper webhook is in `Fail` mode][gatekeeper-failmode].
 
 For more details, head to the [official Gatekeeper documentation][gatekeeper-exemption].
 
