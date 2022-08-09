@@ -10,6 +10,7 @@ namespace: gatekeeper-system
 
 resources:
   - service-monitor.yml
+  - alert-rules.yaml
 
 generatorOptions:
   labels:
