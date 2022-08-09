@@ -20,8 +20,8 @@ spec:
             message: "Gatekeeper is not enforcing {{$labels.type}} requests to the API server."
             doc: "Gatekeeper is not enforcing {{$labels.type}} requests to the API server because the Kubernetes API server is having trouble contacting the '{{ $labels.name }}' {{$labels.type}} webhook, but the webhook is in Fail open (Ignore) mode."
           expr: |
-            rate(apiserver_admission_webhook_fail_open_count{name=~".*.gatekeeper.sh"}[1m]) > 0
-          for: 1m
+            rate(apiserver_admission_webhook_fail_open_count{name=~".*.gatekeeper.sh"}[5m]) > 0
+          for: 5m
           labels:
             severity: warning
         - alert: GatekeeperWebhookCallError
@@ -29,7 +29,7 @@ spec:
             message: "Kubernetes API server is rejecting all requests because Gatekeeper's webhook '{{ $labels.name }}' is failing for '{{ $labels.operation }}'."
             doc: "Gatekeeper's '{{ $labels.name }}' webhook is erroring with code {{ $labels.rejection_code }} for '{{ $labels.operation }}' operations and it is configured in Fail mode, effectivly rejecting all the request to the Kubernetes API server."
           expr: |
-            rate(apiserver_admission_webhook_rejection_count{error_type="calling_webhook_error", name=~".*.gatekeeper.sh"}[1m]) > 0
-          for: 1m
+            rate(apiserver_admission_webhook_rejection_count{error_type="calling_webhook_error", name=~".*.gatekeeper.sh"}[5m]) > 0
+          for: 5m
           labels:
             severity: critical
