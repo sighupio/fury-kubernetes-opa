@@ -27,11 +27,12 @@ The Kubernetes API server provides a mechanism to review every request that is m
 
 Fury Kubernetes OPA provides the following packages:
 
-| Package                                             | Version  | Description                                                       |
-| --------------------------------------------------- | -------- | ----------------------------------------------------------------- |
-| [Gatekeeper Core](katalog/gatekeeper/core)          | `v3.9.0` | Gatekeeper deployment, ready to enforce rules.                    |
-| [Gatekeeper Rules](katalog/gatekeeper/rules)        | `N.A.`   | A set of custom rules to get started.                             |
-| [Gatekeeper Policy Manager](katalog/gatekeeper/gpm) | `v1.0.0` | Gatekeeper Policy Manager, a simple to use web-ui for Gatekeeper. |
+| Package                                                | Version  | Description                                                       |
+| ------------------------------------------------------ | -------- | ----------------------------------------------------------------- |
+| [Gatekeeper Core](katalog/gatekeeper/core)             | `v3.9.0` | Gatekeeper deployment, ready to enforce rules.                    |
+| [Gatekeeper Rules](katalog/gatekeeper/rules)           | `N.A.`   | A set of custom rules to get started with policy enforcement.     |
+| [Gatekeeper Monitoring](katalog/gatekeeper/monitoring) | `N.A.`   | Metrics, alerts and dashboard for monitoring Gatekeeper.          |
+| [Gatekeeper Policy Manager](katalog/gatekeeper/gpm)    | `v1.0.0` | Gatekeeper Policy Manager, a simple to use web-ui for Gatekeeper. |
 
 Click on each package name to see its full documentation.
 
@@ -122,6 +123,20 @@ If for some reason OPA Gatekeeper is giving you issues and blocking normal opera
 ```bash
 kubectl delete ValidatingWebhookConfiguration gatekeeper-validating-webhook-configuration
 ```
+
+### Monitoring
+
+Gatekeeper is configured by default in this module to expose some Prometheus metrics about its health, performance, and operative information.
+
+You can monitor and review these metrics by checking out the provided Grafana dashboard. (This requires the KFD Monitoring Module to be installed).
+
+Go to your cluster's Grafana and search for the "Gatekeeper" dashboard.
+
+You can also use [Gatekeeper Policy Manager](katalog/gatekeeper/gpm/README.md) to view the Constraints Templates, Constraints, and Violations in a simple-to-use UI.
+
+Two alerts are also provided by default with Gatekeeper, the alerts are triggered when the number of errors seen by the Kubernetes API server trying to contact Gatekeeper's webhook is too high. Both for Fail open (`Ignore`) mode and Fail mode.
+
+Notice that the alert for when the Gatekeeper webhook is in `Ignore` mode (the default) depends on an API server metric that has been added in Kubernetes version 1.24. Previous versions of Kubernetes won't trigger alerts when the webhook is failing and in `Ignore` mode.
 
 <!-- Links -->
 [gatekeeper-page]: https://github.com/open-policy-agent/gatekeeper
