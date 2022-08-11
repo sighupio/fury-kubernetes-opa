@@ -20,6 +20,7 @@ resources:
   - pdb.yml
   - mwh.yml
   - vwh.yml
+  - ns-exempted.yml
 
 images:
   - name: openpolicyagent/gatekeeper

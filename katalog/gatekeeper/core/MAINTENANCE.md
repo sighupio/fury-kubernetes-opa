@@ -26,5 +26,5 @@ Please notice that it is expected that some objects don't have the namespace set
 ## Customizations
 
 - We enable monitoring of metrics by default, so we added some parameters to scrape them.
-
-- We add a list of _infrastructure_ namespaces as `--exempt-namespace` flag to the deployment to exempt them from the Admission Validation chain.
+- We add a list of _Kubernetes_ and _infrastructure_ namespaces as `--exempt-namespace` flag to the deployment to exempt them from the Admission Validation chain.
+- We patch the Kubernetes namespces (`kube-system`, `kube-node-lease` and `kube-public`) with the label needed for the exepmtion.

@@ -116,7 +116,7 @@ The following namespaces are already included as `--exempt-namespace` flags for 
 - `ingress-nginx`
 - `cert-manager`
 
-To completely exempt one of them, label it with the following command:
+Kubernetes namesapces (`kube-system`, `kube-node-lease` and `kube-public`) will be patched with the label when you deploy the module. The KFD _infrastructure_ namespaces are created outside of this module, so to completely exempt one of them, you need to label it with the following command:
 
 ```bash
 kubectl label namespace <NAMESPACE> admission.gatekeeper.sh/ignore=yes
