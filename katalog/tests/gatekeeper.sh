@@ -69,6 +69,16 @@ set -o pipefail
   [[ "$status" -eq 0 ]]
 }
 
+@test "Deploy Gatekeeper Exemptions" {
+  info
+  deploy() {
+    kaction katalog/gatekeeper/exemptions apply
+  }
+  loop_it deploy 30 10
+  status=${loop_it_result}
+  [[ "$status" -eq 0 ]]
+}
+
 @test "Deploy Gatekeeper Rules - templates" {
   info
   deploy() {
