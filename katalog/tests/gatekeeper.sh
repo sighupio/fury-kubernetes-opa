@@ -69,7 +69,7 @@ set -o pipefail
   [[ "$status" -eq 0 ]]
 }
 
-@test "Deploy Gatekeeper Exemptions" {
+@test "Deploy Gatekeeper Namespace Exemptions" {
   info
   deploy() {
     kaction katalog/gatekeeper/exemptions apply
