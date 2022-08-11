@@ -53,6 +53,22 @@ set -o pipefail
   [[ "$status" -eq 0 ]]
 }
 
+# We just deploy the monitoring parts to check that the apply works, but we should do some more comprehensive tests.
+# Some tests we could do:
+# - we could check that the serviceMonitor is actually working
+# - We could check for metrics being present
+# - We could check that the alerts are actually triggered
+# but all these requires the monitoring module to be present.
+@test "Deploy Gatekeeper Monitoring" {
+  info
+  deploy() {
+    kaction katalog/gatekeeper/monitoring apply
+  }
+  loop_it deploy 30 10
+  status=${loop_it_result}
+  [[ "$status" -eq 0 ]]
+}
+
 @test "Deploy Gatekeeper Rules - templates" {
   info
   deploy() {
