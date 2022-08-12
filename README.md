@@ -90,9 +90,23 @@ resources:
 kustomize build . | kubectl apply -f -
 ```
 
-> ⚠️ if you decide to deploy Gatekeeper to a different namespace than the default `gatekeeper-system`, you'll need to patch the file `vwh.yml` to point to the right namespace for the webhook service due to limitations in the `kustomize` tool.
+> ⚠️ Gatekeeper is deployed by default as a Fail open (also called `Ignore` mode) Admission Webhook. Should you decide to change it to `Fail` mode read carefully [the project's documentation on the topic first][gatekeeper-failmode].
+<!-- space intentionally left blank -->
+> ⚠️ If you decide to deploy Gatekeeper to a different namespace than the default `gatekeeper-system`, you'll need to patch the file `vwh.yml` to point to the right namespace for the webhook service due to limitations in the `kustomize` tool.
 
 ### Common Customizations
+
+#### Exempting a namespace
+
+Gatekeeper supports 3 levels of granularity to exempt a namespace from policy enforcement.
+
+1. Global exemption at Kubernetes API webhook level: the requests to the API server for the namespace won't be sent to Gatekeeper's webhook.
+2. Global exemption at Gatekeeper configuration level: requests to the API server for the namespace will be sent to Gatekeeper's webhook, but Gatekepeer will not enforce constraints for the namespace. It is the equivalent of exempting the namespace in all the constraints. Useful when you don't want any of the constraints enforced in a namespace.
+3. Exemption at constraint level: you can exempt namespaces in the definition of each constraint. Useful when you may want only a subset of all the constraints to be enforced in a namespace.
+
+> ⚠️ Exempting critical namespaces like `kube-system` or `logging` [won't guarantee that the cluster will function properly when Gatekeeper webhook is in `Fail` mode][gatekeeper-failmode].
+
+For more details on how to implement the exemption, please refer to the [official Gatekeeper documentation site][gatekeeper-exemption].
 
 #### Disable constraints
 
@@ -140,6 +154,8 @@ Notice that the alert for when the Gatekeeper webhook is in `Ignore` mode (the d
 
 <!-- Links -->
 [gatekeeper-page]: https://github.com/open-policy-agent/gatekeeper
+[gatekeeper-failmode]: https://open-policy-agent.github.io/gatekeeper/website/docs/failing-closed/
+[gatekeeper-exemption]: https://open-policy-agent.github.io/gatekeeper/website/docs/exempt-namespaces/
 [kubernetes-vaw-docs]: https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/
 [kfd-monitoring]: https://github.com/sighupio/fury-kubernetes-monitoring
 [core-kustomization]: ./katalog/gatekeeper/core/kustomization.yaml
