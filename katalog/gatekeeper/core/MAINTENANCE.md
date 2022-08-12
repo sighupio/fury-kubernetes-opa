@@ -3,7 +3,7 @@
 1. Check the differences with upstream:
 
 ```bash
-export GATEKEEPER_VERISON=3.9
+export GATEKEEPER_VERSION=3.9
 curl https://raw.githubusercontent.com/open-policy-agent/gatekeeper/release-${GATEKEEPER_VERSION}/deploy/gatekeeper.yaml -o upstream.yaml
 cat ns.yml  crd.yml sa.yml psp.yml rbac.yml secret.yml svc.yml deploy.yml pdb.yml mwh.yml vwh.yml > local.yml 
 ```
