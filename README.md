@@ -11,17 +11,17 @@
 
 <!-- <KFD-DOCS> -->
 
-**Kubernetes Fury OPA** provides policy enforcement for the [Kubernetes Fury Distribution (KFD)][kfd-repo] using OPA Gatekeeper.
+**Kubernetes Fury OPA** provides policy enforcement at runtime for the [Kubernetes Fury Distribution (KFD)][kfd-repo] using OPA Gatekeeper.
 
 If you are new to KFD please refer to the [official documentation][kfd-docs] on how to get started with KFD.
 
 ## Overview
 
-The Kubernetes API server provides a mechanism to review every request that is made, being object creation, modification or deletion. To use this mechanism the API server allows us to create a [Validating Admission Webhook][kubernetes-vaw-docs] that, as the name says, will validate every request and let the API server know if the request is allowed or not based on some logic (policy).
+The Kubernetes API server provides a mechanism to review every request that is made, being object creation, modification, or deletion. To use this mechanism the API server allows us to create a [Validating Admission Webhook][kubernetes-vaw-docs] that, as the name says, will validate every request and let the API server know if the request is allowed or not based on some logic (policy).
 
 **Kubernetes Fury OPA** module is based on [OPA Gatekeeper][gatekeeper-page], a popular open-source Kubernetes-native policy engine with [OPA](https://www.openpolicyagent.org/) as its core that runs as a Validating Admission Webhook. It allows writing custom constraints (policies) in `rego` (a tailor-made language) as Kubernetes objects and enforcing them at runtime.
 
-[SIGHUP][sighup-page] provides a set of base constraints that could be used both as a starting point to apply constraints to your current workloads or to give you an idea on how to implement new rules matching your requirements.
+[SIGHUP][sighup-page] provides a set of base constraints that could be used both as a starting point to apply constraints to your current workloads or to give you an idea of how to implement new rules matching your requirements.
 
 ## Packages
 
@@ -32,18 +32,18 @@ Fury Kubernetes OPA provides the following packages:
 | [Gatekeeper Core](katalog/gatekeeper/core)             | `v3.9.0` | Gatekeeper deployment, ready to enforce rules.                    |
 | [Gatekeeper Rules](katalog/gatekeeper/rules)           | `N.A.`   | A set of custom rules to get started with policy enforcement.     |
 | [Gatekeeper Monitoring](katalog/gatekeeper/monitoring) | `N.A.`   | Metrics, alerts and dashboard for monitoring Gatekeeper.          |
-| [Gatekeeper Policy Manager](katalog/gatekeeper/gpm)    | `v1.0.0` | Gatekeeper Policy Manager, a simple to use web-ui for Gatekeeper. |
+| [Gatekeeper Policy Manager](katalog/gatekeeper/gpm)    | `v1.0.1` | Gatekeeper Policy Manager, a simple to use web-ui for Gatekeeper. |
 
 Click on each package name to see its full documentation.
 
 ## Compatibility
 
-| Kubernetes Version |   Compatibility    | Notes                                               |
-| ------------------ | :----------------: | --------------------------------------------------- |
-| `1.20.x`           | :white_check_mark: | No known issues                                     |
-| `1.21.x`           | :white_check_mark: | No known issues                                     |
-| `1.22.x`           | :white_check_mark: | No known issues                                     |
-| `1.23.x`           |     :warning:      | Conformance tests passed. Not officially supported. |
+| Kubernetes Version |   Compatibility    | Notes            |
+| ------------------ | :----------------: | ---------------- |
+| `1.21.x`           | :white_check_mark: | No known issues  |
+| `1.22.x`           | :white_check_mark: | No known issues  |
+| `1.23.x`           | :white_check_mark: | No known issues. |
+| `1.24.x`           | :white_check_mark: | No known issues. |
 
 Check the [compatibility matrix][compatibility-matrix] for additional information on previous releases of the module.
 
@@ -66,7 +66,7 @@ Check the [compatibility matrix][compatibility-matrix] for additional informatio
 ```yaml
 bases:
   - name: opa/gatekeeper
-    version: "v1.6.2"
+    version: "v1.7.1"
 ```
 
 > See `furyctl` [documentation][furyctl-repo] for additional details about `Furyfile.yml` format.
