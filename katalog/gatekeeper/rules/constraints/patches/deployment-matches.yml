@@ -11,6 +11,8 @@
       - monitoring
       - ingress-nginx
       - cert-manager
+      - tigera-operator
+      - calico-system
     kinds:
       - apiGroups: ["apps", "extensions"]
         kinds: ["Deployment"]
