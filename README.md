@@ -32,7 +32,7 @@ Fury Kubernetes OPA provides the following packages:
 | [Gatekeeper Core](katalog/gatekeeper/core)             | `v3.9.0` | Gatekeeper deployment, ready to enforce rules.                    |
 | [Gatekeeper Rules](katalog/gatekeeper/rules)           | `N.A.`   | A set of custom rules to get started with policy enforcement.     |
 | [Gatekeeper Monitoring](katalog/gatekeeper/monitoring) | `N.A.`   | Metrics, alerts and dashboard for monitoring Gatekeeper.          |
-| [Gatekeeper Policy Manager](katalog/gatekeeper/gpm)    | `v1.0.1` | Gatekeeper Policy Manager, a simple to use web-ui for Gatekeeper. |
+| [Gatekeeper Policy Manager](katalog/gatekeeper/gpm)    | `v1.0.2` | Gatekeeper Policy Manager, a simple to use web-ui for Gatekeeper. |
 
 Click on each package name to see its full documentation.
 
@@ -176,7 +176,7 @@ Before contributing, please read the [Contributing Guidelines](docs/CONTRIBUTING
 
 ### Reporting Issues
 
-In case you experience any problem with the module, please [open a new issue](https://github.com/sighupio/fury-kubernetes-opa/issues/new/choose).
+In case you experience any problems with the module, please [open a new issue](https://github.com/sighupio/fury-kubernetes-opa/issues/new/choose).
 
 ## License
 
