@@ -13,6 +13,8 @@
       - cert-manager
       - tigera-operator
       - calico-system
+      - calico-api
+      - vmware-system-csi
     kinds:
       - apiGroups: ["batch", "extensions", "apps", ""]
         kinds:
