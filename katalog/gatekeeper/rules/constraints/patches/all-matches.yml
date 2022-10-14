@@ -15,6 +15,7 @@
       - calico-system
       - calico-api
       - vmware-system-csi
+      - pomerium
     kinds:
       - apiGroups: ["batch", "extensions", "apps", ""]
         kinds:
