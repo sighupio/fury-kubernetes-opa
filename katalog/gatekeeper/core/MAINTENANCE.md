@@ -31,7 +31,7 @@ diff the generated `local.yaml` with the `upstream.yaml` file and port the neede
 
 Please notice that it is expected that some objects don't have the namespace set as in upstream, this is because the namespace is set with Kustomize.
 
-2. Sync the new image to our registry by updateing the [OPA iamges.yaml file fury-distribution-container-image-sync repository](https://github.com/sighupio/fury-distribution-container-image-sync/blob/main/modules/opa/images.yml).
+2. Sync the new image to our registry by updating the [OPA images.yaml file fury-distribution-container-image-sync repository](https://github.com/sighupio/fury-distribution-container-image-sync/blob/main/modules/opa/images.yml).
 
 3. Update the `kustomization.yaml` file with the new version in the image tag.
 
