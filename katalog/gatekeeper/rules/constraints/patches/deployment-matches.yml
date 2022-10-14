@@ -13,6 +13,9 @@
       - cert-manager
       - tigera-operator
       - calico-system
+      - calico-api
+      - vmware-system-csi
+      - pomerium
     kinds:
       - apiGroups: ["apps", "extensions"]
         kinds: ["Deployment"]
