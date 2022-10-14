@@ -24,4 +24,4 @@ resources:
 images:
   - name: openpolicyagent/gatekeeper
     newName: registry.sighup.io/fury/openpolicyagent/gatekeeper
-    newTag: v3.9.0
+    newTag: v3.9.2
