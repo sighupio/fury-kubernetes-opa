@@ -79,7 +79,7 @@ bases:
 
 ```yaml
 resources:
-- ./vendor/katalog/opa/gatekeeper
+  - ./vendor/katalog/opa/gatekeeper
 ```
 
 5. Apply the necessary patches. You can find a list of common customization [here](#common-customizations).
