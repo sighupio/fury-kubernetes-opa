@@ -31,7 +31,7 @@ spec:
 
         violation[{"msg": msg}] {
           input.review.kind.kind == "Ingress"
-          re_match("^(extensions|networking.k8s.io)$", input.review.kind.group)
+          input.review.kind.group == "networking.k8s.io"
           input.review.kind.version == "v1"
 
           some i
