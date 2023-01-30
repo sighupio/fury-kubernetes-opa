@@ -427,7 +427,7 @@ steps:
       - bats -t katalog/tests/gatekeeper.sh
 
   - name: destroy
-    image: quay.io/sighup/e2e-testing-drone-plugin:v1.25.0
+    image: quay.io/sighup/e2e-testing-drone-plugin:v1.25.3
     pull: always
     depends_on: [e2e]
     settings:
