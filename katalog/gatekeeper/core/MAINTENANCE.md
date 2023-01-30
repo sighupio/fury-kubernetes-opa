@@ -4,12 +4,11 @@
 
 ```bash
 # Assuming ${PWD} == the root of the project
-export GATEKEEPER_VERSION=3.9
+export GATEKEEPER_VERSION=3.11
 curl https://raw.githubusercontent.com/open-policy-agent/gatekeeper/release-${GATEKEEPER_VERSION}/deploy/gatekeeper.yaml -o upstream.yaml
 cat katalog/gatekeeper/core/ns.yml \
     katalog/gatekeeper/core/crd.yml \
     katalog/gatekeeper/core/sa.yml \
-    katalog/gatekeeper/core/psp.yml \
     katalog/gatekeeper/core/rbac.yml \
     katalog/gatekeeper/core/secret.yml \
     katalog/gatekeeper/core/svc.yml \
@@ -22,7 +21,7 @@ cat katalog/gatekeeper/core/ns.yml \
 
 > You could generate the output with `kustomize build .` also, but `kustomize` changes all the indentation and word wrapping of the original files, so you won't be able to do the diff against its output.
 
-Replace `GATEKEEPER_VERSION` with the upstream version you want to compare with. Example: `3.9`.
+Replace `GATEKEEPER_VERSION` with the upstream version you want to compare with. Example: `3.11`.
 You can use the link from the [installation instructions](https://open-policy-agent.github.io/gatekeeper/website/docs/install#deploying-a-release-using-prebuilt-image).
 
 diff the generated `local.yaml` with the `upstream.yaml` file and port the needed differences to the corresponding file.
