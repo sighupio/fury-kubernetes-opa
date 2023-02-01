@@ -20,8 +20,6 @@ spec:
       gatekeeper.sh/system: "yes"
   template:
     metadata:
-      annotations:
-        container.seccomp.security.alpha.kubernetes.io/manager: runtime/default
       labels:
         control-plane: audit-controller
         gatekeeper.sh/operation: audit
@@ -81,16 +79,18 @@ spec:
               memory: 512Mi
             requests:
               cpu: 100m
-              memory: 256Mi
+              memory: 512Mi
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:
               drop:
-                - all
+                - ALL
             readOnlyRootFilesystem: true
             runAsGroup: 999
             runAsNonRoot: true
             runAsUser: 1000
+            seccompProfile:
+              type: RuntimeDefault
           volumeMounts:
             - mountPath: /certs
               name: cert
@@ -127,8 +127,6 @@ spec:
       gatekeeper.sh/system: "yes"
   template:
     metadata:
-      annotations:
-        container.seccomp.security.alpha.kubernetes.io/manager: runtime/default
       labels:
         control-plane: controller-manager
         gatekeeper.sh/operation: webhook
@@ -203,16 +201,18 @@ spec:
               memory: 512Mi
             requests:
               cpu: 100m
-              memory: 256Mi
+              memory: 512Mi
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:
               drop:
-                - all
+                - ALL
             readOnlyRootFilesystem: true
             runAsGroup: 999
             runAsNonRoot: true
             runAsUser: 1000
+            seccompProfile:
+              type: RuntimeDefault
           volumeMounts:
             - mountPath: /certs
               name: cert
