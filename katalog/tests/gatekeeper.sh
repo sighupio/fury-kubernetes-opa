@@ -106,6 +106,16 @@ set -o pipefail
   [[ "$status" -eq 0 ]]
 }
 
+@test "Deploy Gatekeeper Mutator" {
+  info
+  deploy() {
+    kubectl apply -f katalog/tests/gatekeeper-manifests/mutation.yaml
+  }
+  loop_it deploy 30 10
+  status=${loop_it_result}
+  [[ "$status" -eq 0 ]]
+}
+
 @test "Deploy Gatekeeper Policy Manager" {
   info
   deploy() {
@@ -150,6 +160,28 @@ set -o pipefail
   }
   run deploy
   [[ "$status" -eq 0 ]]
+}
+
+@test "[CHECK] Check deployment has been mutated" {
+  info
+  deploy() {
+    kubectl get deployment -n default deployment-allowed -ojsonpath={.metadata.annotations.owner}
+  }
+  run deploy
+  echo "${output}"
+  [ "$status" -eq 0 ]
+  [ "$output" = "sighup" ]
+}
+
+@test "[CHECK] Check deployment has NOT been mutated" {
+  info
+  deploy() {
+    kubectl get deployment -n kube-system deployment-allowed-ns -ojsonpath={.metadata.annotations.owner}
+  }
+  run deploy
+  echo "${output}"
+  [ "$status" -eq 0 ]
+  [ "$output" = "" ]
 }
 
 @test "[ALLOW] Create not existing Ingress" {
@@ -244,6 +276,16 @@ set -o pipefail
     kubectl delete pod bad-pod
   }
   run resource_teardown
+  [[ "$status" -eq 0 ]]
+}
+
+@test "Teardown - Delete Mutator" {
+  info
+  skip
+  mutator_teardown() {
+    kubectl delete -f katalog/tests/gatekeeper-manifests/mutation.yaml
+  }
+  run mutator_teardown
   [[ "$status" -eq 0 ]]
 }
 
