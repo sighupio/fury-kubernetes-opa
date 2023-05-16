@@ -165,7 +165,7 @@ set -o pipefail
 @test "[CHECK] Check deployment has been mutated" {
   info
   deploy() {
-    kubectl get deployment -n default deployment-allowed -ojsonpath={.metadata.annotations.owner}
+    kubectl get deployment -n default deployment-allowed -ojsonpath="{.metadata.annotations.owner}"
   }
   run deploy
   echo "${output}"
@@ -176,7 +176,7 @@ set -o pipefail
 @test "[CHECK] Check deployment has NOT been mutated" {
   info
   deploy() {
-    kubectl get deployment -n kube-system deployment-allowed-ns -ojsonpath={.metadata.annotations.owner}
+    kubectl get deployment -n kube-system deployment-allowed-ns -ojsonpath="{.metadata.annotations.owner}"
   }
   run deploy
   echo "${output}"
