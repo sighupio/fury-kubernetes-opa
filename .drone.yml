@@ -397,7 +397,7 @@ steps:
       action: custom-cluster-126
       pipeline_id: cluster-126
       local_kind_config_path: katalog/tests/kind/config.yml
-      cluster_version: "1.26.3"
+      cluster_version: "1.26.0"
       instance_path: /shared
       aws_default_region:
         from_secret: aws_region
