@@ -419,7 +419,7 @@ steps:
         from_secret: dockerhub_password
 
   - name: e2e
-    image: quay.io/sighup/e2e-testing:1.1.0_0.11.0_3.1.1_1.9.4_1.26.3_3.5.3_4.33.3
+    image: quay.io/sighup/e2e-testing:1.1.0_0.9.0_3.1.1_1.9.4_1.25.3_3.5.3_4.21.1
     pull: always
     volumes:
       - name: shared
