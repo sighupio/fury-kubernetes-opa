@@ -1,10 +1,10 @@
-# Gatekepeer Package Maintenance
+# Gatekeeper Package Maintenance
 
 1. Check the differences with upstream manifests:
 
 ```bash
 # Assuming ${PWD} == the root of the project
-export GATEKEEPER_VERSION=3.11
+export GATEKEEPER_VERSION=3.12
 curl https://raw.githubusercontent.com/open-policy-agent/gatekeeper/release-${GATEKEEPER_VERSION}/deploy/gatekeeper.yaml -o upstream.yaml
 cat katalog/gatekeeper/core/ns.yml \
     katalog/gatekeeper/core/crd.yml \
@@ -16,7 +16,7 @@ cat katalog/gatekeeper/core/ns.yml \
     katalog/gatekeeper/core/pdb.yml \
     katalog/gatekeeper/core/mwh.yml \
     katalog/gatekeeper/core/vwh.yml \
-    > local.yml 
+    > local.yml
 ```
 
 > You could generate the output with `kustomize build .` also, but `kustomize` changes all the indentation and word wrapping of the original files, so you won't be able to do the diff against its output.
@@ -37,4 +37,4 @@ Please notice that it is expected that some objects don't have the namespace set
 ## Customizations
 
 - We enable monitoring of metrics by default, so we added some parameters to scrape them.
-- We delete the namesapce from resources definitions, the namespace is set by Kustomize.
+- We delete the namespace from resources definitions, the namespace is set by Kustomize.
