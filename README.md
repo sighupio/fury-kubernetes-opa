@@ -53,7 +53,7 @@ Check the [compatibility matrix][compatibility-matrix] for additional informatio
 
 | Tool                                    | Version    | Description                                                                                                                                                    |
 | --------------------------------------- | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [furyctl][furyctl-repo]                 | `>=0.6.0`  | The recommended tool to download and manage KFD modules and their packages. To learn more about `furyctl` read the [official documentation][furyctl-repo].     |
+| [furyctl][furyctl-repo]                 | `>=0.25.0` | The recommended tool to download and manage KFD modules and their packages. To learn more about `furyctl` read the [official documentation][furyctl-repo].     |
 | [kustomize][kustomize-repo]             | `>=3.5.3`  | Packages are customized using `kustomize`. To learn how to create your customization layer with `kustomize`, please refer to the [repository][kustomize-repo]. |
 | [KFD Monitoring Module][kfd-monitoring] | `>v1.10.0` | Expose metrics to Prometheus *(optional)* and use Grafana Dashboards.                                                                                          |
 
@@ -71,7 +71,7 @@ bases:
 
 > See `furyctl` [documentation][furyctl-repo] for additional details about `Furyfile.yml` format.
 
-2. Execute `furyctl vendor -H` to download the packages
+2. Execute `furyctl legacy vendor -H` to download the packages
 
 3. Inspect the download packages under `./vendor/katalog/opa/gatekeeper`.
 
