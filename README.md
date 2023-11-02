@@ -29,7 +29,7 @@ Fury Kubernetes OPA provides the following packages:
 
 | Package                                                | Version   | Description                                                       |
 | ------------------------------------------------------ | --------- | ----------------------------------------------------------------- |
-| [Gatekeeper Core](katalog/gatekeeper/core)             | `v3.13.3` | Gatekeeper deployment, ready to enforce rules.                    |
+| [Gatekeeper Core](katalog/gatekeeper/core)             | `v3.14.0` | Gatekeeper deployment, ready to enforce rules.                    |
 | [Gatekeeper Rules](katalog/gatekeeper/rules)           | `N.A.`    | A set of custom rules to get started with policy enforcement.     |
 | [Gatekeeper Monitoring](katalog/gatekeeper/monitoring) | `N.A.`    | Metrics, alerts and dashboard for monitoring Gatekeeper.          |
 | [Gatekeeper Policy Manager](katalog/gatekeeper/gpm)    | `v1.0.9`  | Gatekeeper Policy Manager, a simple to use web-ui for Gatekeeper. |
