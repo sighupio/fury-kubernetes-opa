@@ -5,7 +5,7 @@
 </h1>
 <!-- markdownlint-enable MD033 -->
 
-![Release](https://img.shields.io/badge/Latest%20Release-v1.9.0-blue)
+![Release](https://img.shields.io/badge/Latest%20Release-v1.10.0-blue)
 ![License](https://img.shields.io/github/license/sighupio/fury-kubernetes-opa?label=License)
 ![Slack](https://img.shields.io/badge/slack-@kubernetes/fury-yellow.svg?logo=slack&label=Slack)
 
@@ -29,10 +29,10 @@ Fury Kubernetes OPA provides the following packages:
 
 | Package                                                | Version   | Description                                                       |
 | ------------------------------------------------------ | --------- | ----------------------------------------------------------------- |
-| [Gatekeeper Core](katalog/gatekeeper/core)             | `v3.12.0` | Gatekeeper deployment, ready to enforce rules.                    |
+| [Gatekeeper Core](katalog/gatekeeper/core)             | `v3.14.0` | Gatekeeper deployment, ready to enforce rules.                    |
 | [Gatekeeper Rules](katalog/gatekeeper/rules)           | `N.A.`    | A set of custom rules to get started with policy enforcement.     |
 | [Gatekeeper Monitoring](katalog/gatekeeper/monitoring) | `N.A.`    | Metrics, alerts and dashboard for monitoring Gatekeeper.          |
-| [Gatekeeper Policy Manager](katalog/gatekeeper/gpm)    | `v1.0.4`  | Gatekeeper Policy Manager, a simple to use web-ui for Gatekeeper. |
+| [Gatekeeper Policy Manager](katalog/gatekeeper/gpm)    | `v1.0.9`  | Gatekeeper Policy Manager, a simple to use web-ui for Gatekeeper. |
 
 Click on each package name to see its full documentation.
 
@@ -40,10 +40,11 @@ Click on each package name to see its full documentation.
 
 | Kubernetes Version |   Compatibility    | Notes            |
 | ------------------ | :----------------: | ---------------- |
-| `1.23.x`           | :white_check_mark: | No known issues. |
 | `1.24.x`           | :white_check_mark: | No known issues. |
 | `1.25.x`           | :white_check_mark: | No known issues. |
 | `1.26.x`           | :white_check_mark: | No known issues  |
+| `1.27.x`           | :white_check_mark: | No known issues  |
+
 
 Check the [compatibility matrix][compatibility-matrix] for additional information on previous releases of the module.
 
@@ -66,7 +67,7 @@ Check the [compatibility matrix][compatibility-matrix] for additional informatio
 ```yaml
 bases:
   - name: opa/gatekeeper
-    version: "1.9.0"
+    version: "1.10.0"
 ```
 
 > See `furyctl` [documentation][furyctl-repo] for additional details about `Furyfile.yml` format.
