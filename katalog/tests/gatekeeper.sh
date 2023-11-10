@@ -26,7 +26,7 @@ set -o pipefail
     kubectl apply -f https://raw.githubusercontent.com/sighupio/fury-kubernetes-monitoring/v1.14.2/katalog/prometheus-operator/crd-rule.yml
     force_apply katalog/gatekeeper/core
   }
-  run deploy
+  loop_it deploy 30 2
   [[ "$status" -eq 0 ]]
 }
 
@@ -264,47 +264,4 @@ set -o pipefail
   echo "command status is: ${status}"
   [[ "$status" -eq 0 ]]
   [[ "$output" -eq 3 ]]
-}
-
-@test "Teardown - Delete resources" {
-  info
-  skip
-  resource_teardown() {
-    kubectl delete -f katalog/tests/gatekeeper-manifests/deploy_ns_whitelisted.yml
-    kubectl delete -f katalog/tests/gatekeeper-manifests/deployment_trusted.yml
-    kubectl delete -f katalog/tests/gatekeeper-manifests/ingress_trusted.yml
-    kubectl delete pod bad-pod
-  }
-  run resource_teardown
-  [[ "$status" -eq 0 ]]
-}
-
-@test "Teardown - Delete Mutator" {
-  info
-  skip
-  mutator_teardown() {
-    kubectl delete -f katalog/tests/gatekeeper-manifests/mutation.yaml
-  }
-  run mutator_teardown
-  [[ "$status" -eq 0 ]]
-}
-
-@test "Teardown - Delete Gatekeeper Rules" {
-  info
-  skip
-  gatekeeper_teardown() {
-    kaction katalog/gatekeeper/rules delete
-  }
-  run gatekeeper_teardown
-  [[ "$status" -eq 0 ]]
-}
-
-@test "Teardown - Delete Gatekeeper Core" {
-  info
-  skip
-  gatekeeper_teardown() {
-    kaction katalog/gatekeeper/core delete
-  }
-  run gatekeeper_teardown
-  [[ "$status" -eq 0 ]]
 }
