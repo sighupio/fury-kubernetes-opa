@@ -14,7 +14,6 @@ resources:
   - collection/disallow-host-namespaces.yaml
   - collection/disallow-host-path.yaml
   - collection/disallow-host-ports.yaml
-  - collection/disallow-host-process.yaml
   - collection/disallow-latest-tag.yaml
   - collection/disallow-privilege-escalation.yaml
   - collection/disallow-privileged-containers.yaml
