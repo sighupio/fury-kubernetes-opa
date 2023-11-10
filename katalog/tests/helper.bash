@@ -12,17 +12,17 @@ kaction(){
 
 apply (){
   kustomize build $1 >&2
-  kustomize build $1 | kubectl apply -f - 2>&3
+  kustomize build $1 | kubectl apply -f - --server-side 2>&3
 }
 
 force_apply (){
   kustomize build $1 >&2
-  kustomize build $1 | kubectl apply -f - --force 2>&3
+  kustomize build $1 | kubectl apply -f - --force --server-side 2>&3
 }
 
 delete (){
   kustomize build $1 >&2
-  kustomize build $1 | kubectl delete -f - 2>&3
+  kustomize build $1 | kubectl delete -f - --server-side 2>&3
 }
 
 info(){

@@ -16,7 +16,8 @@ set -o pipefail
     kubectl apply -f 'https://raw.githubusercontent.com/sighupio/fury-kubernetes-monitoring/v2.1.0/katalog/prometheus-operator/crds/0prometheusruleCustomResourceDefinition.yaml'
     force_apply katalog/kyverno
   }
-  run deploy
+  loop_it deploy 30 2
+  status=${loop_it_result}
   [[ "$status" -eq 0 ]]
 }
 
