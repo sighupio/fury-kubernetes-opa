@@ -16,6 +16,7 @@
       - calico-api
       - vmware-system-csi
       - pomerium
+      - tracing
     kinds:
       - apiGroups: ["batch", "extensions", "apps", ""]
         kinds:

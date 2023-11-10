@@ -7,22 +7,22 @@ set -o pipefail
 kaction(){
     path=$1
     verb=$2
-    kustomize build $path | kubectl $verb -f - 2>&3
+    kustomize build $path | kubectl $verb -f - --server-side 2>&3
 }
 
 apply (){
   kustomize build $1 >&2
-  kustomize build $1 | kubectl apply -f - 2>&3
+  kustomize build $1 | kubectl apply -f - --server-side 2>&3
 }
 
 force_apply (){
   kustomize build $1 >&2
-  kustomize build $1 | kubectl apply -f - --force 2>&3
+  kustomize build $1 | kubectl apply -f - --server-side --force-conflicts 2>&3
 }
 
 delete (){
   kustomize build $1 >&2
-  kustomize build $1 | kubectl delete -f - 2>&3
+  kustomize build $1 | kubectl delete -f - --server-side 2>&3
 }
 
 info(){

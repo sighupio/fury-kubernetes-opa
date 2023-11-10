@@ -1,0 +1,181 @@
+# Copyright (c) 2017-present SIGHUP s.r.l All rights reserved.
+# Use of this source code is governed by a BSD-style
+# license that can be found in the LICENSE file.
+
+crds:
+  install: false
+
+# Configuration
+config:
+
+  # -- Create the configmap.
+  create: true
+  webhooks: 
+     - namespaceSelector:
+         matchExpressions:
+         - key: kubernetes.io/metadata.name
+           operator: NotIn
+           values:
+             - kube-system
+             - kyverno
+             - logging
+             - monitoring
+             - ingress-nginx
+             - cert-manager
+             - tigera-operator
+             - calico-system
+             - calico-api
+             - vmware-system-csi
+             - pomerium
+             - tracing
+# Metrics configuration
+metricsConfig:
+
+  # -- Create the configmap.
+  create: true
+
+grafana:
+  # -- Enable grafana dashboard creation.
+  enabled: false
+
+# Features configuration
+features:
+  admissionReports:
+    # -- Enables the feature
+    enabled: true
+  policyReports:
+    # -- Enables the feature
+    enabled: true
+  autoUpdateWebhooks:
+    # -- Enables the feature
+    enabled: true
+  backgroundScan:
+    # -- Enables the feature
+    enabled: true
+    # -- Number of background scan workers
+    backgroundScanWorkers: 2
+    # -- Background scan interval
+    backgroundScanInterval: 1h
+    # -- Skips resource filters in background scan
+    skipResourceFilters: true
+  configMapCaching:
+    # -- Enables the feature
+    enabled: true
+  deferredLoading:
+    # -- Enables the feature
+    enabled: true
+  dumpPayload:
+    # -- Enables the feature
+    enabled: false
+  forceFailurePolicyIgnore:
+    # -- Enables the feature
+    enabled: false
+  logging:
+    # -- Logging format
+    format: text
+    # -- Logging verbosity
+    verbosity: 2
+  omitEvents:
+    # -- Events which should not be emitted (possible values `PolicyViolation`, `PolicyApplied`, `PolicyError`, and `PolicySkipped`)
+    eventTypes: []
+      # - PolicyViolation
+      # - PolicyApplied
+      # - PolicyError
+      # - PolicySkipped
+  policyExceptions:
+    # -- Enables the feature
+    enabled: false
+    # -- Restrict policy exceptions to a single namespace
+    namespace: ''
+  protectManagedResources:
+    # -- Enables the feature
+    enabled: false
+  registryClient:
+    # -- Allow insecure registry
+    allowInsecure: false
+    # -- Enable registry client helpers
+    credentialHelpers:
+    - default
+    - google
+    - amazon
+    - azure
+    - github
+  reports:
+    # -- Reports chunk size
+    chunkSize: 1000
+
+# Cleanup cronjobs to prevent internal resources from stacking up in the cluster
+cleanupJobs:
+
+  admissionReports:
+
+    # -- Enable cleanup cronjob
+    enabled: true
+
+  clusterAdmissionReports:
+
+    # -- Enable cleanup cronjob
+    enabled: true
+
+# Admission controller configuration
+admissionController:
+
+  replicas: 3
+
+  rbac:
+    # -- Create RBAC resources
+    create: true
+
+  # -- Create self-signed certificates at deployment time.
+  # The certificates won't be automatically renewed if this is set to `true`.
+  createSelfSignedCert: false
+
+  serviceMonitor:
+    # -- Create a `ServiceMonitor` to collect Prometheus metrics.
+    enabled: true
+
+
+
+# Background controller configuration
+backgroundController:
+
+  replicas: 2
+
+  # -- Enable background controller.
+  enabled: true
+
+
+  serviceMonitor:
+    # -- Create a `ServiceMonitor` to collect Prometheus metrics.
+    enabled: true
+
+# Cleanup controller configuration
+cleanupController:
+
+  replicas: 2
+
+  # -- Overrides features defined at the root level
+  featuresOverride: {}
+
+  # -- Enable cleanup controller.
+  enabled: true
+
+  serviceMonitor:
+    # -- Create a `ServiceMonitor` to collect Prometheus metrics.
+    enabled: true
+
+# Reports controller configuration
+reportsController:
+
+  replicas: 2
+  
+  # -- Overrides features defined at the root level
+  featuresOverride: {}
+
+  # -- Enable reports controller.
+  enabled: true
+
+  serviceMonitor:
+    # -- Create a `ServiceMonitor` to collect Prometheus metrics.
+    enabled: true
+    # -- Additional labels

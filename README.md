@@ -5,13 +5,13 @@
 </h1>
 <!-- markdownlint-enable MD033 -->
 
-![Release](https://img.shields.io/badge/Latest%20Release-v1.10.0-blue)
+![Release](https://img.shields.io/badge/Latest%20Release-v1.11.0-blue)
 ![License](https://img.shields.io/github/license/sighupio/fury-kubernetes-opa?label=License)
 ![Slack](https://img.shields.io/badge/slack-@kubernetes/fury-yellow.svg?logo=slack&label=Slack)
 
 <!-- <KFD-DOCS> -->
 
-**Kubernetes Fury OPA** provides policy enforcement at runtime for the [Kubernetes Fury Distribution (KFD)][kfd-repo] using OPA Gatekeeper.
+**Kubernetes Fury OPA** provides policy enforcement at runtime for the [Kubernetes Fury Distribution (KFD)][kfd-repo].
 
 If you are new to KFD please refer to the [official documentation][kfd-docs] on how to get started with KFD.
 
@@ -19,7 +19,7 @@ If you are new to KFD please refer to the [official documentation][kfd-docs] on 
 
 The Kubernetes API server provides a mechanism to review every request that is made (object creation, modification, or deletion). To use this mechanism the API server allows us to create a [Validating Admission Webhook][kubernetes-vaw-docs] that, as the name says, will validate every request and let the API server know if the request is allowed or not based on some logic (policy).
 
-**Kubernetes Fury OPA** module is based on [OPA Gatekeeper][gatekeeper-page], a popular open-source Kubernetes-native policy engine with [OPA](https://www.openpolicyagent.org/) as its core that runs as a Validating Admission Webhook. It allows writing custom constraints (policies) in `rego` (a tailor-made language) as Kubernetes objects and enforcing them at runtime.
+**Kubernetes Fury OPA** module is based on [OPA Gatekeeper][gatekeeper-page] and [Kyverno][kyverno-page], two popular open-source Kubernetes-native policy engines that runs as a Validating Admission Webhook. It allows writing custom constraints (policies) and enforcing them at runtime.
 
 [SIGHUP][sighup-page] provides a set of base constraints that could be used both as a starting point to apply constraints to your current workloads and to give you an idea of how to implement new rules matching your requirements.
 
@@ -27,12 +27,13 @@ The Kubernetes API server provides a mechanism to review every request that is m
 
 Fury Kubernetes OPA provides the following packages:
 
-| Package                                                | Version   | Description                                                       |
-| ------------------------------------------------------ | --------- | ----------------------------------------------------------------- |
-| [Gatekeeper Core](katalog/gatekeeper/core)             | `v3.14.0` | Gatekeeper deployment, ready to enforce rules.                    |
-| [Gatekeeper Rules](katalog/gatekeeper/rules)           | `N.A.`    | A set of custom rules to get started with policy enforcement.     |
-| [Gatekeeper Monitoring](katalog/gatekeeper/monitoring) | `N.A.`    | Metrics, alerts and dashboard for monitoring Gatekeeper.          |
-| [Gatekeeper Policy Manager](katalog/gatekeeper/gpm)    | `v1.0.9`  | Gatekeeper Policy Manager, a simple to use web-ui for Gatekeeper. |
+| Package                                                | Version   | Description                                                                                                                                             |
+| ------------------------------------------------------ | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Gatekeeper Core](katalog/gatekeeper/core)             | `v3.14.0` | Gatekeeper deployment, ready to enforce rules.                                                                                                          |
+| [Gatekeeper Rules](katalog/gatekeeper/rules)           | `N.A.`    | A set of custom rules to get started with policy enforcement.                                                                                           |
+| [Gatekeeper Monitoring](katalog/gatekeeper/monitoring) | `N.A.`    | Metrics, alerts and dashboard for monitoring Gatekeeper.                                                                                                |
+| [Gatekeeper Policy Manager](katalog/gatekeeper/gpm)    | `v1.0.9`  | Gatekeeper Policy Manager, a simple to use web-ui for Gatekeeper.                                                                                       |
+| [Kyverno](katalog/kyverno)                             | `v1.11.0` | Kyverno is a policy engine designed for Kubernetes. It can validate, mutate, and generate configurations using admission controls and background scans. |
 
 Click on each package name to see its full documentation.
 
@@ -40,7 +41,6 @@ Click on each package name to see its full documentation.
 
 | Kubernetes Version |   Compatibility    | Notes            |
 | ------------------ | :----------------: | ---------------- |
-| `1.24.x`           | :white_check_mark: | No known issues. |
 | `1.25.x`           | :white_check_mark: | No known issues. |
 | `1.26.x`           | :white_check_mark: | No known issues  |
 | `1.27.x`           | :white_check_mark: | No known issues  |
@@ -60,14 +60,14 @@ Check the [compatibility matrix][compatibility-matrix] for additional informatio
 
 > You can comment out the service monitor in the [kustomization.yaml][core-kustomization] file if you don't want to install the monitoring module.
 
-### Deployment
+### Gatekeeper deployment
 
 1. List the packages you want to deploy and their version in a `Furyfile.yml`
 
 ```yaml
 bases:
   - name: opa/gatekeeper
-    version: "1.10.0"
+    version: "1.11.0"
 ```
 
 > See `furyctl` [documentation][furyctl-repo] for additional details about `Furyfile.yml` format.
@@ -95,9 +95,9 @@ kustomize build . | kubectl apply -f -
 <!-- space intentionally left blank -->
 > ⚠️ If you decide to deploy Gatekeeper to a different namespace than the default `gatekeeper-system`, you'll need to patch the file `vwh.yml` to point to the right namespace for the webhook service due to limitations in the `kustomize` tool.
 
-### Common Customizations
+#### Common Customizations
 
-#### Exempting a namespace
+##### Exempting a namespace
 
 Gatekeeper supports 3 levels of granularity to exempt a namespace from policy enforcement.
 
@@ -109,7 +109,7 @@ Gatekeeper supports 3 levels of granularity to exempt a namespace from policy en
 
 For more details on how to implement the exemption, please refer to the [official Gatekeeper documentation site][gatekeeper-exemption].
 
-#### Disable constraints
+##### Disable constraints
 
 Disable one of the default constraints by creating the following kustomize patch:
 
@@ -131,7 +131,7 @@ add this to the `patches/allow.yml` file:
   value: "allow"
 ```
 
-### Emergency brake
+#### Emergency brake
 
 If for some reason OPA Gatekeeper is giving you issues and blocking normal operations in your cluster, you can disable it by removing the Validating Admission Webhook definition from your cluster:
 
@@ -139,7 +139,7 @@ If for some reason OPA Gatekeeper is giving you issues and blocking normal opera
 kubectl delete ValidatingWebhookConfiguration gatekeeper-validating-webhook-configuration
 ```
 
-### Monitoring
+#### Monitoring
 
 Gatekeeper is configured by default in this module to expose some Prometheus metrics about its health, performance, and operative information.
 
@@ -170,6 +170,35 @@ Two alerts are also provided by default with the module, the alerts are triggere
 | GatekeeperWebhookCallError    | Kubernetes API server is rejecting all requests because Gatekeeper's webhook '{{ $labels.name }}' is failing for '{{ $labels.operation }}'. |
 
 Notice that the alert for when the Gatekeeper webhook is in `Ignore` mode (the default) depends on an API server metric that has been added in Kubernetes version 1.24. Previous versions of Kubernetes won't trigger alerts when the webhook is failing and in `Ignore` mode.
+
+### Kyverno deployment
+
+1. List the packages you want to deploy and their version in a `Furyfile.yml`
+
+```yaml
+bases:
+  - name: opa/kyverno
+    version: "1.11.0"
+```
+
+> See `furyctl` [documentation][furyctl-repo] for additional details about `Furyfile.yml` format.
+
+2. Execute `furyctl legacy vendor -H` to download the packages
+
+3. Inspect the download packages under `./vendor/katalog/opa/kyverno`.
+
+4. Define a `kustomization.yaml` that includes the `./vendor/katalog/opa/kyverno` directory as a resource.
+
+```yaml
+resources:
+  - ./vendor/katalog/opa/kyverno
+```
+
+5. To deploy the packages to your cluster, execute:
+
+```bash
+kustomize build . | kubectl apply -f -
+```
 
 <!-- Links -->
 [gatekeeper-page]: https://github.com/open-policy-agent/gatekeeper

@@ -1,0 +1,25 @@
+# Copyright (c) 2017-present SIGHUP s.r.l All rights reserved.
+# Use of this source code is governed by a BSD-style
+# license that can be found in the LICENSE file.
+
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: nginx-pod
+  name: nginx-pod-ok
+  namespace: default
+spec:
+  containers:
+  - image: registry.sighup.io/fury/nginx:1.17.9
+    name: nginx-container
+    resources:
+      requests:
+        cpu: 100m
+        memory: 512M
+      limits:
+        cpu: 1000m
+        memory: 1024M
+    securityContext:
+      privileged: false
+      runAsNonRoot: true

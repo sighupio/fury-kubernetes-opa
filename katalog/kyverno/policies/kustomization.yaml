@@ -1,0 +1,32 @@
+# Copyright (c) 2017-present SIGHUP s.r.l All rights reserved.
+# Use of this source code is governed by a BSD-style
+# license that can be found in the LICENSE file.
+
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: kyverno
+
+resources:
+  - collection/disallow-capabilities-strict.yaml
+  - collection/disallow-capabilities.yaml
+  - collection/disallow-host-namespaces.yaml
+  - collection/disallow-host-path.yaml
+  - collection/disallow-host-ports.yaml
+  - collection/disallow-latest-tag.yaml
+  - collection/disallow-privilege-escalation.yaml
+  - collection/disallow-privileged-containers.yaml
+  - collection/disallow-proc-mount.yaml
+  - collection/require-probes.yaml
+  - collection/require-run-as-nonroot.yaml
+  - collection/restrict-sysctls.yaml
+  - collection/unique-ingress-host-and-path.yaml
+
+patches:
+  - patch: |-
+      - op: replace
+        path: /spec/validationFailureAction
+        value: enforce
+    target:
+      kind: ClusterPolicy
