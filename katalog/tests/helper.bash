@@ -17,7 +17,7 @@ apply (){
 
 force_apply (){
   kustomize build $1 >&2
-  kustomize build $1 | kubectl apply -f - --force --server-side 2>&3
+  kustomize build $1 | kubectl apply -f - --server-side --force-conflicts 2>&3
 }
 
 delete (){
