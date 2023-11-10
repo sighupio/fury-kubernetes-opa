@@ -120,6 +120,8 @@ cleanupJobs:
 # Admission controller configuration
 admissionController:
 
+  replicas: 3
+
   rbac:
     # -- Create RBAC resources
     create: true
@@ -137,6 +139,8 @@ admissionController:
 # Background controller configuration
 backgroundController:
 
+  replicas: 2
+
   # -- Enable background controller.
   enabled: true
 
@@ -147,6 +151,8 @@ backgroundController:
 
 # Cleanup controller configuration
 cleanupController:
+
+  replicas: 2
 
   # -- Overrides features defined at the root level
   featuresOverride: {}
@@ -161,6 +167,8 @@ cleanupController:
 # Reports controller configuration
 reportsController:
 
+  replicas: 2
+  
   # -- Overrides features defined at the root level
   featuresOverride: {}
 
