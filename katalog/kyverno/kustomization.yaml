@@ -1,0 +1,35 @@
+# Copyright (c) 2017-present SIGHUP s.r.l All rights reserved.
+# Use of this source code is governed by a BSD-style
+# license that can be found in the LICENSE file.
+
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: kyverno
+
+resources:
+  - crds.yaml
+  - policies
+  - namespace.yaml
+  - deploy.yaml
+
+images:
+  - name: ghcr.io/kyverno/kyverno
+    newName: registry.sighup.io/fury/kyverno/kyverno
+    newTag: v1.11.0
+  - name: ghcr.io/kyverno/kyvernopre
+    newName: registry.sighup.io/fury/kyverno/kyvernopre
+    newTag: v1.11.0
+  - name: ghcr.io/kyverno/background-controller
+    newName: registry.sighup.io/fury/kyverno/background-controller
+    newTag: v1.11.0
+  - name: ghcr.io/kyverno/cleanup-controller
+    newName: registry.sighup.io/fury/kyverno/cleanup-controller
+    newTag: v1.11.0
+  - name: ghcr.io/kyverno/reports-controller
+    newName: registry.sighup.io/fury/kyverno/reports-controller
+    newTag: v1.11.0
+  - name: bitnami/kubectl
+    newName: registry.sighup.io/fury/bitnami/kubectl
+    newTag: "1.26.10"
