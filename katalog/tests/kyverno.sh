@@ -14,6 +14,8 @@ set -o pipefail
   deploy() {
     kubectl apply -f 'https://raw.githubusercontent.com/sighupio/fury-kubernetes-monitoring/v2.1.0/katalog/prometheus-operator/crds/0servicemonitorCustomResourceDefinition.yaml'
     kubectl apply -f 'https://raw.githubusercontent.com/sighupio/fury-kubernetes-monitoring/v2.1.0/katalog/prometheus-operator/crds/0prometheusruleCustomResourceDefinition.yaml'
+    kubectl apply -f katalog/kyverno/crds.yaml --server-side
+    sleep 30
     force_apply katalog/kyverno
   }
   loop_it deploy 30 2
