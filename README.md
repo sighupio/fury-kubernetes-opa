@@ -5,7 +5,7 @@
 </h1>
 <!-- markdownlint-enable MD033 -->
 
-![Release](https://img.shields.io/badge/Latest%20Release-v1.11.0-blue)
+![Release](https://img.shields.io/badge/Latest%20Release-v1.11.1-blue)
 ![License](https://img.shields.io/github/license/sighupio/fury-kubernetes-opa?label=License)
 ![Slack](https://img.shields.io/badge/slack-@kubernetes/fury-yellow.svg?logo=slack&label=Slack)
 
@@ -53,9 +53,9 @@ Check the [compatibility matrix][compatibility-matrix] for additional informatio
 ### Prerequisites
 
 | Tool                                    | Version    | Description                                                                                                                                                    |
-| --------------------------------------- | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [furyctl][furyctl-repo]                 | `>=0.25.0` | The recommended tool to download and manage KFD modules and their packages. To learn more about `furyctl` read the [official documentation][furyctl-repo].     |
-| [kustomize][kustomize-repo]             | `>=3.5.3`  | Packages are customized using `kustomize`. To learn how to create your customization layer with `kustomize`, please refer to the [repository][kustomize-repo]. |
+| --------------------------------------- |------------| -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [furyctl][furyctl-repo]                 | `>=0.27.0` | The recommended tool to download and manage KFD modules and their packages. To learn more about `furyctl` read the [official documentation][furyctl-repo].     |
+| [kustomize][kustomize-repo]             | `>=3.10.0` | Packages are customized using `kustomize`. To learn how to create your customization layer with `kustomize`, please refer to the [repository][kustomize-repo]. |
 | [KFD Monitoring Module][kfd-monitoring] | `>v1.10.0` | Expose metrics to Prometheus *(optional)* and use Grafana Dashboards.                                                                                          |
 
 > You can comment out the service monitor in the [kustomization.yaml][core-kustomization] file if you don't want to install the monitoring module.
@@ -67,7 +67,7 @@ Check the [compatibility matrix][compatibility-matrix] for additional informatio
 ```yaml
 bases:
   - name: opa/gatekeeper
-    version: "1.11.0"
+    version: "1.11.1"
 ```
 
 > See `furyctl` [documentation][furyctl-repo] for additional details about `Furyfile.yml` format.
@@ -178,7 +178,7 @@ Notice that the alert for when the Gatekeeper webhook is in `Ignore` mode (the d
 ```yaml
 bases:
   - name: opa/kyverno
-    version: "1.11.0"
+    version: "1.11.1"
 ```
 
 > See `furyctl` [documentation][furyctl-repo] for additional details about `Furyfile.yml` format.
@@ -204,6 +204,7 @@ kustomize build . | kubectl apply -f -
 [gatekeeper-page]: https://github.com/open-policy-agent/gatekeeper
 [gatekeeper-failmode]: https://open-policy-agent.github.io/gatekeeper/website/docs/failing-closed/
 [gatekeeper-exemption]: https://open-policy-agent.github.io/gatekeeper/website/docs/exempt-namespaces/
+[kyverno-page]: https://github.com/kyverno/kyverno
 [kubernetes-vaw-docs]: https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/
 [kfd-monitoring]: https://github.com/sighupio/fury-kubernetes-monitoring
 [core-kustomization]: ./katalog/gatekeeper/core/kustomization.yaml

@@ -18,7 +18,7 @@ helm template kyverno /tmp/kyverno --values MAINTENANCE.values.yaml --namespace 
 helm template kyverno /tmp/kyverno --values MAINTENANCE.values.yaml --set crds.install=true --namespace kyverno | yq 'select(.kind == "CustomResourceDefinition")' > crds.yaml
 ```
 
-Compare the deploy.yaml file with the built-kyverno.yaml to find differences with the current version.
+Compare the core/deploy.yaml file with the built-kyverno.yaml to find differences with the current version.
 
 What was changed:
 - Removed all the helm hooks from the deploy
