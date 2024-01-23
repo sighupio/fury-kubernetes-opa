@@ -31,4 +31,4 @@ images:
     newTag: v1.11.0
   - name: bitnami/kubectl
     newName: registry.sighup.io/fury/bitnami/kubectl
-    newTag: "1.26.10"
+    newTag: "1.27.10"
