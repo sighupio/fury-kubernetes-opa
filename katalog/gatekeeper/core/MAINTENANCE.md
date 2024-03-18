@@ -4,7 +4,7 @@
 
 ```bash
 # Assuming ${PWD} == the root of the project
-export GATEKEEPER_VERSION=3.12
+export GATEKEEPER_VERSION=v3.15.1
 curl https://raw.githubusercontent.com/open-policy-agent/gatekeeper/release-${GATEKEEPER_VERSION}/deploy/gatekeeper.yaml -o upstream.yaml
 cat katalog/gatekeeper/core/ns.yml \
     katalog/gatekeeper/core/crd.yml \

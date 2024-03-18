@@ -20,33 +20,33 @@ spec:
     spec:
       serviceAccountName: gatekeeper-policy-manager
       containers:
-      - name: gatekeeper-policy-manager
-        image: quay.io/sighup/gatekeeper-policy-manager
-        imagePullPolicy: Always
-        resources:
-          requests:
-            memory: "128Mi"
-            cpu: "100m"
-          limits:
-            memory: "256Mi"
-            cpu: "500m"
-        livenessProbe:
+        - name: gatekeeper-policy-manager
+          image: quay.io/sighup/gatekeeper-policy-manager
+          imagePullPolicy: Always
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "256Mi"
+              cpu: "500m"
+          livenessProbe:
             httpGet:
               path: /health
               port: http
-        readinessProbe:
+          readinessProbe:
             httpGet:
               path: /health
               port: http
-        ports:
-        - containerPort: 8080
-          name: http
-        securityContext:
-          privileged: false
-          runAsNonRoot: true
-          allowPrivilegeEscalation: false
-          seccompProfile:
-            type: RuntimeDefault
-          capabilities:
-            drop:
-              - ALL
+          ports:
+            - containerPort: 8080
+              name: http
+          securityContext:
+            privileged: false
+            runAsNonRoot: true
+            allowPrivilegeEscalation: false
+            seccompProfile:
+              type: RuntimeDefault
+            capabilities:
+              drop:
+                - ALL
