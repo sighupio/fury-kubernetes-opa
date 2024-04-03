@@ -12,5 +12,5 @@ spec:
   selector:
     app: gatekeeper-policy-manager
   ports:
-  - port: 80
-    targetPort: http
+    - port: 80
+      targetPort: http
