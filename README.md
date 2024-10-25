@@ -41,10 +41,10 @@ Click on each package name to see its full documentation.
 
 | Kubernetes Version |   Compatibility    | Notes           |
 | ------------------ | :----------------: | --------------- |
-| `1.26.x`           | :white_check_mark: | No known issues |
-| `1.27.x`           | :white_check_mark: | No known issues |
-| `1.28.x`           | :white_check_mark: | No known issues |
+| `1.31.x`           | :white_check_mark: | No known issues |
+| `1.30.x`           | :white_check_mark: | No known issues |
 | `1.29.x`           | :white_check_mark: | No known issues |
+| `1.28.x`           | :white_check_mark: | No known issues |
 
 Check the [compatibility matrix][compatibility-matrix] for additional information on previous releases of the module.
 
