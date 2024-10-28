@@ -29,10 +29,10 @@ Fury Kubernetes OPA provides the following packages:
 
 | Package                                                | Version   | Description                                                                                                                                             |
 | ------------------------------------------------------ | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Gatekeeper Core](katalog/gatekeeper/core)             | `v3.15.1` | Gatekeeper deployment, ready to enforce rules.                                                                                                          |
+| [Gatekeeper Core](katalog/gatekeeper/core)             | `v3.17.1` | Gatekeeper deployment, ready to enforce rules.                                                                                                          |
 | [Gatekeeper Rules](katalog/gatekeeper/rules)           | `N.A.`    | A set of custom rules to get started with policy enforcement.                                                                                           |
 | [Gatekeeper Monitoring](katalog/gatekeeper/monitoring) | `N.A.`    | Metrics, alerts and dashboard for monitoring Gatekeeper.                                                                                                |
-| [Gatekeeper Policy Manager](katalog/gatekeeper/gpm)    | `v1.0.10` | Gatekeeper Policy Manager, a simple to use web-ui for Gatekeeper.                                                                                       |
+| [Gatekeeper Policy Manager](katalog/gatekeeper/gpm)    | `v1.0.13` | Gatekeeper Policy Manager, a simple to use web-ui for Gatekeeper.                                                                                       |
 | [Kyverno](katalog/kyverno)                             | `v1.11.4` | Kyverno is a policy engine designed for Kubernetes. It can validate, mutate, and generate configurations using admission controls and background scans. |
 
 Click on each package name to see its full documentation.
