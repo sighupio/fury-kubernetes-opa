@@ -39,22 +39,26 @@ Click on each package name to see its full documentation.
 
 ## Compatibility
 
-| Kubernetes Version |   Compatibility    | Notes            |
-| ------------------ | :----------------: | ---------------- |
-| `1.26.x`           | :white_check_mark: | No known issues  |
-| `1.27.x`           | :white_check_mark: | No known issues  |
-| `1.28.x`           | :white_check_mark: | No known issues  |
-| `1.29.x`           | :white_check_mark: | No known issues  |
-
+| Kubernetes Version |   Compatibility    | Notes           |
+| ------------------ | :----------------: | --------------- |
+| `1.31.x`           | :white_check_mark: | No known issues |
+| `1.30.x`           | :white_check_mark: | No known issues |
+| `1.29.x`           | :white_check_mark: | No known issues |
+| `1.28.x`           | :white_check_mark: | No known issues |
 
 Check the [compatibility matrix][compatibility-matrix] for additional information on previous releases of the module.
 
 ## Usage
 
+> [!NOTE]
+> The following instructions are for using the module with furyctl legacy, or downloading it and using it via kustomize.
+>
+> In the latest versions of the Kubernetes Fury Distribution the OPA module is natively integrated and can be used and configured by the `.spec.distribution.modules.policy` key in the configuration file.
+
 ### Prerequisites
 
 | Tool                                    | Version    | Description                                                                                                                                                    |
-| --------------------------------------- |------------| -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| --------------------------------------- | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [furyctl][furyctl-repo]                 | `>=0.27.0` | The recommended tool to download and manage KFD modules and their packages. To learn more about `furyctl` read the [official documentation][furyctl-repo].     |
 | [kustomize][kustomize-repo]             | `>=3.10.0` | Packages are customized using `kustomize`. To learn how to create your customization layer with `kustomize`, please refer to the [repository][kustomize-repo]. |
 | [KFD Monitoring Module][kfd-monitoring] | `>v1.10.0` | Expose metrics to Prometheus *(optional)* and use Grafana Dashboards.                                                                                          |
@@ -230,6 +234,6 @@ In case you experience any problems with the module, please [open a new issue](h
 
 ## License
 
-This module is open-source and it's released under the following [LICENSE](LICENSE)
+This module is open-source and released under the following [LICENSE](LICENSE)
 
 <!-- </FOOTER> -->
