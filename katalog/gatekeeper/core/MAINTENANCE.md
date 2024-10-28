@@ -4,8 +4,8 @@
 
 ```bash
 # Assuming ${PWD} == the root of the project
-export GATEKEEPER_VERSION=v3.15.1
-curl https://raw.githubusercontent.com/open-policy-agent/gatekeeper/release-${GATEKEEPER_VERSION}/deploy/gatekeeper.yaml -o upstream.yaml
+export GATEKEEPER_VERSION=v3.17.1
+curl -l https://raw.githubusercontent.com/open-policy-agent/gatekeeper/refs/tags/${GATEKEEPER_VERSION}/deploy/gatekeeper.yaml -o upstream.yaml
 cat katalog/gatekeeper/core/ns.yml \
     katalog/gatekeeper/core/crd.yml \
     katalog/gatekeeper/core/sa.yml \
@@ -30,11 +30,12 @@ diff the generated `local.yaml` with the `upstream.yaml` file and port the neede
 
 Please notice that it is expected that some objects don't have the namespace set as in upstream, this is because the namespace is set with Kustomize.
 
-2. Sync the new image to our registry by updating the [OPA images.yaml file fury-distribution-container-image-sync repository](https://github.com/sighupio/fury-distribution-container-image-sync/blob/main/modules/opa/images.yml).
+1. Sync the new image to our registry by updating the [OPA images.yaml file fury-distribution-container-image-sync repository](https://github.com/sighupio/fury-distribution-container-image-sync/blob/main/modules/opa/images.yml).
 
-3. Update the `kustomization.yaml` file with the new version in the image tag.
+2. Update the `kustomization.yaml` file with the new version in the image tag.
 
 ## Customizations
 
 - We enable monitoring of metrics by default, so we added some parameters to scrape them.
 - We delete the namespace from resources definitions, the namespace is set by Kustomize.
+- We create an additional service for the audit endpoint.

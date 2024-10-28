@@ -1,0 +1,68 @@
+# Copyright (c) 2017-present SIGHUP s.r.l All rights reserved.
+# Use of this source code is governed by a BSD-style
+# license that can be found in the LICENSE file.
+# ---
+# This manifests are used to tell kapp that the following CRDs will be created
+# by Gatekeeper afterwards and that it is OK that they are not present when
+# running the deploy command.
+# See:
+# - https://github.com/carvel-dev/kapp/blob/develop/examples/gatekeeper-v3.10.0/exists.yml
+# - https://carvel.dev/kapp/docs/v0.63.x/apply-waiting/
+#
+# Below we list all the constraints CRDs that Gatekeeper will be creating.
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: k8slivenessprobe.constraints.gatekeeper.sh
+  annotations:
+    kapp.k14s.io/exists: ""
+spec:
+  group: constraints.gatekeeper.sh
+  versions:
+    - name: v1beta1
+  names:
+    kind: K8sLivenessProbe
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: k8sreadinessprobe.constraints.gatekeeper.sh
+  annotations:
+    kapp.k14s.io/exists: ""
+spec:
+  group: constraints.gatekeeper.sh
+  versions:
+    - name: v1beta1
+  names:
+    kind: K8sReadinessProbe
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: k8suniqueingresshost.constraints.gatekeeper.sh
+  annotations:
+    kapp.k14s.io/exists: ""
+spec:
+  group: constraints.gatekeeper.sh
+  versions:
+    - name: v1beta1
+  names:
+    kind: K8sUniqueIngressHost
+---
+
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: securitycontrols.constraints.gatekeeper.sh
+  annotations:
+    kapp.k14s.io/exists: ""
+spec:
+  group: constraints.gatekeeper.sh
+  versions:
+    - name: v1beta1
+  names:
+    kind: SecurityControls
+---
+

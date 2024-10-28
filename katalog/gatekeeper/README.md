@@ -24,7 +24,7 @@ This module can easily be added to your existing Fury setup adding to your `Fury
 bases:
   (...)
   - name: opa/gatekeeper
-    version: "1.10.0"
+    version: "1.12.0"
 ```
 
 Once you'll do this, you can then proceed to integrate Gatekeeper into your Kustomize project.
@@ -114,7 +114,7 @@ are removed by Gatekeeper. Otherwise, the finalizers will need to be removed man
 
 ### Before Uninstall, Clean Up Old Constraints
 
-Currently, the uninstall mechanism only removes the Gatekeeper system,
+Currently, the uninstallation mechanism only removes the Gatekeeper system,
 it does not remove any `ConstraintTemplate`, `Constraint`, and `Config` resources that have been created by the user,
 nor does it remove their accompanying `CRDs`.
 

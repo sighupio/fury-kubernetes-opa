@@ -16,16 +16,16 @@ For example, one could have a `ConstraintTemplate` to check that a set of labels
 
 Below, you can find a list of constraint templates shipped with Kubernetes Fury Distribution:
 
-| Rule Name                  | Desctiption                                                                                                                                           |
-|----------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Rule Name                  | Description                                                                                                                                           |
+| -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `k8slivenessprobe`         | Deny pods that don't declare `livenessProbe`.                                                                                                         |
 | `k8sreadinessprobe`        | Deny pods that don't declare `readinessProbe`.                                                                                                        |
 | `k8suniqueingresshost`     | Deny duplicated ingress across the cluster.                                                                                                           |
 | `k8suniqueserviceselector` | Deny duplicated services selector in the same namespace.                                                                                              |
 | `securitycontrols`         | Deny container images with the `latest` tag, with no limits declared (both CPU and memory), with privilege escalation capability and root containers. |
 
-> [security_controls_template.yml][security-controls-template]: it's an all in one pod security policy measure composed of several rules. Most of the rules are commented out and provided as examples and to be used as starting point for your own rules.
-> This file can be splitted into several `ConstraintTemplates` with the counterpart of having to manage an additional `constraint`/`constraintTemplate` resource for each one.
+> [security_controls_template.yml][security-controls-template]: it's an all-in-one pod security policy measure composed of several rules. Most of the rules are commented out and provided as examples and to be used as starting point for your own rules.
+> This file can be split into several `ConstraintTemplates` with the counterpart of having to manage an additional `constraint`/`constraintTemplate` resource for each one.
 <!-- space left blank on purpose to separate both quotes -->
 > The KFD OPA package provides both `ConstraintTemplates` and `Constraints` for each rule out of the box.
 <!-- space left blank on purpose to separate both quotes -->

@@ -22,8 +22,8 @@ set -o pipefail
   info
   deploy() {
     sed -i  -e '/# - DELETE/s/# //g' katalog/gatekeeper/core/vwh.yml
-    kubectl apply -f https://raw.githubusercontent.com/sighupio/fury-kubernetes-monitoring/v1.14.2/katalog/prometheus-operator/crd-servicemonitor.yml
-    kubectl apply -f https://raw.githubusercontent.com/sighupio/fury-kubernetes-monitoring/v1.14.2/katalog/prometheus-operator/crd-rule.yml
+    kubectl apply -f https://raw.githubusercontent.com/sighupio/fury-kubernetes-monitoring/refs/tags/v3.2.0/katalog/prometheus-operator/crds/0servicemonitorCustomResourceDefinition.yaml
+    kubectl apply -f https://raw.githubusercontent.com/sighupio/fury-kubernetes-monitoring/refs/tags/v3.2.0/katalog/prometheus-operator/crds/0prometheusruleCustomResourceDefinition.yaml
     force_apply katalog/gatekeeper/core
   }
   loop_it deploy 30 2
