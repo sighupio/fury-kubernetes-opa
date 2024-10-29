@@ -329,7 +329,7 @@ volumes:
       path: /var/run/docker.sock
 
 ---
-name: E2E Tests Kubernetes v1.30.5
+name: E2E Tests Kubernetes v1.30.4
 kind: pipeline
 type: docker
 
@@ -359,9 +359,9 @@ steps:
         path: /var/run/docker.sock
     environment:
       KIND_CONFIG: ./katalog/tests/kind/config.yml
-      CLUSTER_VERSION: v1.30.5
-      KUBECONFIG: kubeconfig-gatekeeper-v1.30.5
-      CLUSTER_NAME: ${DRONE_REPO_NAME}-${DRONE_BUILD_NUMBER}-gatekeeper-v1.30.5
+      CLUSTER_VERSION: v1.30.4
+      KUBECONFIG: kubeconfig-gatekeeper-v1.30.4
+      CLUSTER_NAME: ${DRONE_REPO_NAME}-${DRONE_BUILD_NUMBER}-gatekeeper-v1.30.4
     commands:
       # NOTE: kind's `--wait` flag that waits for the control-plane to be ready
       # does not work when disabling the default CNI. It will always go in timeout.
@@ -374,7 +374,7 @@ steps:
     pull: always
     network_mode: host
     environment:
-      KUBECONFIG: kubeconfig-gatekeeper-v1.30.5
+      KUBECONFIG: kubeconfig-gatekeeper-v1.30.4
     depends_on:
       - Create Kind Cluster for Gatekeeper
     commands:
@@ -388,7 +388,7 @@ steps:
       - name: dockersock
         path: /var/run/docker.sock
     environment:
-      CLUSTER_NAME: ${DRONE_REPO_NAME}-${DRONE_BUILD_NUMBER}-gatekeeper-v1.30.5
+      CLUSTER_NAME: ${DRONE_REPO_NAME}-${DRONE_BUILD_NUMBER}-gatekeeper-v1.30.4
     commands:
       # does not matter if the command fails
       - kind delete cluster --name $${CLUSTER_NAME} || true
@@ -410,9 +410,9 @@ steps:
         path: /var/run/docker.sock
     environment:
       KIND_CONFIG: ./katalog/tests/kind/config.yml
-      CLUSTER_VERSION: v1.30.5
-      KUBECONFIG: kubeconfig-kyverno-v1.30.5
-      CLUSTER_NAME: ${DRONE_REPO_NAME}-${DRONE_BUILD_NUMBER}-kyverno-v1.30.5
+      CLUSTER_VERSION: v1.30.4
+      KUBECONFIG: kubeconfig-kyverno-v1.30.4
+      CLUSTER_NAME: ${DRONE_REPO_NAME}-${DRONE_BUILD_NUMBER}-kyverno-v1.30.4
     commands:
       # NOTE: kind's `--wait` flag that waits for the control-plane to be ready
       # does not work when disabling the default CNI. It will always go in timeout.
@@ -425,7 +425,7 @@ steps:
     pull: always
     network_mode: host
     environment:
-      KUBECONFIG: kubeconfig-kyverno-v1.30.5
+      KUBECONFIG: kubeconfig-kyverno-v1.30.4
     depends_on:
       - Create Kind Cluster for Kyverno
     commands:
@@ -439,7 +439,7 @@ steps:
       - name: dockersock
         path: /var/run/docker.sock
     environment:
-      CLUSTER_NAME: ${DRONE_REPO_NAME}-${DRONE_BUILD_NUMBER}-kyverno-v1.30.5
+      CLUSTER_NAME: ${DRONE_REPO_NAME}-${DRONE_BUILD_NUMBER}-kyverno-v1.30.4
     commands:
       # does not matter if the command fails
       - kind delete cluster --name $${CLUSTER_NAME} || true
@@ -590,7 +590,7 @@ clone:
 
 depends_on:
   - E2E Tests Kubernetes v1.31.0
-  - E2E Tests Kubernetes v1.30.5
+  - E2E Tests Kubernetes v1.30.4
   - E2E Tests Kubernetes v1.29.8
   - E2E Tests Kubernetes v1.28.13
 
