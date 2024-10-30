@@ -5,7 +5,7 @@
 </h1>
 <!-- markdownlint-enable MD033 -->
 
-![Release](https://img.shields.io/badge/Latest%20Release-v1.12.0-blue)
+![Release](https://img.shields.io/badge/Latest%20Release-v1.13.0-blue)
 ![License](https://img.shields.io/github/license/sighupio/fury-kubernetes-opa?label=License)
 ![Slack](https://img.shields.io/badge/slack-@kubernetes/fury-yellow.svg?logo=slack&label=Slack)
 
@@ -16,6 +16,11 @@
 If you are new to KFD please refer to the [official documentation][kfd-docs] on how to get started with KFD.
 
 ## Overview
+
+> [!TIP]
+> [Starting from Kubernetes v1.25][kubernetes-pss-stable], [Pod Security Standards (PSS)][kubernetes-pss] are promoted to stable. For most use cases, the policies defined in the Pod Security Standards are a great starting point, consider applying them before switching to one the of tools provided by this module.
+>
+> For more advanced use-cases, where custom policies that are not included in the PSS must be enforced, this module is the right choice.
 
 The Kubernetes API server provides a mechanism to review every request that is made (object creation, modification, or deletion). To use this mechanism the API server allows us to create a [Validating Admission Webhook][kubernetes-vaw-docs] that, as the name says, will validate every request and let the API server know if the request is allowed or not based on some logic (policy).
 
@@ -72,7 +77,7 @@ Check the [compatibility matrix][compatibility-matrix] for additional informatio
 ```yaml
 bases:
   - name: opa/gatekeeper
-    version: "1.12.0"
+    version: "1.13.0"
 ```
 
 > See `furyctl` [documentation][furyctl-repo] for additional details about `Furyfile.yml` format.
@@ -96,9 +101,11 @@ resources:
 kustomize build . | kubectl apply -f -
 ```
 
-> ⚠️ Gatekeeper is deployed by default as a Fail open (also called `Ignore` mode) Admission Webhook. Should you decide to change it to `Fail` mode read carefully [the project's documentation on the topic first][gatekeeper-failmode].
+> [!WARNING]
+> Gatekeeper is deployed by default as a Fail open (also called `Ignore` mode) Admission Webhook. Should you decide to change it to `Fail` mode read carefully [the project's documentation on the topic first][gatekeeper-failmode].
 <!-- space intentionally left blank -->
-> ⚠️ If you decide to deploy Gatekeeper to a different namespace than the default `gatekeeper-system`, you'll need to patch the file `vwh.yml` to point to the right namespace for the webhook service due to limitations in the `kustomize` tool.
+> [!TIP]
+> If you decide to deploy Gatekeeper to a different namespace than the default `gatekeeper-system`, you'll need to patch the file `vwh.yml` to point to the right namespace for the webhook service due to limitations in the `kustomize` tool.
 
 #### Common Customizations
 
@@ -110,7 +117,8 @@ Gatekeeper supports 3 levels of granularity to exempt a namespace from policy en
 2. Global exemption at Gatekeeper configuration level: requests to the API server for the namespace will be sent to Gatekeeper's webhook, but Gatekepeer will not enforce constraints for the namespace. It is the equivalent of exempting the namespace in all the constraints. Useful when you don't want any of the constraints enforced in a namespace.
 3. Exemption at constraint level: you can exempt namespaces in the definition of each constraint. Useful when you may want only a subset of all the constraints to be enforced in a namespace.
 
-> ⚠️ Exempting critical namespaces like `kube-system` or `logging` [won't guarantee that the cluster will function properly when Gatekeeper webhook is in `Fail` mode][gatekeeper-failmode].
+> [!CAUTION]
+> Exempting critical namespaces like `kube-system` or `logging` [won't guarantee that the cluster will function properly when Gatekeeper webhook is in `Fail` mode][gatekeeper-failmode].
 
 For more details on how to implement the exemption, please refer to the [official Gatekeeper documentation site][gatekeeper-exemption].
 
@@ -183,7 +191,7 @@ Notice that the alert for when the Gatekeeper webhook is in `Ignore` mode (the d
 ```yaml
 bases:
   - name: opa/kyverno
-    version: "1.12.0"
+    version: "1.13.0"
 ```
 
 > See `furyctl` [documentation][furyctl-repo] for additional details about `Furyfile.yml` format.
@@ -206,19 +214,26 @@ kustomize build . | kubectl apply --server-side -f -
 ```
 
 <!-- Links -->
+
+[kubernetes-pss-stable]: https://kubernetes.io/blog/2022/08/25/pod-security-admission-stable/
+[kubernetes-pss]: https://kubernetes.io/docs/concepts/security/pod-security-standards/
+
 [gatekeeper-page]: https://github.com/open-policy-agent/gatekeeper
 [gatekeeper-failmode]: https://open-policy-agent.github.io/gatekeeper/website/docs/failing-closed/
 [gatekeeper-exemption]: https://open-policy-agent.github.io/gatekeeper/website/docs/exempt-namespaces/
+
 [kyverno-page]: https://github.com/kyverno/kyverno
 [kubernetes-vaw-docs]: https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/
-[kfd-monitoring]: https://github.com/sighupio/fury-kubernetes-monitoring
+
 [core-kustomization]: ./katalog/gatekeeper/core/kustomization.yaml
-[furyctl-repo]: https://github.com/sighupio/furyctl
+[compatibility-matrix]: https://github.com/sighupio/fury-kubernetes-opa/blob/main/docs/COMPATIBILITY_MATRIX.md
+
 [sighup-page]: https://sighup.io
 [kfd-repo]: https://github.com/sighupio/fury-distribution
-[kustomize-repo]: https://github.com/kubernetes-sigs/kustomize
 [kfd-docs]: https://docs.kubernetesfury.com/docs/distribution/
-[compatibility-matrix]: https://github.com/sighupio/fury-kubernetes-opa/blob/main/docs/COMPATIBILITY_MATRIX.md
+[kfd-monitoring]: https://github.com/sighupio/fury-kubernetes-monitoring
+[furyctl-repo]: https://github.com/sighupio/furyctl
+[kustomize-repo]: https://github.com/kubernetes-sigs/kustomize
 
 <!-- </KFD-DOCS> -->
 
