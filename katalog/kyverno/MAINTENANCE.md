@@ -18,7 +18,11 @@ helm template kyverno /tmp/kyverno --values MAINTENANCE.values.yaml --namespace 
 helm template kyverno /tmp/kyverno --values MAINTENANCE.values.yaml --set crds.install=true --namespace kyverno | yq 'select(.kind == "CustomResourceDefinition")' > crds.yaml
 ```
 
-Compare the core/deploy.yaml file with the built-kyverno.yaml to find differences with the current version.
+1. Compare the core/deploy.yaml file with the built-kyverno.yaml to find differences with the current version.
+
+2. Sync the new image to our registry by updating the [OPA images.yaml file fury-distribution-container-image-sync repository](https://github.com/sighupio/fury-distribution-container-image-sync/blob/main/modules/opa/images.yml).
+
+3. Update the `kustomization.yaml` file with the new version in the image tag.
 
 What was changed:
 - Removed all the helm hooks from the deploy
