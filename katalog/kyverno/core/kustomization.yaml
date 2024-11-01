@@ -32,6 +32,4 @@ images:
   - name: bitnami/kubectl
     newName: registry.sighup.io/fury/bitnami/kubectl
     newTag: "1.28.5"
-  - name: ghcr.io/kyverno/kyverno-cli
-    newName: registry.sighup.io/fury/kyverno/kyverno-cli
-    newTag: v1.12.6
+

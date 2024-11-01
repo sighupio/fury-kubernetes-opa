@@ -202,7 +202,7 @@ resources:
 5. To deploy the packages to your cluster, execute:
 
 ```bash
-kustomize build . | kubectl create -f -
+kustomize build . | kubectl apply --server-side -f -
 ```
 
 <!-- Links -->
