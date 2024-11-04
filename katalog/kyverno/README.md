@@ -48,7 +48,7 @@ You can deploy kyverno by running the following command in the root of
 the project:
 
 ```shell
-kustomize build | kubectl apply -f -
+kustomize build | kubectl apply --server-side -f -
 ```
 
 <!-- Links -->
