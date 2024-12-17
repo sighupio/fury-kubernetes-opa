@@ -37,6 +37,7 @@ steps:
     image: quay.io/sighup/policeman
     pull: always
     environment:
+      FILTER_REGEX_EXCLUDE: (\.github)
       # Identifies false positives like missing 'selector'.
       # Doing this is valid for Kustomize patches
       VALIDATE_KUBERNETES_KUBEVAL: "false"
