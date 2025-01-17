@@ -65,4 +65,15 @@ spec:
   names:
     kind: SecurityControls
 ---
+apiVersion: kapp.k14s.io/v1alpha1
+kind: Config
+rebaseRules:
+  - path: [data]
+    type: copy
+    sources: [existing, new]
+    resourceMatchers:
+      - kindNamespaceNameMatcher:
+          kind: Secret
+          namespace: gatekeeper-system
+          name: gatekeeper-webhook-server-cert
 
