@@ -8,7 +8,7 @@ helm repo add kyverno https://kyverno.github.io/kyverno/
 helm repo update
 
 helm search repo kyverno/kyverno # get the latest chart version
-helm pull kyverno/kyverno --version 3.2.7  --untar --untardir /tmp
+helm pull kyverno/kyverno --version 3.3.7  --untar --untardir /tmp
 ```
 
 > Note: if the templating gives some error, change `kubeVersion:`  on the /tmp/kyverno/Chart.yaml.
@@ -20,9 +20,11 @@ helm template kyverno /tmp/kyverno --values MAINTENANCE.values.yaml --set crds.i
 
 1. Compare the core/deploy.yaml file with the built-kyverno.yaml to find differences with the current version.
 
-2. Sync the new image to our registry by updating the [OPA images.yaml file fury-distribution-container-image-sync repository](https://github.com/sighupio/fury-distribution-container-image-sync/blob/main/modules/opa/images.yml).
+2. Overwrite the content of the generated from chart crds.yaml with the content of the katalog/kyverno/core/crds.yaml file.
 
-3. Update the `kustomization.yaml` file with the new version in the image tag.
+3. Sync the new image to our registry by updating the [OPA images.yaml file fury-distribution-container-image-sync repository](https://github.com/sighupio/fury-distribution-container-image-sync/blob/main/modules/opa/images.yml).
+
+4. Update the `kustomization.yaml` file with the new version in the image tag.
 
 What was changed:
 - Removed all the helm hooks from the deploy
