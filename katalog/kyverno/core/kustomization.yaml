@@ -29,3 +29,6 @@ images:
   - name: ghcr.io/kyverno/reports-controller
     newName: registry.sighup.io/fury/kyverno/reports-controller
     newTag: v1.13.4
+  - name: bitnami/kubectl
+    newName: registry.sighup.io/fury/bitnami/kubectl
+    newTag: "1.30.2"
