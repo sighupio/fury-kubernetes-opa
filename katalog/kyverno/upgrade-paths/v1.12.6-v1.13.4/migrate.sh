@@ -5,9 +5,37 @@
 
 # shellcheck disable=SC2154
 
+wait_for_job() {
+  local namespace="$1"
+  local jobname="$2"
+  local timeout="$3"
+  local retries="$4"
+  local retries_count=0
+  
+  while [ $retries_count -lt "$retries" ]; do
+    if kubectl wait --for=condition=complete job/"$jobname" -n "$namespace" --timeout="${timeout}s"; then
+      echo "job completed"
+      return 0
+    fi
+    
+    echo "timeout"
+    
+    retries_count=$((retries_count+1))
+    
+    if [ $retries_count -lt "$retries" ]; then
+      echo "retry"
+    else
+      kubectl logs -n "$namespace" job/"$jobname"
+      echo "exit"
+      exit 1
+    fi
+  done
+}
+
 echo "scaling down kyverno and deleting webhooks"
 kubectl apply --server-side -f kyverno-scale-to-zero.yaml
-echo
+
+wait_for_job kyverno kyverno-scale-to-zero 60 5
 
 echo "applying Kyverno v1.13.4 manifests"
 kustomize build ../../ | kubectl apply -f - --server-side
@@ -30,6 +58,6 @@ echo
 echo "checking pods"
 kubectl get pods -n kyverno
 echo
-echo "checking policies"
+echo "checking clusterpolicies"
 kubectl get clusterpolicies.kyverno.io
 echo
