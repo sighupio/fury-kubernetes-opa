@@ -13,7 +13,7 @@ resources:
   - must_have_readiness_probe.yml
 #  - must_have_namespace_label_to_be_safely_deleted.yml
 
-patchesJson6902:
+patches:
   - target:
       group: constraints.gatekeeper.sh
       version: v1beta1
