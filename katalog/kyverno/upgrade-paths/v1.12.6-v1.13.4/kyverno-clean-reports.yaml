@@ -1,0 +1,60 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: kyverno-clean-reports
+  namespace: kyverno
+  labels:
+    app.kubernetes.io/component: hooks
+    app.kubernetes.io/instance: kyverno
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: kyverno
+    app.kubernetes.io/version: 3.3.7
+spec:
+  backoffLimit: 2
+  template:
+    metadata:
+    spec:
+      serviceAccount: kyverno-admission-controller
+      restartPolicy: Never
+      containers:
+        - name: kubectl
+          image: "registry.sighup.io/fury/bitnami/kubectl:1.30.2"
+          command:
+            - /bin/bash
+            - -c
+            - |
+              set -euo pipefail
+              NAMESPACES=$(kubectl get namespaces --no-headers=true | awk '{print $1}')
+
+              for ns in ${NAMESPACES[@]};
+              do
+                COUNT=$(kubectl get policyreports.wgpolicyk8s.io -n $ns --no-headers=true | awk '/pol/{print $1}' | wc -l)
+
+                if [ $COUNT -gt 0 ]; then
+                  echo "deleting $COUNT policyreports in namespace $ns"
+                  kubectl get policyreports.wgpolicyk8s.io -n $ns --no-headers=true | awk '/pol/{print $1}' | xargs kubectl delete -n $ns policyreports.wgpolicyk8s.io
+                else
+                  echo "no policyreports in namespace $ns"
+                fi
+              done
+
+              COUNT=$(kubectl get clusterpolicyreports.wgpolicyk8s.io --no-headers=true | awk '/pol/{print $1}' | wc -l)
+
+              if [ $COUNT -gt 0 ]; then
+                echo "deleting $COUNT clusterpolicyreports"
+                kubectl get clusterpolicyreports.wgpolicyk8s.io --no-headers=true | awk '/pol/{print $1}' | xargs kubectl delete clusterpolicyreports.wgpolicyk8s.io
+              else
+                echo "no clusterpolicyreports"
+              fi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            privileged: false
+            readOnlyRootFilesystem: true
+            runAsGroup: 65534
+            runAsNonRoot: true
+            runAsUser: 65534
+            seccompProfile:
+              type: RuntimeDefault

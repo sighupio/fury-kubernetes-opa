@@ -1,0 +1,50 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: kyverno-migrate-resources
+  namespace: kyverno
+  labels:
+    app.kubernetes.io/component: hooks
+    app.kubernetes.io/instance: kyverno
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: kyverno
+    app.kubernetes.io/version: 3.3.7
+spec:
+  backoffLimit: 2
+  template:
+    metadata:
+    spec:
+      serviceAccount: kyverno-migrate-resources
+      restartPolicy: Never
+      containers:
+        - name: kubectl
+          image: "registry.sighup.io/fury/kyverno/kyverno-cli:v1.13.4"
+          imagePullPolicy: IfNotPresent
+          args:
+            - migrate
+            - --resource
+            - cleanuppolicies.kyverno.io
+            - --resource
+            - clustercleanuppolicies.kyverno.io
+            - --resource
+            - clusterpolicies.kyverno.io
+            - --resource
+            - globalcontextentries.kyverno.io
+            - --resource
+            - policies.kyverno.io
+            - --resource
+            - policyexceptions.kyverno.io
+            - --resource
+            - updaterequests.kyverno.io
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+            privileged: false
+            readOnlyRootFilesystem: true
+            runAsGroup: 65534
+            runAsNonRoot: true
+            runAsUser: 65534
+            seccompProfile:
+              type: RuntimeDefault
