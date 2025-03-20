@@ -1,10 +1,9 @@
+#!/bin/bash
 # Copyright (c) 2017-present SIGHUP s.r.l All rights reserved.
 # Use of this source code is governed by a BSD-style
 # license that can be found in the LICENSE file.
 
 # shellcheck disable=SC2154
-
-#!/bin/bash
 
 echo "scaling down kyverno and deleting webhooks"
 kubectl apply --server-side -f kyverno-scale-to-zero.yaml
