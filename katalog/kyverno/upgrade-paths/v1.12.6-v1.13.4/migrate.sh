@@ -61,3 +61,11 @@ echo
 echo "checking clusterpolicies"
 kubectl get clusterpolicies.kyverno.io
 echo
+
+echo "cleaning up"
+kubectl delete -f kyverno-scale-to-zero.yaml
+kubectl delete -f kyverno-migrate-resources-binding.yaml
+kubectl delete -f kyverno-migrate-resources-role.yaml
+kubectl delete -f kyverno-migrate-resources-sa.yaml
+kubectl delete -f kyverno-migrate-resources-job.yaml
+echo
