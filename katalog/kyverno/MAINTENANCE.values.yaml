@@ -10,24 +10,25 @@ config:
 
   # -- Create the configmap.
   create: true
-  webhooks: 
-     - namespaceSelector:
-         matchExpressions:
-         - key: kubernetes.io/metadata.name
-           operator: NotIn
-           values:
-             - kube-system
-             - kyverno
-             - logging
-             - monitoring
-             - ingress-nginx
-             - cert-manager
-             - tigera-operator
-             - calico-system
-             - calico-api
-             - vmware-system-csi
-             - pomerium
-             - tracing
+  webhooks:
+    namespaceSelector:
+      matchExpressions:
+      - key: kubernetes.io/metadata.name
+        operator: NotIn
+        values:
+          - kube-system
+          - kyverno
+          - logging
+          - monitoring
+          - ingress-nginx
+          - cert-manager
+          - tigera-operator
+          - calico-system
+          - calico-api
+          - vmware-system-csi
+          - pomerium
+          - tracing
+
 # Metrics configuration
 metricsConfig:
 

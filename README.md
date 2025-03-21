@@ -38,7 +38,7 @@ Fury Kubernetes OPA provides the following packages:
 | [Gatekeeper Rules](katalog/gatekeeper/rules)           | `N.A.`    | A set of custom rules to get started with policy enforcement.                                                                                           |
 | [Gatekeeper Monitoring](katalog/gatekeeper/monitoring) | `N.A.`    | Metrics, alerts and dashboard for monitoring Gatekeeper.                                                                                                |
 | [Gatekeeper Policy Manager](katalog/gatekeeper/gpm)    | `v1.0.13` | Gatekeeper Policy Manager, a simple to use web-ui for Gatekeeper.                                                                                       |
-| [Kyverno](katalog/kyverno)                             | `v1.12.6` | Kyverno is a policy engine designed for Kubernetes. It can validate, mutate, and generate configurations using admission controls and background scans. |
+| [Kyverno](katalog/kyverno)                             | `v1.13.4` | Kyverno is a policy engine designed for Kubernetes. It can validate, mutate, and generate configurations using admission controls and background scans. |
 
 Click on each package name to see its full documentation.
 
