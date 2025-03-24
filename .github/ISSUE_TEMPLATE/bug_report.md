@@ -30,7 +30,8 @@ If applicable, add screenshots to help explain your problem.
 
 **Kubernetes (please complete the following information):**
  - Kubernetes version: [e.g. 1.30.0]
- - Gatekeeper version: [e.g. 3.18.0]
+ - OPA Gatekeeper version: [e.g. 3.18.0]
+ - Kyverno version: [e.g. 3.18.0]
 
 **Additional context**
 Add any other context about the problem here.
