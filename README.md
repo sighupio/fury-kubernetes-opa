@@ -1,6 +1,6 @@
 <!-- markdownlint-disable MD033 -->
 <h1>
-    <img src="https://raw.githubusercontent.com/sighupio/fury-distribution/refs/heads/feat/rebranding/docs/assets/white-logo.png" align="left" width="90" style="margin-right: 15px"/>
+    <img src="https://raw.githubusercontent.com/sighupio/distribution/refs/heads/main/docs/assets/white-logo.png" align="left" width="90" style="margin-right: 15px"/>
     Policy Core Module
 </h1>
 <!-- markdownlint-enable MD033 -->
