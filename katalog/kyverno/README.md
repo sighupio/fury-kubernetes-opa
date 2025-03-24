@@ -20,11 +20,11 @@ Kyverno is a policy engine designed for Kubernetes. It can validate, mutate, and
 
 ## Configuration
 
-Kyverno is deployed in HA mode, and whitelists the KFD `infra` namespaces by default on the webhooks.
+Kyverno is deployed in HA mode, and whitelists the SKD `infra` namespaces by default on the webhooks.
 
 ## Pre-configured policies
 
-This package comes with a set of predefined policies from the main kyverno repository. These policies are our own KFD baseline, and are similar to what is provided with the Gatekeeper package.
+This package comes with a set of predefined policies from the main kyverno repository. These policies are our own SKD baseline, and are similar to what is provided with the Gatekeeper package.
 
 | Policy                         | Description                                                                                                                                                                                                                                                                                                                          |
 | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |

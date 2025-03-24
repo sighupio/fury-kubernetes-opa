@@ -1,19 +1,19 @@
 <!-- markdownlint-disable MD033 -->
 <h1>
-    <img src="https://github.com/sighupio/fury-distribution/blob/main/docs/assets/fury-epta-white.png?raw=true" align="left" width="90" style="margin-right: 15px"/>
-    Kubernetes Fury OPA
+    <img src="https://github.com/sighupio/distribution/blob/main/docs/assets/fury-epta-white.png?raw=true" align="left" width="90" style="margin-right: 15px"/>
+    Policy Core Module
 </h1>
 <!-- markdownlint-enable MD033 -->
 
 ![Release](https://img.shields.io/badge/Latest%20Release-v1.14.0-blue)
-![License](https://img.shields.io/github/license/sighupio/fury-kubernetes-opa?label=License)
+![License](https://img.shields.io/github/license/sighupio/module-policy?label=License)
 ![Slack](https://img.shields.io/badge/slack-@kubernetes/fury-yellow.svg?logo=slack&label=Slack)
 
 <!-- <KFD-DOCS> -->
 
-**Kubernetes Fury OPA** provides policy enforcement at runtime for the [Kubernetes Fury Distribution (KFD)][kfd-repo].
+**Policy Core Module** provides policy enforcement at runtime for the [SIGHUP Distribution (SKD)][skd-repo].
 
-If you are new to KFD please refer to the [official documentation][kfd-docs] on how to get started with KFD.
+If you are new to SKD please refer to the [official documentation][skd-docs] on how to get started with SKD.
 
 ## Overview
 
@@ -24,13 +24,13 @@ If you are new to KFD please refer to the [official documentation][kfd-docs] on 
 
 The Kubernetes API server provides a mechanism to review every request that is made (object creation, modification, or deletion). To use this mechanism the API server allows us to create a [Validating Admission Webhook][kubernetes-vaw-docs] that, as the name says, will validate every request and let the API server know if the request is allowed or not based on some logic (policy).
 
-**Kubernetes Fury OPA** module is based on [OPA Gatekeeper][gatekeeper-page] and [Kyverno][kyverno-page], two popular open-source Kubernetes-native policy engines that runs as a Validating Admission Webhook. It allows writing custom constraints (policies) and enforcing them at runtime.
+**Policy Core Module** module is based on [Gatekeeper][gatekeeper-page] and [Kyverno][kyverno-page], two popular open-source Kubernetes-native policy engines that runs as a Validating Admission Webhook. It allows writing custom constraints (policies) and enforcing them at runtime.
 
 [SIGHUP][sighup-page] provides a set of base constraints that could be used both as a starting point to apply constraints to your current workloads and to give you an idea of how to implement new rules matching your requirements.
 
 ## Packages
 
-Fury Kubernetes OPA provides the following packages:
+Policy Core Module provides the following packages:
 
 | Package                                                | Version   | Description                                                                                                                                             |
 | ------------------------------------------------------ | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -58,15 +58,15 @@ Check the [compatibility matrix][compatibility-matrix] for additional informatio
 > [!NOTE]
 > The following instructions are for using the module with furyctl legacy, or downloading it and using it via kustomize.
 >
-> In the latest versions of the Kubernetes Fury Distribution the OPA module is natively integrated and can be used and configured by the `.spec.distribution.modules.policy` key in the configuration file.
+> In the latest versions of the SIGHUP Distribution the Policy Core Module is natively integrated and can be used and configured by the `.spec.distribution.modules.policy` key in the configuration file.
 
 ### Prerequisites
 
 | Tool                                    | Version    | Description                                                                                                                                                    |
 | --------------------------------------- | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [furyctl][furyctl-repo]                 | `>=0.27.0` | The recommended tool to download and manage KFD modules and their packages. To learn more about `furyctl` read the [official documentation][furyctl-repo].     |
+| [furyctl][furyctl-repo]                 | `>=0.27.0` | The recommended tool to download and manage SKD modules and their packages. To learn more about `furyctl` read the [official documentation][furyctl-repo].     |
 | [kustomize][kustomize-repo]             | `>=3.10.0` | Packages are customized using `kustomize`. To learn how to create your customization layer with `kustomize`, please refer to the [repository][kustomize-repo]. |
-| [KFD Monitoring Module][kfd-monitoring] | `>v1.10.0` | Expose metrics to Prometheus *(optional)* and use Grafana Dashboards.                                                                                          |
+| [SKD Monitoring Module][skd-monitoring] | `>v1.10.0` | Expose metrics to Prometheus *(optional)* and use Grafana Dashboards.                                                                                          |
 
 > You can comment out the service monitor in the [kustomization.yaml][core-kustomization] file if you don't want to install the monitoring module.
 
@@ -146,7 +146,7 @@ add this to the `patches/allow.yml` file:
 
 #### Emergency brake
 
-If for some reason OPA Gatekeeper is giving you issues and blocking normal operations in your cluster, you can disable it by removing the Validating Admission Webhook definition from your cluster:
+If for some reason Gatekeeper is giving you issues and blocking normal operations in your cluster, you can disable it by removing the Validating Admission Webhook definition from your cluster:
 
 ```bash
 kubectl delete ValidatingWebhookConfiguration gatekeeper-validating-webhook-configuration
@@ -156,7 +156,7 @@ kubectl delete ValidatingWebhookConfiguration gatekeeper-validating-webhook-conf
 
 Gatekeeper is configured by default in this module to expose some Prometheus metrics about its health, performance, and operative information.
 
-You can monitor and review these metrics by checking out the provided Grafana dashboard. (This requires the KFD Monitoring Module to be installed).
+You can monitor and review these metrics by checking out the provided Grafana dashboard. (This requires the SKD Monitoring Module to be installed).
 
 Go to your cluster's Grafana and search for the "Gatekeeper" dashboard:
 
@@ -226,12 +226,12 @@ kustomize build . | kubectl apply --server-side -f -
 [kubernetes-vaw-docs]: https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/
 
 [core-kustomization]: ./katalog/gatekeeper/core/kustomization.yaml
-[compatibility-matrix]: https://github.com/sighupio/fury-kubernetes-opa/blob/main/docs/COMPATIBILITY_MATRIX.md
+[compatibility-matrix]: https://github.com/sighupio/module-policy/blob/main/docs/COMPATIBILITY_MATRIX.md
 
 [sighup-page]: https://sighup.io
-[kfd-repo]: https://github.com/sighupio/fury-distribution
-[kfd-docs]: https://docs.kubernetesfury.com/docs/distribution/
-[kfd-monitoring]: https://github.com/sighupio/fury-kubernetes-monitoring
+[skd-repo]: https://github.com/sighupio/distribution
+[skd-docs]: https://docs.kubernetesfury.com/docs/distribution/
+[skd-monitoring]: https://github.com/sighupio/module-monitoring
 [furyctl-repo]: https://github.com/sighupio/furyctl
 [kustomize-repo]: https://github.com/kubernetes-sigs/kustomize
 
@@ -245,7 +245,7 @@ Before contributing, please read the [Contributing Guidelines](docs/CONTRIBUTING
 
 ### Reporting Issues
 
-In case you experience any problems with the module, please [open a new issue](https://github.com/sighupio/fury-kubernetes-opa/issues/new/choose).
+In case you experience any problems with the module, please [open a new issue](https://github.com/sighupio/module-policy/issues/new/choose).
 
 ## License
 

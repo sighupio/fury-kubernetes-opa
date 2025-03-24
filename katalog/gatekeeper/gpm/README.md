@@ -2,7 +2,7 @@
 
 <!-- KFD-DOCS -->
 
-**Gatekeeper Policy Manager** is a simple *read-only* web UI for viewing OPA Gatekeeper policies' status in a Kubernetes Cluster.
+**Gatekeeper Policy Manager** is a simple *read-only* web UI for viewing Gatekeeper policies' status in a Kubernetes Cluster.
 
 The target Kubernetes Cluster can be the same where GPM is running or some other [remote cluster(s) using a `kubeconfig` file][gpm-multicluster-readme].
 
@@ -10,7 +10,7 @@ GPM can display all the defined **Constraint Templates** with their rego code, a
 
 ## Requirements
 
-You'll need [OPA Gatekeeper][gatekeeper-pkg] running in your cluster and at least some constraint templates and constraints defined to take advantage of this tool.
+You'll need [Gatekeeper][gatekeeper-pkg] running in your cluster and at least some constraint templates and constraints defined to take advantage of this tool.
 
 ### Resources
 
