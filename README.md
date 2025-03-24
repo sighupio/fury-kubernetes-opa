@@ -5,7 +5,7 @@
 </h1>
 <!-- markdownlint-enable MD033 -->
 
-![Release](https://img.shields.io/badge/Latest%20Release-v1.13.0-blue)
+![Release](https://img.shields.io/badge/Latest%20Release-v1.14.0-blue)
 ![License](https://img.shields.io/github/license/sighupio/fury-kubernetes-opa?label=License)
 ![Slack](https://img.shields.io/badge/slack-@kubernetes/fury-yellow.svg?logo=slack&label=Slack)
 
@@ -34,7 +34,7 @@ Fury Kubernetes OPA provides the following packages:
 
 | Package                                                | Version   | Description                                                                                                                                             |
 | ------------------------------------------------------ | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Gatekeeper Core](katalog/gatekeeper/core)             | `v3.17.1` | Gatekeeper deployment, ready to enforce rules.                                                                                                          |
+| [Gatekeeper Core](katalog/gatekeeper/core)             | `v3.18.2` | Gatekeeper deployment, ready to enforce rules.                                                                                                          |
 | [Gatekeeper Rules](katalog/gatekeeper/rules)           | `N.A.`    | A set of custom rules to get started with policy enforcement.                                                                                           |
 | [Gatekeeper Monitoring](katalog/gatekeeper/monitoring) | `N.A.`    | Metrics, alerts and dashboard for monitoring Gatekeeper.                                                                                                |
 | [Gatekeeper Policy Manager](katalog/gatekeeper/gpm)    | `v1.0.13` | Gatekeeper Policy Manager, a simple to use web-ui for Gatekeeper.                                                                                       |
@@ -191,7 +191,7 @@ Notice that the alert for when the Gatekeeper webhook is in `Ignore` mode (the d
 ```yaml
 bases:
   - name: opa/kyverno
-    version: "1.13.0"
+    version: "1.14.0"
 ```
 
 > See `furyctl` [documentation][furyctl-repo] for additional details about `Furyfile.yml` format.
