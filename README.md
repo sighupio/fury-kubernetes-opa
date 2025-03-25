@@ -1,7 +1,11 @@
 <!-- markdownlint-disable MD033 -->
-<h1>
-    <img src="https://raw.githubusercontent.com/sighupio/distribution/refs/heads/main/docs/assets/white-logo.png" align="left" width="90" style="margin-right: 15px"/>
-    Policy Core Module
+<h1 align="center">
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/sighupio/distribution/refs/heads/main/docs/assets/white-logo.png">
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/sighupio/distribution/refs/heads/main/docs/assets/black-logo.png">
+  <img alt="Shows a black logo in light color mode and a white one in dark color mode." src="https://raw.githubusercontent.com/sighupio/distribution/refs/heads/main/docs/assets/white-logo.png">
+</picture><br/>
+  Policy Module
 </h1>
 <!-- markdownlint-enable MD033 -->
 
@@ -11,7 +15,7 @@
 
 <!-- <KFD-DOCS> -->
 
-**Policy Core Module** provides policy enforcement at runtime for the [SIGHUP Distribution (SD)][skd-repo].
+**Policy Module** provides policy enforcement at runtime for the [SIGHUP Distribution (SD)][skd-repo].
 
 If you are new to SD please refer to the [official documentation][skd-docs] on how to get started with SD.
 
@@ -24,13 +28,13 @@ If you are new to SD please refer to the [official documentation][skd-docs] on h
 
 The Kubernetes API server provides a mechanism to review every request that is made (object creation, modification, or deletion). To use this mechanism the API server allows us to create a [Validating Admission Webhook][kubernetes-vaw-docs] that, as the name says, will validate every request and let the API server know if the request is allowed or not based on some logic (policy).
 
-**Policy Core Module** module is based on [Gatekeeper][gatekeeper-page] and [Kyverno][kyverno-page], two popular open-source Kubernetes-native policy engines that runs as a Validating Admission Webhook. It allows writing custom constraints (policies) and enforcing them at runtime.
+**Policy Module** module is based on [Gatekeeper][gatekeeper-page] and [Kyverno][kyverno-page], two popular open-source Kubernetes-native policy engines that runs as a Validating Admission Webhook. It allows writing custom constraints (policies) and enforcing them at runtime.
 
 [SIGHUP][sighup-page] provides a set of base constraints that could be used both as a starting point to apply constraints to your current workloads and to give you an idea of how to implement new rules matching your requirements.
 
 ## Packages
 
-Policy Core Module provides the following packages:
+Policy Module provides the following packages:
 
 | Package                                                | Version   | Description                                                                                                                                             |
 | ------------------------------------------------------ | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -58,7 +62,7 @@ Check the [compatibility matrix][compatibility-matrix] for additional informatio
 > [!NOTE]
 > The following instructions are for using the module with furyctl legacy, or downloading it and using it via kustomize.
 >
-> In the latest versions of the SIGHUP Distribution the Policy Core Module is natively integrated and can be used and configured by the `.spec.distribution.modules.policy` key in the configuration file.
+> In the latest versions of the SIGHUP Distribution the Policy Module is natively integrated and can be used and configured by the `.spec.distribution.modules.policy` key in the configuration file.
 
 ### Prerequisites
 
