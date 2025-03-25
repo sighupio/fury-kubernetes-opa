@@ -29,7 +29,7 @@ Below, you can find a list of constraint templates shipped with SIGHUP Distribut
 <!-- space left blank on purpose to separate both quotes -->
 > The Gatekeeper package provides both `ConstraintTemplates` and `Constraints` for each rule out of the box.
 <!-- space left blank on purpose to separate both quotes -->
-> All the `Constraints` exclude by default SKD "infra" namespaces (`kube-system`, `logging`, `monitoring`, `ingress-nginx`, `cert-manager`) to avoid service disruption.
+> All the `Constraints` exclude by default SD "infra" namespaces (`kube-system`, `logging`, `monitoring`, `ingress-nginx`, `cert-manager`) to avoid service disruption.
 
 ### Usage
 

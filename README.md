@@ -11,9 +11,9 @@
 
 <!-- <KFD-DOCS> -->
 
-**Policy Core Module** provides policy enforcement at runtime for the [SIGHUP Distribution (SKD)][skd-repo].
+**Policy Core Module** provides policy enforcement at runtime for the [SIGHUP Distribution (SD)][skd-repo].
 
-If you are new to SKD please refer to the [official documentation][skd-docs] on how to get started with SKD.
+If you are new to SD please refer to the [official documentation][skd-docs] on how to get started with SD.
 
 ## Overview
 
@@ -64,9 +64,9 @@ Check the [compatibility matrix][compatibility-matrix] for additional informatio
 
 | Tool                                    | Version    | Description                                                                                                                                                    |
 | --------------------------------------- | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [furyctl][furyctl-repo]                 | `>=0.27.0` | The recommended tool to download and manage SKD modules and their packages. To learn more about `furyctl` read the [official documentation][furyctl-repo].     |
+| [furyctl][furyctl-repo]                 | `>=0.27.0` | The recommended tool to download and manage SD modules and their packages. To learn more about `furyctl` read the [official documentation][furyctl-repo].     |
 | [kustomize][kustomize-repo]             | `>=3.10.0` | Packages are customized using `kustomize`. To learn how to create your customization layer with `kustomize`, please refer to the [repository][kustomize-repo]. |
-| [SKD Monitoring Module][skd-monitoring] | `>v1.10.0` | Expose metrics to Prometheus *(optional)* and use Grafana Dashboards.                                                                                          |
+| [SD Monitoring Module][skd-monitoring] | `>v1.10.0` | Expose metrics to Prometheus *(optional)* and use Grafana Dashboards.                                                                                          |
 
 > You can comment out the service monitor in the [kustomization.yaml][core-kustomization] file if you don't want to install the monitoring module.
 
@@ -156,7 +156,7 @@ kubectl delete ValidatingWebhookConfiguration gatekeeper-validating-webhook-conf
 
 Gatekeeper is configured by default in this module to expose some Prometheus metrics about its health, performance, and operative information.
 
-You can monitor and review these metrics by checking out the provided Grafana dashboard. (This requires the SKD Monitoring Module to be installed).
+You can monitor and review these metrics by checking out the provided Grafana dashboard. (This requires the SD Monitoring Module to be installed).
 
 Go to your cluster's Grafana and search for the "Gatekeeper" dashboard:
 
