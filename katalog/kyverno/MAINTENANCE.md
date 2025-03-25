@@ -22,7 +22,7 @@ helm template kyverno /tmp/kyverno --values MAINTENANCE.values.yaml --set crds.i
 
 2. Overwrite the content of the generated from chart crds.yaml with the content of the katalog/kyverno/core/crds.yaml file.
 
-3. Sync the new image to our registry by updating the [OPA images.yaml file fury-distribution-container-image-sync repository](https://github.com/sighupio/fury-distribution-container-image-sync/blob/main/modules/opa/images.yml).
+3. Sync the new image to our registry by updating the [OPA images.yaml file container-image-sync repository](https://github.com/sighupio/container-image-sync/blob/main/modules/opa/images.yml).
 
 4. Update the `kustomization.yaml` file with the new version in the image tag.
 

@@ -1,4 +1,4 @@
-# OPA Gatekeeper
+# Gatekeeper
 
 <!-- <KFD-DOCS> -->
 

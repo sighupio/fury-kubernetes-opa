@@ -4,7 +4,7 @@
 
 A Policy is a group of rules that enforce desired behavior. The module provides a set of common policies out of the box to get started in securing your cluster.
 
-A policy in OPA Gatekeeper is defined by two objects: a `ConstraintTemplate` and a `Constraint`.
+A policy in Gatekeeper is defined by two objects: a `ConstraintTemplate` and a `Constraint`.
 
 As the name suggests, the `ConstraintTemplate` defines the common logic of the policy and the `Constraint` takes that logic and creates the actual policy by creating an instance of the template with the right values for the required parameters.
 
@@ -14,7 +14,7 @@ For example, one could have a `ConstraintTemplate` to check that a set of labels
 
 ## SIGHUP base rules
 
-Below, you can find a list of constraint templates shipped with Kubernetes Fury Distribution:
+Below, you can find a list of constraint templates shipped with SIGHUP Distribution:
 
 | Rule Name                  | Description                                                                                                                                           |
 | -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -27,9 +27,9 @@ Below, you can find a list of constraint templates shipped with Kubernetes Fury 
 > [security_controls_template.yml][security-controls-template]: it's an all-in-one pod security policy measure composed of several rules. Most of the rules are commented out and provided as examples and to be used as starting point for your own rules.
 > This file can be split into several `ConstraintTemplates` with the counterpart of having to manage an additional `constraint`/`constraintTemplate` resource for each one.
 <!-- space left blank on purpose to separate both quotes -->
-> The KFD OPA package provides both `ConstraintTemplates` and `Constraints` for each rule out of the box.
+> The Gatekeeper package provides both `ConstraintTemplates` and `Constraints` for each rule out of the box.
 <!-- space left blank on purpose to separate both quotes -->
-> All the `Constraints` exclude by default KFD "infra" namespaces (`kube-system`, `logging`, `monitoring`, `ingress-nginx`, `cert-manager`) to avoid service disruption.
+> All the `Constraints` exclude by default SKD "infra" namespaces (`kube-system`, `logging`, `monitoring`, `ingress-nginx`, `cert-manager`) to avoid service disruption.
 
 ### Usage
 

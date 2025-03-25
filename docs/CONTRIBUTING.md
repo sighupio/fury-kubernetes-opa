@@ -1,5 +1,5 @@
 # Contributing
 
-Please refer to the contributing section in [KFD's official documentation][kfd-contributing] to learn how to contribute.
+Please refer to the contributing section in [SKD's official documentation][skd-contributing] to learn how to contribute.
 
-[kfd-contributing]: https://docs.kubernetesfury.com/docs/contribute
+[skd-contributing]: https://docs.sighup.io/docs/contribute
