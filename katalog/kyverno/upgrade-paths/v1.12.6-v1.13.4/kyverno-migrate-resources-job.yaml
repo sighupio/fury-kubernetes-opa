@@ -16,6 +16,7 @@ metadata:
     app.kubernetes.io/part-of: kyverno
     app.kubernetes.io/version: 3.3.7
 spec:
+  ttlSecondsAfterFinished: 600
   backoffLimit: 2
   template:
     metadata:
